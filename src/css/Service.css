@@ -1,0 +1,77 @@
+.our-service-container {
+  background-color: #ffffff;
+  height: fit-content;
+  padding-bottom: 50px;
+}
+.our-service-title {
+  text-align: center;
+  padding-top: 30px;
+}
+.our-service-title .spans {
+  font-family: "Poppins";
+  font-weight: 600;
+  color: #727374;
+}
+
+.our-service-title h1 {
+  font-family: "Darker Grotesque";
+  font-weight: 900;
+  font-size: 60px;
+  padding: 10px
+}
+
+.service-container {
+  display: flex;
+  justify-content:space-around;
+  flex-wrap: wrap;
+  height: fit-content;
+  padding-left: 40px;
+    padding-right: 40px;
+    gap: 20px;
+}
+
+.service-card {
+  width: 250px;
+  height: 300px;
+  background-color: #fcfbf7;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.service-card a {
+  text-decoration: none;
+  color: inherit; /* agar warna teks tetap sama */
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: white;
+}
+
+.service-card .service-card-title {
+  font-family: "Darker Grotesque", sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  color: #3d3e40;
+  margin-top: 10px;
+}
+.service-card .service-card-desc {
+  margin-top: 10px;
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #848687;
+}
+
+@media screen and (max-width: 800px) {
+  .service-card {
+    margin-left: 0;
+    margin-bottom: 50px;
+  }
+}

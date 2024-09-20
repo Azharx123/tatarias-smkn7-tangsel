@@ -1,0 +1,185 @@
+:root {
+  --primary-color: #ff33fc;
+  --secondary-color: #34364a;
+  --background-color: #fcfbf7;
+  --text-light-color: #7b7b80;
+  --font-title: "Darker Grotesque", sans-serif;
+  --font-body: "Poppins", sans-serif;
+}
+
+.explore-container {
+  background-color: var(--background-color);
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 100px;
+}
+
+.explore-title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 50px;
+  color: var(--secondary-color);
+  text-align: center;
+}
+
+.explore-title .highlight {
+  color: var(--primary-color);
+}
+
+.card-container-materi {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.card-materi {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative; /* Add this to make it a reference for absolutely positioned elements */
+  height: 100%; /* Ensure card takes full available height */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-materi:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.title-text-card {
+  flex-grow: 1; /* Ensures the content takes up available space */
+}
+
+.title-text-card h3 {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--secondary-color);
+  margin: 10px 0;
+}
+
+.title-text-card p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-light-color);
+}
+
+.bottom-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute; /* Position it absolutely */
+  bottom: 20px; /* Push it to the bottom */
+  left: 0;
+  right: 0;
+  padding: 0 20px; /* Ensure padding to keep alignment */
+}
+
+.play-button-explore .circle-explore {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.play-button-explore .circle-explore svg {
+  color: #ff33fc;
+  transition: background-color 0.3s;
+}
+
+@media screen and (max-width: 800px) {
+  .explore-container {
+    padding: 50px 20px;
+    margin-bottom: 40px;
+  }
+  .explore-title {
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .card-container-materi {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  .card-materi {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .image-container {
+    height: 180px;
+  }
+}
+
+.play-button-explore .circle-explore:hover {
+  background-color: #ff33fc; /* Optional background effect on hover */
+}
+
+.play-button-explore .circle-explore:hover svg {
+  color: white;
+}
+
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.video-content {
+  position: relative;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  font-size: 1.5rem;
+  background-color: #ffffff;
+  border: none;
+  width: 40px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
+  border-radius: 50%; /* Make it a circle */
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  color: #ff33fc;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #ffffff;
+  background-color: #ff33fc;
+}

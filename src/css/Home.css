@@ -1,0 +1,211 @@
+@keyframes shine {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+@keyframes borderGlow {
+  0% {
+    border-color: #ffffff;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+  }
+  50% {
+    border-color: #fe3efb;
+    box-shadow: 0 0 10px #fe3efb, 0 0 20px #fe3efb, 0 0 30px #fe3efb;
+  }
+  100% {
+    border-color: #ffffff;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+  }
+}
+
+@keyframes borderGlow2 {
+  0%, 100% {
+    border-color: #fe3efb;
+    box-shadow: 0 0 10px #fe3efb, 0 0 20px #fe3efb, 0 0 30px #fe3efb;
+  }
+  50% {
+    border-color: #ffffff;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+  }
+}
+
+@keyframes backgroundGlow {
+  0%, 100% { background-color: #000000; }
+  50% { background-color: #fe3efb; }
+}
+
+@keyframes changeColor {
+  0%, 100% { background-color: #000000; }
+  50% { background-color: #fe3efb; }
+}
+
+.welcome-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.welcome-container-1 img,
+.welcome-container-2 img,
+.welcome-container-3 img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.overlay-welcome-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.49),
+    rgba(29, 14, 27, 0.593),
+    rgba(255, 0, 230, 0.434)
+  );
+}
+
+.text-welcome-container {
+  position: absolute;
+  text-align: center;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+}
+
+.h1-welcome {
+  margin-bottom: 20px;
+  font-size: 50px;
+  font-family: "Darker Grotesque", sans-serif;
+  font-weight: 900;
+}
+
+.span-h1-welcome {
+  color: transparent;
+  background: linear-gradient(0deg, #ffffff 50%, rgb(255, 0, 230) 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: slideUp 3s ease-in-out infinite;
+}
+
+@keyframes slideUp {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 0% 100%; }
+  100% { background-position: 0% 200%; }
+}
+
+.p-welcome {
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ffffff, #fe3efb, #ffffff);
+  background-size: 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shine 2s infinite linear;
+  margin-bottom: 30px;
+}
+
+.button-welcome {
+  background-color: white;
+  color: #fe3efb;
+  border: none;
+  padding: 15px 35px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 0px transparent;
+}
+
+.button-welcome:hover {
+  animation: borderGlow 1.5s infinite ease-in-out;
+  color: #fe3efb;
+  background-color: white;
+}
+
+.button-welcome:active {
+  animation: backgroundGlow 1.5s infinite ease-in-out;
+  border-color: transparent;
+  color: #ffffff;
+  background-color: #fe3efb;
+}
+
+@media (max-width: 1200px) {
+  .h1-welcome {
+    font-size: 45px;
+  }
+  .p-welcome {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 900px) {
+  .h1-welcome {
+    font-size: 40px;
+  }
+  .p-welcome {
+    font-size: 16px;
+  }
+  .button-welcome {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .h1-welcome {
+    font-size: 32px;
+  }
+  .p-welcome {
+    font-size: 14px;
+  }
+  .button-welcome {
+    padding: 10px 25px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .h1-welcome {
+    font-size: 28px;
+  }
+  .p-welcome {
+    font-size: 12px;
+  }
+  .button-welcome {
+    padding: 8px 20px;
+    font-size: 11px;
+  }
+}
+
+/*Unused
+  margin-bottom: 50px;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: colorChange 5s infinite, lightReflection 3s infinite;
+  animation-fill-mode: forwards;
+}*/

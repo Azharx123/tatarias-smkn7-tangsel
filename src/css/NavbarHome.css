@@ -1,0 +1,92 @@
+/* Container utama navbar */
+.navbar-home {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.315);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  top: 0; 
+  right: 0;
+  padding: 3rem 1.5rem;
+}
+
+.navbar-art {
+  flex: 1;
+}
+
+.navbar-art img {
+  width: 20vh;
+  height: auto;
+}
+
+.left-art {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.right-art {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.navbar-logos {
+  position: absolute;
+  top: 50%;
+  left: 51.6%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-logos img {
+  width: 70px;
+  height: auto;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  .navbar-home {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .navbar-art img {
+    width: 15vh;
+  }
+
+  .navbar-logos {
+    position: static;
+    transform: none;
+    gap: 1rem;
+  }
+
+  .navbar-logos img {
+    width: 50px;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+  .navbar-home {
+    padding: 0.5rem;
+  }
+
+  .navbar-art img {
+    width: 10vh;
+  }
+
+  .navbar-logos img {
+    width: 40px;
+  }
+
+  .navbar-logos {
+    gap: 0.5rem;
+  }
+}

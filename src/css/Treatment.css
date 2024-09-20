@@ -1,0 +1,520 @@
+.treatment-container {
+  padding-top: 80px;
+  padding-bottom: 300px;
+  background-color: #fcfbf7;
+}
+.title-section {
+  text-align: center;
+}
+.tag-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 40px;
+  background-color: #ff33fc;
+  border-radius: 50px;
+
+  font-family: "Poppins";
+  font-size: 12px;
+  margin-top: 20px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.tag-badge p {
+  color: white;
+}
+
+.title-section h1 {
+  font-family: "Darker Grotesque";
+  font-weight: 900;
+  font-size: 55px;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 60px;
+  color: #ff33fc;
+}
+.icons {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+.title-section p {
+  font-family: "Poppins";
+  font-size: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 20px;
+  color: #858587;
+}
+
+.created-container {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 50px;
+}
+.created {
+  display: flex;
+
+  margin-left: 40px;
+  align-items: center;
+}
+
+.main-hairstyling {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.main-hairstyling .card-list-video {
+  margin-left: 30px;
+  background-color: white;
+
+  width: 20%;
+
+  border-radius: 20px;
+}
+
+.card-list-video p {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 20px;
+  margin-left: 30px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.card-list-video .list-video {
+  height: 60px;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 20px;
+  background-color: #f1ddf1;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+.list-video span {
+  font-family: "Poppins";
+
+  font-size: 15px;
+}
+
+.button-gabung {
+  background-color: #c41dd0;
+  border-radius: 20px;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  margin-top: 120px;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-gabung span {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 20px;
+  color: white;
+}
+
+.hairstyling-details {
+  margin-left: 80px;
+  padding-top: 100px;
+}
+
+.badge-container {
+  display: flex;
+}
+.course-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  background-color: #e7d9e6c2;
+  border-radius: 50px;
+
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-bottom: 50px;
+}
+
+.details-course-container {
+  padding-top: 20px;
+}
+
+.about-course h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 40px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+}
+
+.about-course p {
+  font-family: "Poppins";
+  font-size: 15px;
+  color: black;
+  margin-bottom: 20px;
+  max-width: 500px;
+  text-align: justify;
+}
+
+.designed-for {
+  margin-top: 50px;
+}
+
+.designed-for h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+}
+.list-for-container {
+  max-width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 20px;
+}
+.lists {
+  display: flex;
+  margin-right: 30px;
+  margin-top: 20px;
+}
+
+.lists span {
+  font-family: "Poppins";
+  font-size: 15px;
+  color: black;
+  margin-right: 20px;
+}
+
+.course-content h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 40px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+}
+
+.list-video-container {
+  background-color: white;
+  height: fit-content;
+  width: 700px;
+  border-radius: 30px;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+}
+.title-video {
+  display: flex;
+}
+
+.title-video .title {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 23px;
+  color: #c41dd0;
+  margin-left: 20px;
+  margin-top: 35px;
+}
+.title-video .title a {
+  text-decoration: none;
+  color: #c41dd0;
+}
+.title-video .rounded {
+  background-color: #e7d9e6c2;
+  border-radius: 30px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  align-items: center;
+}
+.title-video .roundedd {
+  border-radius: 30px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  align-items: center;
+}
+
+.rounded span {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 20px;
+  color: #c41dd0;
+}
+.roundedd span {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #af0ebb;
+}
+
+.list-video-courses-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-left: 45px;
+}
+.list-video-courses {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.list-video-courses span {
+  font-family: "Poppins";
+  font-size: 18px;
+  color: black;
+  margin-left: 10px;
+}
+
+.selected-tab {
+  background-color: #320730c2;
+  color: white;
+}
+.latihan-content h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 40px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+}
+
+.soal-containers {
+  background-color: white;
+  height: fit-content;
+  width: 700px;
+  border-radius: 30px;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+}
+.title .soalnya {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 20px;
+  color: #c41dd0;
+  margin-left: 10px;
+}
+.list-video-courses input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 0.15em;
+  margin-right: 0.5em;
+  border: 0.15em solid #c41dd0;
+  outline: none;
+  cursor: pointer;
+}
+
+.list-video-courses input[type="checkbox"]:checked {
+  background-color: #c41dd0;
+}
+
+@media screen and (max-width: 1500px) {
+  .card-list-video {
+    display: none;
+  }
+  .video-container img {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .video-container iframe {
+    width: 98%;
+  }
+
+  .hairstyling-details {
+    margin-left: 30px;
+  }
+  .created-container {
+    flex-direction: column;
+    padding-top: 20px;
+  }
+  .created {
+    display: block;
+    margin-left: 0px;
+  }
+  .list-video-container {
+    width: 90%;
+  }
+  .title-section h1 {
+    font-size: 65px;
+  }
+  .soal-containers {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about-course p {
+    max-width: 350px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .video-container img {
+    display: none;
+  }
+  .main-hairstyling {
+    padding-top: 20px;
+  }
+  .title-section h1 {
+    font-size: 45px;
+  }
+  .title-section p {
+    font-size: 15px;
+  }
+  .about-course p {
+    max-width: 300px;
+  }
+  .list-video-courses span {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .list-video-courses span {
+    font-size: 10px;
+  }
+}
+
+.button-container .button {
+  background-color: #ee33e5;
+  color: white;
+  border-radius: 20px;
+  padding: 20px 40px;
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.kompetensi-dasar {
+  margin-top: 50px;
+}
+
+.kompetensi-dasar h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+}
+.kompetensi-dasar h4 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 15px;
+  color: #350e38;
+  margin-bottom: 10px;
+  max-width: 400px;
+}
+.indikator-pencapaian {
+  margin-top: 50px;
+}
+
+.indikator-pencapaian h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+  max-width: 300px;
+}
+.indikator-pencapaian h4 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 15px;
+  color: #350e38;
+  margin-bottom: 10px;
+  max-width: 300px;
+}
+.materi-container {
+  margin-top: 50px;
+}
+
+.materi-container h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+}
+
+.materi-container p {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 15px;
+  color: #350e38;
+  margin-bottom: 10px;
+  max-width: 300px;
+  text-align: justify;
+}
+.materi-content {
+  margin-top: 50px;
+}
+
+.materi-content h2 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+  margin-top: 40px;
+  max-width: 300px;
+}
+
+.materi-content p {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 15px;
+  color: #350e38;
+  margin-bottom: 10px;
+  max-width: 300px;
+  text-align: justify;
+}
+
+.jawaban-container {
+  margin-top: 50px;
+}
+
+.jawaban-container h3 {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 30px;
+  color: #c41dd0;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.jawaban-container p {
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 15px;
+  color: #350e38;
+  margin-bottom: 10px;
+  max-width: 400px;
+  text-align: justify;
+}
