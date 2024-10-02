@@ -30,7 +30,7 @@ const Footer = () => {
       <div
         className="footer-content"
         data-aos="fade-up"
-        data-aos-offset="100"
+        data-aos-offset="50"
         data-aos-duration="500"
         data-aos-delay="100"
         data-aos-once="false"
@@ -67,6 +67,7 @@ const Footer = () => {
           data-aos-offset="50"
           data-aos-duration="500"
           data-aos-delay="100"
+          data-aos-once="false"
         >
           &copy; {currentYear} SMKN 7 TANGERANG SELATAN. All Rights Reserved.
         </p>

@@ -7,82 +7,82 @@ import "../css/Service.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-function Service() {
+const serviceData = [
+  {
+    id: 1,
+    title: "Tata Rias",
+    description:
+      "Seni dan teknik dalam menciptakan tampilan yang berbeda dan menarik melalui pengaturan, styling, dan perawatan rambut.",
+    image: Image1,
+    link: "/belajar-tatarias",
+  },
+  {
+    id: 2,
+    title: "Salon",
+    description:
+      "Salon adalah tempat yang menyediakan berbagai layanan kecantikan dan perawatan diri, seperti potong rambut, perawatan kulit, manikur, pedikur, dan pijat.",
+    image: Image2,
+    link: "/belajar-salon",
+  },
+  {
+    id: 3,
+    title: "Treatment",
+    description:
+      "Treatment di salon merupakan proses perawatan khusus yang ditawarkan untuk merawat dan memanjakan tubuh dan kulit.",
+    image: Image3,
+    link: "/belajar-treatment-rambut",
+  },
+  {
+    id: 4,
+    title: "Hairstyle",
+    description:
+      "Hairstyling adalah seni dan teknik dalam menciptakan tatanan rambut yang berbeda dan menarik.",
+    image: Image4,
+    link: "/belajar-hairstyling",
+  },
+];
+
+const ServiceCard = ({ title, description, image, link }) => (
+  <div className="service-card">
+    <a href={link}>
+      <div className="service-card-image">
+        <img src={image} alt={title} width={100} height={100} />
+      </div>
+      <h3 className="service-card-title">{title}</h3>
+      <p className="service-card-desc">{description}</p>
+    </a>
+  </div>
+);
+
+const Service = () => {
   useEffect(() => {
     AOS.init({});
-  });
+  }, []);
+
   return (
-    <div>
-      <div className="our-service-container">
-        <div
-          className="our-service-title"
-          data-aos="fade-up"
-          data-aos-offset="350"
-        >
-          <span className="spans">MATERI KAMI</span>
-          <h1 style={{ color: "#34364A" }}>
-            Materi Yang <span style={{ color: "#FF33FC" }}>Tersedia</span>
-          </h1>
-        </div>
-        <div
-          className="service-container"
-          data-aos-offset="350"
-          data-aos="slide-up"
-          data-aos-once="false"
-        >
-          <div className="service-card">
-            <a href="/belajar-tatarias">
-              <div className="service-card-image">
-                <img src={Image3} alt="" width={100} />
-              </div>
-              <div className="service-card-title">Tata Rias</div>
-              <div className="service-card-desc">
-                Seni dan teknik dalam menciptakan tampilan yang berbeda dan
-                menarik melalui pengaturan, styling, dan perawatan rambut.
-              </div>
-            </a>
-          </div>
-          <div className="service-card">
-            <a href="/belajar-salon">
-              <div className="service-card-image">
-                <img src={Image2} alt="" width={100} />
-              </div>
-              <div className="service-card-title">Salon</div>
-              <div className="service-card-desc">
-                Salon adalah tempat yang menyediakan berbagai layanan kecantikan
-                dan perawatan diri, seperti potong rambut, perawatan kulit,
-                manikur, pedikur, dan pijat
-              </div>
-            </a>
-          </div>
-          <div className="service-card">
-            <a href="/belajar-treatment-rambut">
-              <div className="service-card-image">
-                <img src={Image1} alt="" width={100} />
-              </div>
-              <div className="service-card-title">Treatment</div>
-              <div className="service-card-desc">
-                Treatment di salon merupakan proses perawatan khusus yang
-                ditawarkan untuk merawat dan memanjakan tubuh dan kulit.
-              </div>
-            </a>
-          </div>
-          <div className="service-card">
-            <a href="/belajar-hairstyling">
-              <div className="service-card-image">
-                <img src={Image4} alt="" width={100} />
-              </div>
-              <div className="service-card-title">Hairstyle</div>
-              <div className="service-card-desc">
-                Hairstyling adalah seni dan teknik dalam menciptakan tatanan
-                rambut yang berbeda dan menarik.
-              </div>
-            </a>
-          </div>
-        </div>
+    <section className="our-service-container">
+      <div
+        className="our-service-title"
+        data-aos="fade-up"
+        data-aos-offset="350"
+      >
+        <span className="subtitle">MATERI KAMI</span>
+        <h1>
+          Materi Yang <span className="highlight">Tersedia</span>
+        </h1>
       </div>
-    </div>
+      <div
+        className="service-container"
+        data-aos="slide-up"
+        data-aos-offset="350"
+        data-aos-once="false"
+      >
+        {serviceData.map((service) => (
+          <ServiceCard key={service.id} {...service} />
+        ))}
+      </div>
+    </section>
   );
-}
+};
 
 export default Service;

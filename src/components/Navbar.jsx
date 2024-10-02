@@ -8,7 +8,7 @@ import "../css/Navbar.css";
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [materiDropdown, setMateriDropdown] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -17,88 +17,90 @@ function Navbar() {
 
   const isActive = (path) => location.pathname === path;
 
-  const toggleDropdown = () => {
-    setMateriDropdown(!materiDropdown);
-  };
-
   useEffect(() => {
     const handleScroll = () => {
-      const navbar = document.querySelector(".navbar");
-      if (window.scrollY > 50) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
+      const isScrolled = window.scrollY > 50;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [scrolled]);
 
   const NavLinks = ({ mobile = false }) => (
-    <ul className={mobile ? "mobile-links" : "desktop-links"}>
+    <ul className={`nav-links ${mobile ? "mobile" : ""}`}>
       <li>
-        {isActive("/") ? (
-          <span className="disabled-link">Home</span>
-        ) : (
-          <a href="/">Home</a>
-        )}
+        <a href="/" className={isActive("/") ? "active-link" : ""}>
+          Home
+        </a>
       </li>
       <li>
-        {isActive("/about") ? (
-          <span className="disabled-link">About</span>
-        ) : (
-          <a href="/about">About</a>
-        )}
+        <a href="/about" className={isActive("/about") ? "active-link" : ""}>
+          About
+        </a>
       </li>
-      <li
-        className="materi"
-        onMouseEnter={() => setMateriDropdown(true)}
-        onMouseLeave={() => setMateriDropdown(false)}
-      >
+      <li className="dropdown">
         <span>Materi</span>
-        {materiDropdown && (
-          <ul className="dropdown-materi">
-            <li>
-              <a href="/belajar-tatarias">Tatarias</a>
-            </li>
-            <li>
-              <a href="/belajar-salon">Salon</a>
-            </li>
-            <li>
-              <a href="/belajar-treatment">Treatment</a>
-            </li>
-            <li>
-              <a href="/belajar-hairstyling">Hairstyle</a>
-            </li>
-          </ul>
-        )}
+        <ul className="dropdown-menu">
+          <li>
+            <a
+              href="/belajar-tatarias"
+              className={isActive("/belajar-tatarias") ? "active-link" : ""}
+            >
+              Tatarias
+            </a>
+          </li>
+          <li>
+            <a
+              href="/belajar-salon"
+              className={isActive("/belajar-salon") ? "active-link" : ""}
+            >
+              Salon
+            </a>
+          </li>
+          <li>
+            <a
+              href="/belajar-treatment"
+              className={isActive("/belajar-treatment") ? "active-link" : ""}
+            >
+              Treatment
+            </a>
+          </li>
+          <li>
+            <a
+              href="/belajar-hairstyling"
+              className={isActive("/belajar-hairstyling") ? "active-link" : ""}
+            >
+              Hairstyle
+            </a>
+          </li>
+        </ul>
       </li>
       <li>
-        {isActive("/#explore") ? (
-          <span className="disabled-link">Explore</span>
-        ) : (
-          <a href="#explore">Explore</a>
-        )}
+        <a
+          href="#explore"
+          className={isActive("/#explore") ? "active-link" : ""}
+        >
+          Explore
+        </a>
       </li>
     </ul>
   );
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
         <div className="navbar-logo">
-          <img
-            src={Image1}
-            alt="Logo UNJ"
-            width={70}
-            style={{ marginRight: 20 }}
-          />
+          <img src={Image1} alt="Logo UNJ" width={70} />
           <img src={Image2} alt="Logo SMK7" width={70} />
         </div>
-        <div className="navbar-menu">
+        {/* Desktop Navigation */}
+        <div className="navbar-menu desktop-menu">
           <NavLinks />
         </div>
+        {/* Mobile Menu Button */}
         <button
           className="mobile-menu-button"
           onClick={toggleMobileMenu}
@@ -111,11 +113,10 @@ function Navbar() {
           )}
         </button>
       </div>
-      {mobileMenuOpen && (
-        <div className="navbar-mobile">
-          <NavLinks mobile={true} />
-        </div>
-      )}
+      {/* Mobile Navigation */}
+      <div className={`navbar-mobile ${mobileMenuOpen ? "active" : ""}`}>
+        <NavLinks mobile={true} />
+      </div>
     </nav>
   );
 }

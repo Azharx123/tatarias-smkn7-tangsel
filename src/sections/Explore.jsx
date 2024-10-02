@@ -57,7 +57,9 @@ function Explore() {
   const handleDuration = (duration, index) => {
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60);
-    const formattedDuration = `${minutes} menit ${seconds < 10 ? "0" : ""}${seconds} detik`;
+    const formattedDuration = `${minutes} menit ${
+      seconds < 10 ? "0" : ""
+    }${seconds} detik`;
 
     // Store the duration for the specific video
     setVideoDurations((prevDurations) => ({

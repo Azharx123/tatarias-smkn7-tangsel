@@ -63,7 +63,7 @@ function Review({ scrollToService }) {
           data-aos-once="false"
         >
           <p>Dipercaya oleh 100K+ Siswa</p>
-          <h2>Join Our Supportive Community</h2>
+          <h2>Join Our<br></br>Supportive Community</h2>
           <p className="review-comment">
             Kami telah membantu lebih dari 100.000 siswa untuk memulai karir
             sebagai barber, beautician, dan terapis spa.

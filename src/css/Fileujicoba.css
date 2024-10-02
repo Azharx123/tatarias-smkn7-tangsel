@@ -1,0 +1,233 @@
+:root {
+  --primary-color: #fe3efb;
+  --secondary-color: #350e38;
+  --background-color: #f4f4f4;
+  --text-color: #333;
+  --font-primary: "Darker Grotesque", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
+}
+
+/* Global Styles */
+body {
+  font-family: var(--font-secondary);
+  color: var(--text-color);
+}
+
+/* Loading indicator for asynchronous operations */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation Keyframes */
+@keyframes slideUpHairstyling {
+  0%,
+  100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 200% 200%;
+  }
+}
+
+/* Hero Section */
+.hairstyling-hero {
+  position: relative;
+  min-height: 87vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hairstyling-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/images/Hairstying Background.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 50%;
+  text-align: left;
+  padding-left: 90px;
+}
+
+.hero-content h1 {
+  font-family: var(--font-secondary);
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 0 0 1rem;
+  color: transparent;
+  background: linear-gradient(45deg, rgb(199, 52, 175) 50%, #000000 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: slideUpHairstyling 5s ease-in-out infinite;
+}
+
+.hero-content p {
+  font-family: var(--font-secondary);
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    #000000,
+    var(--primary-color)
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 2s infinite linear;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  font-family: var(--font-secondary);
+  background-color: white;
+  color: var(--primary-color);
+  border: none;
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(254, 62, 251, 0.5);
+}
+
+.cta-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(254, 62, 251, 0.5);
+}
+
+.cta-button:active {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  transform: translateY(1px);
+}
+
+.hero-video {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 90px;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(254, 62, 251, 0.3);
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.video-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    #ffffff,
+    var(--primary-color)
+  );
+  z-index: -1;
+  filter: blur(10px);
+  animation: borderGlow 3s infinite alternate;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .hairstyling-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  .hero-content,
+  .hero-video {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .hero-content {
+    margin-bottom: 2rem;
+  }
+
+  .hairstyling-hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hairstyling-hero p {
+    font-size: 1.8rem;
+  }
+
+  .video-wrapper {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hairstyling-hero h1 {
+    font-size: 3rem;
+  }
+
+  .hairstyling-hero p {
+    font-size: 1.5rem;
+  }
+
+  .cta-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hairstyling-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hairstyling-hero p {
+    font-size: 1.3rem;
+  }
+}

@@ -8,6 +8,8 @@ import FotoSMK3 from "../assets/images/SMK-foto-3.png";
 import NavbarHome from "../components/NavbarHome";
 import Navbar from "../components/Navbar";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Footer from "../components/Footer";
 import Pengenalan from "../sections/Pengenalan";
 import Explore from "../sections/Explore";
@@ -15,91 +17,94 @@ import Service from "../sections/Service";
 import Review from "../sections/Review";
 import Contact from "../sections/Contact";
 
-function Home() {
-  useEffect(() => {
-    AOS.init({});
-  }, []);
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  fade: true,
+  cssEase: "linear",
+  arrows: false, // Menyembunyikan tombol panah
+  swipe: false, // Menonaktifkan swipe
+  pauseOnHover: false, // Menonaktifkan pause saat hover
+  pauseOnFocus: false, // Menonaktifkan pause saat fokus
+};
 
-  const [status, setStatus] = useState(true);
-  const [buttonClicked, setButtonClicked] = useState(false);
+const WelcomeSection = ({ onStartLearning }) => (
+  <div
+    className="welcome-section"
+    data-aos="fade-up"
+    data-aos-offset="500"
+    data-aos-duration="500"
+  >
+    <Slider {...sliderSettings}>
+      {[FotoSMK1, FotoSMK2, FotoSMK3].map((foto, index) => (
+        <div key={index} className="welcome-slide">
+          <img src={foto} alt={`SMK Foto ${index + 1}`} />
+        </div>
+      ))}
+    </Slider>
+    <div className="welcome-content">
+      <h1 className="welcome-title">
+        Selamat datang di <span className="highlight">Barmodule</span>
+      </h1>
+      <p className="welcome-description">
+        Mari belajar bersama kami dan wujudkan mimpi mu
+      </p>
+      <button className="welcome-button" onClick={onStartLearning}>
+        Mulai Belajar
+      </button>
+    </div>
+  </div>
+);
+
+const MainContent = ({ scrollToService, serviceRef }) => (
+  <>
+    <Navbar />
+    <Pengenalan scrollToService={scrollToService} />
+    <div ref={serviceRef}>
+      <Service />
+    </div>
+    <Explore />
+    <Review scrollToService={scrollToService} />
+    <Contact />
+  </>
+);
+
+function Home() {
+  const [showWelcome, setShowWelcome] = useState(true);
   const serviceRef = useRef(null);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-  };
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   const scrollToService = () => {
     serviceRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div>
-      {status ? (
-        <div>
-          <NavbarHome />
-          <div
-            className="welcome-container"
-            data-aos="fade-up"
-            data-aos-offset="500"
-            data-aos-duration="500"
-          >
-            <Slider {...settings}>
-              <div className="welcome-container-1">
-                <img src={FotoSMK1} alt="SMK Foto 1" />
-              </div>
-              <div className="welcome-container-2">
-                <img src={FotoSMK2} alt="SMK Foto 2" />
-              </div>
-              <div className="welcome-container-3">
-                <img src={FotoSMK3} alt="SMK Foto 3" />
-              </div>
-            </Slider>
-            <div className="overlay-welcome-container"></div>
-            <div className="text-welcome-container">
-              <link
-                href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;700;900&family=Poppins:wght@500;600&display=swap"
-                rel="stylesheet"
-              />
-              <h1 className="h1-welcome">
-                Selamat datang di{" "}
-                <span className="span-h1-welcome">Barmodule</span>
-              </h1>
-              <p className="p-welcome">
-                Mari belajar bersama kami dan wujudkan mimpi mu
-              </p>
-              <button
-                className="button-welcome"
-                onClick={() => {
-                  setStatus(false);
-                  setButtonClicked(true); // Ubah state saat tombol diklik
-                }}
-              >
-                Mulai Belajar
-              </button>
-            </div>
-          </div>
-     <Footer/>
-        </div>
-      ) : (
+    <div className="home-component">
+      {showWelcome ? (
         <>
-          <Navbar />
-          <Pengenalan scrollToService={scrollToService} />
-          <div ref={serviceRef}>
-            <Service />
-          </div>
-          <Explore />
-          <Review scrollToService={scrollToService} />
-          <Contact />
-          <Footer />
+          <NavbarHome />
+          <WelcomeSection onStartLearning={() => setShowWelcome(false)} />
         </>
+      ) : (
+        <MainContent
+          scrollToService={scrollToService}
+          serviceRef={serviceRef}
+        />
       )}
+      <Footer />
     </div>
   );
 }
+
 export default Home;
