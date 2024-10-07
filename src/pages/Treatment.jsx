@@ -1,956 +1,1643 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import "../css/Treatment.css";
-import Imagez from "../assets/images/bgbg.jpeg";
-import { CgCalendarDates, CgCheckO } from "react-icons/cg";
-import { BsFillPlayCircleFill, BsFillCheckCircleFill } from "react-icons/bs";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
-import Swal from "sweetalert2";
+import ReactQuill from "react-quill";
+import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import {
+  BsFillPlayCircleFill,
+  BsFillCheckCircleFill,
+  BsFillPauseFill,
+} from "react-icons/bs";
+import { FaScissors, FaRuler, FaSprayCan } from "react-icons/fa6";
+import { PiHairDryerFill } from "react-icons/pi";
+import YouTube from "react-youtube";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import "react-quill/dist/quill.snow.css";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Komponen1 from "../assets/images/materi/komponen/nomor1.jpg";
-import Komponen2 from "../assets/images/materi/komponen/nomor2.jpg";
-import Komponen3 from "../assets/images/materi/komponen/nomor3.jpg";
-import Komponen4 from "../assets/images/materi/komponen/nomor4.jpg";
-import Langkah1 from "../assets/images/materi/langkah/nomr1.jpg";
-import Langkah2 from "../assets/images/materi/langkah/nomor2.png";
-import Langkah3 from "../assets/images/materi/langkah/nomor3.jpg";
-import Langkah4 from "../assets/images/materi/langkah/nomor4.jpg";
-import Langkah5 from "../assets/images/materi/langkah/nomor5.png";
-import Langkah6 from "../assets/images/materi/langkah/nomor6.jpeg";
-import Gunting1 from "../assets/images/materi/gunting/nomor1.png";
-import Gunting2 from "../assets/images/materi/gunting/nomor2.png";
-import Gunting3 from "../assets/images/materi/gunting/nomor3.png";
-import Gunting4 from "../assets/images/materi/gunting/nomor4.png";
-import Gunting5 from "../assets/images/materi/gunting/nomor5.png";
-import Alat1 from "../assets/images/materi/alat/nomor1.png";
-import Alat2 from "../assets/images/materi/alat/nomor2.png";
-import Alat3 from "../assets/images/materi/alat/nomor3.png";
-import Alat4 from "../assets/images/materi/alat/nomor4.png";
-import Alat5 from "../assets/images/materi/alat/nomor5.png";
-import Alat6 from "../assets/images/materi/alat/nomor6.png";
-import Alat7 from "../assets/images/materi/alat/nomor7.png";
-import Alat8 from "../assets/images/materi/alat/nomor8.png";
-import Alat9 from "../assets/images/materi/alat/nomor9.png";
-import Alat10 from "../assets/images/materi/alat/nomor10.png";
-import Alat11 from "../assets/images/materi/alat/nomor11.png";
-import Alat12 from "../assets/images/materi/alat/nomor12.png";
-import Klien from "../assets/images/materi/klien.png";
+import "react-tabs/style/react-tabs.css";
+import "../css/Treatment.css";
 
-function HairStyling() {
-  const [tabIndex, setTabIndex] = useState(0);
-  const [isKumpul, setIskumpul] = useState(false);
+import TreatmentBackground from "../assets/images/Class Treatment.png";
+import TreatmentImage from "../assets/images/Treatment Material.png";
+import FotoRambut from "../assets/images/Foto Rambut.png";
+import HairPhoto from "../assets/images/Uniform Layer.png";
+import Component1 from "../assets/images/komponen1.jpg";
+import Component2 from "../assets/images/komponen2.jpg";
+import Component3 from "../assets/images/komponen3.jpg";
+import Component4 from "../assets/images/komponen4.jpg";
+import Step1 from "../assets/images/langkah1.jpg";
+import Step2 from "../assets/images/langkah2.png";
+import Step3 from "../assets/images/langkah3.jpg";
+import Step4 from "../assets/images/langkah4.jpg";
+import Step5 from "../assets/images/langkah5.png";
+import Step6 from "../assets/images/langkah6.jpeg";
+import foto1 from "../assets/images/nomor1.png";
+import Bahagia from "../assets/images/Pribadi Bahagia.png";
+import FotoKlien from "../assets/images/klien.png";
+import PilihanGanda from "../assets/images/Sudut 90.png";
+import SalonSoal from "../assets/images/SalonSoal.png";
+
+const Treatment = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const [isHeroPlaying, setIsHeroPlaying] = useState(false);
+  const [heroDuration, setHeroDuration] = useState(0);
+  const [heroCurrentTime, setHeroCurrentTime] = useState(0);
+  const [heroVolume, setHeroVolume] = useState(100);
+  const [isHeroMuted, setIsHeroMuted] = useState(false);
+  const [isHeroVideoReady, setIsHeroVideoReady] = useState(false);
+  const heroVideoRef = useRef(null);
+  const progressRef = useRef(null);
+  const timeUpdateIntervalRef = useRef(null);
+  const [activeVideos, setActiveVideos] = useState({});
+  const [mcAnswers, setMcAnswers] = useState({});
+  const [essayAnswers, setEssayAnswers] = useState({});
+  const [showResults, setShowResults] = useState(false);
+  const [score, setScore] = useState(0);
+  const [errors, setErrors] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("");
+  const resultsRef = useRef(null);
+  const exerciseSectionRef = useRef(null);
+
+  const stopTimeUpdate = useCallback(() => {
+    if (timeUpdateIntervalRef.current) {
+      clearInterval(timeUpdateIntervalRef.current);
+      timeUpdateIntervalRef.current = null;
+    }
+  }, []);
+
+  const startTimeUpdate = useCallback(() => {
+    stopTimeUpdate();
+    timeUpdateIntervalRef.current = setInterval(() => {
+      if (heroVideoRef.current) {
+        setHeroCurrentTime(heroVideoRef.current.getCurrentTime());
+      }
+    }, 1000);
+  }, [stopTimeUpdate]);
+
+  useEffect(() => {
+    const onPlayerReady = (event) => {
+      setHeroDuration(event.target.getDuration());
+      setIsHeroVideoReady(true);
+    };
+
+    const onPlayerStateChange = (event) => {
+      if (event.data === window.YT.PlayerState.PLAYING) {
+        setIsHeroPlaying(true);
+        startTimeUpdate();
+      } else if (event.data === window.YT.PlayerState.PAUSED) {
+        setIsHeroPlaying(false);
+        stopTimeUpdate();
+      }
+    };
+
+    const initializeYouTubePlayer = () => {
+      heroVideoRef.current = new window.YT.Player("youtube-player", {
+        height: "100%",
+        width: "100%",
+        videoId: "mHQFy8IZPLY",
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          fs: 0,
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+        },
+      });
+    };
+
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = initializeYouTubePlayer;
+
+    return () => {
+      window.onYouTubeIframeAPIReady = null;
+      stopTimeUpdate();
+    };
+  }, [startTimeUpdate, stopTimeUpdate]);
+
+  const handleHeroPlayPause = useCallback(() => {
+    if (!heroVideoRef.current) return;
+
+    if (isHeroPlaying) {
+      heroVideoRef.current.pauseVideo();
+    } else {
+      heroVideoRef.current.playVideo();
+      // Pause all other videos
+      setActiveVideos({});
+    }
+    setIsHeroPlaying(!isHeroPlaying);
+  }, [isHeroPlaying]);
+
+  const handleHeroProgressChange = useCallback((e) => {
+    if (!heroVideoRef.current) return;
+
+    const newTime = e.target.value;
+    heroVideoRef.current.seekTo(newTime);
+    setHeroCurrentTime(newTime);
+  }, []);
+
+  const handleHeroVolumeChange = useCallback((e) => {
+    if (!heroVideoRef.current) return;
+
+    const newVolume = e.target.value;
+    heroVideoRef.current.setVolume(newVolume);
+    setHeroVolume(newVolume);
+    setIsHeroMuted(newVolume === 0);
+  }, []);
+
+  const toggleHeroMute = useCallback(() => {
+    if (!heroVideoRef.current) return;
+
+    if (isHeroMuted) {
+      heroVideoRef.current.unMute();
+      heroVideoRef.current.setVolume(heroVolume);
+    } else {
+      heroVideoRef.current.mute();
+    }
+    setIsHeroMuted(!isHeroMuted);
+  }, [isHeroMuted, heroVolume]);
+
+  const formatTime = useCallback((time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  }, []);
+
+  const scrollToActiveVideo = useCallback(() => {
+    const activeVideoKey = Object.keys(activeVideos).find(
+      (key) => activeVideos[key]
+    );
+    if (activeVideoKey) {
+      const activeElement = document.querySelector(
+        `[data-video-key="${activeVideoKey}"]`
+      );
+      if (activeElement) {
+        activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    } else if (isHeroPlaying) {
+      const heroSection = document.querySelector(".treatment-hero");
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [activeVideos, isHeroPlaying]);
+
+  const toggleVideo = useCallback(
+    (section, index, videoIndex = null) => {
+      if (isHeroPlaying) {
+        handleHeroPlayPause();
+      }
+
+      setActiveVideos((prev) => {
+        const videoKey =
+          videoIndex !== null
+            ? `${section}-${index}-${videoIndex}`
+            : `${section}-${index}`;
+
+        if (prev[videoKey]) {
+          return {};
+        }
+
+        if (Object.values(prev).some(Boolean)) {
+          scrollToActiveVideo();
+          return prev;
+        }
+
+        return { [videoKey]: true };
+      });
+    },
+    [isHeroPlaying, handleHeroPlayPause, scrollToActiveVideo]
+  );
+
+  useEffect(() => {
+    return () => {
+      setActiveVideos({});
+    };
+  }, []);
+
+  const VideoPlayer = ({ src, isActive, onPlay, onPause }) => {
+    const videoId = src.split("v=")[1]?.split("&")[0] || src.split("/").pop();
+
+    if (!isActive) return null;
+
+    return (
+      <YouTube
+        videoId={videoId}
+        opts={{
+          width: "100%",
+          height: "315",
+          playerVars: {
+            autoplay: 1,
+          },
+        }}
+        onPlay={onPlay}
+        onPause={onPause}
+        onEnd={() => setActiveVideos({})}
+      />
+    );
+  };
+
+  const scrollToSection = (sectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const renderVideoSection = (videos, sectionKey) => {
+    return (
+      <div className="video-list">
+        {videos.map((video, index) => {
+          const videoKey = `${sectionKey}-${index}`;
+          const isVideoActive = activeVideos[videoKey];
+          const isAnyVideoPlaying =
+            isHeroPlaying || Object.values(activeVideos).some(Boolean);
+          const isOtherVideoPlaying = isAnyVideoPlaying && !isVideoActive;
+
+          return (
+            <div key={index} className="video-item" data-video-key={videoKey}>
+              <div
+                className={`video-title-wrapper ${
+                  isOtherVideoPlaying ? "disabled" : ""
+                }`}
+                onClick={() => {
+                  if (isOtherVideoPlaying) {
+                    scrollToActiveVideo();
+                  } else {
+                    toggleVideo(sectionKey, index);
+                  }
+                }}
+              >
+                {isVideoActive ? (
+                  <BsFillPauseFill className="play-icon" />
+                ) : (
+                  <BsFillPlayCircleFill className="play-icon" />
+                )}
+                <span className="video-title">
+                  {isOtherVideoPlaying
+                    ? "Matikan video lain terlebih dahulu"
+                    : video.title}
+                </span>
+              </div>
+              <VideoPlayer
+                src={video.src}
+                isActive={isVideoActive}
+                onPlay={() => {
+                  if (isHeroPlaying) {
+                    handleHeroPlayPause();
+                  }
+                }}
+                onPause={() => {
+                  setActiveVideos((prev) => ({
+                    ...prev,
+                    [videoKey]: false,
+                  }));
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const handleMCAnswer = (questionIndex, answerIndex) => {
+    setMcAnswers((prev) => {
+      const newAnswers = { ...prev };
+      if (newAnswers[questionIndex] === answerIndex) {
+        delete newAnswers[questionIndex];
+      } else {
+        newAnswers[questionIndex] = answerIndex;
+      }
+      return newAnswers;
+    });
+    setErrors((prev) => ({ ...prev, [`mc-${questionIndex}`]: null }));
+  };
+
+  const handleEssayAnswer = (questionIndex, content) => {
+    setEssayAnswers((prev) => ({ ...prev, [questionIndex]: content }));
+    setErrors((prev) => ({ ...prev, [`essay-${questionIndex}`]: null }));
+  };
+
+  const calculateScore = () => {
+    let totalScore = 0;
+    const mcQuestions =
+      treatments.find((style) => style.title === "Latihan")?.questions
+        ?.multipleChoice || [];
+    const essayQuestions =
+      treatments.find((style) => style.title === "Latihan")?.questions?.essay ||
+      [];
+
+    mcQuestions.forEach((q, index) => {
+      if (mcAnswers[index] === q.answer) totalScore += 1;
+    });
+
+    essayQuestions.forEach((q, index) => {
+      const answer = essayAnswers[index] || "";
+      const matchedKeywords = q.keyWords.filter((keyword) =>
+        answer.toLowerCase().includes(keyword.toLowerCase())
+      );
+      totalScore += matchedKeywords.length / q.keyWords.length;
+    });
+
+    const percentageScore =
+      (totalScore / (mcQuestions.length + essayQuestions.length)) * 100;
+    setScore(percentageScore.toFixed(2));
+  };
+
+  const validateAnswers = () => {
+    const newErrors = {};
+    const mcQuestions =
+      treatments.find((style) => style.title === "Latihan")?.questions
+        ?.multipleChoice || [];
+    const essayQuestions =
+      treatments.find((style) => style.title === "Latihan")?.questions?.essay ||
+      [];
+
+    mcQuestions.forEach((_, index) => {
+      if (mcAnswers[index] === undefined) {
+        newErrors[`mc-${index}`] = "Harap pilih salah satu jawaban.";
+      }
+    });
+
+    essayQuestions.forEach((_, index) => {
+      if (!essayAnswers[index] || essayAnswers[index].trim() === "") {
+        newErrors[`essay-${index}`] = "Harap isi jawaban essay.";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateAnswers()) {
+      setShowPopup(true);
+      setPopupMessage("Apakah yakin ingin mengumpulkan?");
+      setPopupType("confirm");
+    } else {
+      setShowPopup(true);
+      setPopupMessage("Harap mengisi seluruh jawaban");
+      setPopupType("error");
+      scrollToFirstUnanswered();
+    }
+  };
+
+  const handleConfirmSubmit = () => {
+    calculateScore();
+    setShowResults(true);
+    setShowPopup(false);
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
+  const handleReset = () => {
+    setShowPopup(true);
+    setPopupMessage("Mau reset soal?");
+    setPopupType("reset");
+  };
+
+  const handleConfirmReset = () => {
+    setMcAnswers({});
+    setEssayAnswers({});
+    setShowResults(false);
+    setScore(0);
+    setErrors({});
+    setShowPopup(false);
+    scrollToExerciseSection();
+  };
+
+  const scrollToFirstUnanswered = () => {
+    const firstUnansweredQuestion = document.querySelector(
+      ".question.unanswered"
+    );
+    if (firstUnansweredQuestion) {
+      firstUnansweredQuestion.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToExerciseSection = () => {
+    if (exerciseSectionRef.current) {
+      exerciseSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  const renderClassDescription = (classInfo) => (
+    <div className="treatment-content">
+      <img src={classInfo.image} alt={classInfo.title} />
+      <div className="treatment-info">
+        <h3>{classInfo.title}</h3>
+        {Array.isArray(classInfo.description) ? (
+          <ul>
+            {classInfo.description.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{classInfo.description}</p>
+        )}
+      </div>
+    </div>
+  );
+
+  const renderMultiSectionContent = (title, sections) => (
+    <div className="multi-section-content">
+      <h3>{title}</h3>
+      {sections.map((section, index) => (
+        <div key={index} className="content-container">
+          <img src={section.image} alt={section.subTitle} />
+          <div className="content-info">
+            <h4>{section.subTitle}</h4>
+            <p>{section.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderFlexibleContentSection = (title, contents) => (
+    <section className="flexible-content-section">
+      <h3>{title}</h3>
+      {contents.map((content, index) => (
+        <div key={index} className="flexible-content-item">
+          <h4>{content.subtitle}</h4>
+          {content.subtitle === "Persiapan Pribadi" && (
+            <img
+              src={Bahagia}
+              alt="Persiapan Pribadi"
+              className="content-image"
+            />
+          )}
+          {content.subtitle === "Persiapan Klien" ? (
+            <div className="content-with-image">
+              <img
+                src={FotoKlien}
+                alt="Persiapan Klien"
+                className="content-image"
+              />
+              <div>
+                {Array.isArray(content.description) ? (
+                  content.description.map((paragraph, pIndex) => (
+                    <p key={pIndex}>{paragraph}</p>
+                  ))
+                ) : (
+                  <p>{content.description}</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <>
+              {Array.isArray(content.description) ? (
+                content.description.map((paragraph, pIndex) => (
+                  <p key={pIndex}>{paragraph}</p>
+                ))
+              ) : (
+                <p>{content.description}</p>
+              )}
+            </>
+          )}
+          {content.items && (
+            <ul>
+              {content.items.map((item, itemIndex) => (
+                <li key={itemIndex}>{item}</li>
+              ))}
+            </ul>
+          )}
+          {content.categories && (
+            <div className="tool-categories">
+              {content.categories.map((category, catIndex) => (
+                <div key={catIndex} className="tool-category">
+                  <h5>{category.title}</h5>
+                  {category.description && <p>{category.description}</p>}
+                  <div className="tool-items">
+                    {category.items.map((item, itemIndex) => (
+                      <div key={itemIndex} className="tool-item">
+                        <img src={item.image} alt={item.subtitle} />
+                        <div className="tool-info">
+                          <h6>{item.subtitle}</h6>
+                          <p>{item.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </section>
+  );
+
+  const services = [
+    {
+      title: "Pengenalan",
+      icon: <CgCalendarDates />,
+      descriptions: [
+        "Website kami menyediakan semua yang kamu butuhkan untuk belajar hairstyling secara mandiri. Mulai dari video tutorial berkualitas tinggi, panduan langkah demi langkah, hingga forum diskusi yang aktif. Semua dikemas dalam satu platform yang mudah diakses dan dinavigasi.",
+      ],
+      details: [
+        {
+          title: "Dibuat untuk",
+          items: [
+            "Orang yang ingin belajar Teknik Pangkas.",
+            "Pemula yang ingin belajar Teknik Uniform Layer.",
+            "Orang yang ingin belajar hal baru.",
+          ],
+        },
+        {
+          title: "Kompetensi Dasar",
+          items: [
+            "Menerapkan pemangkasan rambut Teknik uniform layer.",
+            "Menganalisis berbagai jenis kulit dan bentuk wajah untuk menentukan teknik riasan yang sesuai.",
+            "Memilih produk kosmetik yang tepat sesuai dengan jenis kulit, warna kulit, dan tujuan riasan.",
+            "Merawat peralatan dan bahan riasan agar tetap bersih dan awet.",
+          ],
+        },
+        {
+          title: "Indikator Pencapaian Kompetensi",
+          items: [
+            "Menguraikan konsep dasar pemangkasan rambut Teknik uniform layer.",
+            "Memilih alat pemangkasan rambut sesuai fungsi dan cara penggunaan alat.",
+            "Menganalisis Teknik pemangkasan rambut Teknik uniform layer sesuai dengan konsep pemangkasan.",
+            "Merencanakan pemangkasan rambut Teknik uniform layer sesuai dengan prosedur.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Apa yang dibutuhkan",
+      icon: <CgCheckO />,
+      descriptions: [
+        "Untuk mengikuti kursus ini dengan efektif, Anda akan memerlukan beberapa peralatan dan bahan penting. Berikut adalah daftar lengkap yang akan membantu Anda mempersiapkan diri untuk memulai perjalanan belajar hairstyling Anda.",
+      ],
+      details: [
+        { icon: <FaScissors />, text: "Gunting profesional" },
+        { icon: <FaRuler />, text: "Sisir dan sikat rambut" },
+        {
+          icon: <FaSprayCan />,
+          text: "Produk styling (gel, mousse, hairspray)",
+        },
+        { icon: <PiHairDryerFill />, text: "Pengering rambut" },
+        { icon: <BsFillCheckCircleFill />, text: "Cape potong rambut" },
+        { icon: <BsFillCheckCircleFill />, text: "Botol semprot" },
+        { icon: <BsFillCheckCircleFill />, text: "Handuk kecil" },
+        {
+          icon: <BsFillCheckCircleFill />,
+          text: "Mannequin head untuk latihan",
+        },
+      ],
+    },
+    {
+      title: "Video",
+      icon: <BsFillPlayCircleFill />,
+      descriptions: [
+        "Dibawah ini adalah video yang wajib ditonton untuk pembelajaran yang memadai",
+      ],
+      videos: [
+        {
+          title: "Pengenalan Alat dan Bahan",
+          src: "https://www.youtube.com/watch?v=c96leQ_fRII",
+          type: "youtube",
+        },
+        {
+          title: "Dasar-dasar Pemangkasan",
+          src: "https://youtu.be.com/watch?v=7RGiRqOVxeo",
+          type: "youtube",
+        },
+      ],
+    },
+  ];
+
+   const flexibleContent = {
+     title: "Persiapan Kerja",
+     contents: [
+       {
+         subtitle: "Persiapan Area Kerja",
+         description:
+           "Kondisi ruangan dalam keadaan nyaman, bersih dari kotoran dan debu",
+       },
+       {
+         subtitle: "Persiapan Alat dan Bahan",
+         description:
+           "Berbagai alat pemangkasan rambut dapat digunakan, dengan ketentuan memenuhi standar minimal kebutuhan, kelayakan dan aman digunakan, contohnya:",
+         categories: [
+           {
+             title: "Pertama",
+             description: "Gunting Pangkas Bilah Satu",
+             items: [
+               {
+                 subtitle: "Bentuk 4 1/2",
+                 image: foto1,
+                 description:
+                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
+               },
+               {
+                 subtitle: "Bentuk 5",
+                 image: foto1,
+                 description:
+                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
+               },
+               {
+                 subtitle: "Bentuk 5 1/2",
+                 image: foto1,
+                 description:
+                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
+               },
+             ],
+           },
+           {
+             title: "Kedua",
+
+             description: "Gunting Penipis",
+             items: [
+               {
+                 subtitle: "Bentuk Satu Bilah",
+                 image: foto1,
+                 description:
+                   "Memangkas garis pemangkasan lengkung karena memiliki gigi yang lebih panjang.",
+               },
+               {
+                 subtitle: "Bentuk Dua Bilah",
+                 image: foto1,
+                 description: "Memangkas garis pemangkasan lurus",
+               },
+             ],
+           },
+           {
+             title: "Ketiga",
+             description: "Alat Penunjang Pemangkasan",
+             items: [
+               {
+                 subtitle: "Cape Penyampoan",
+                 image: foto1,
+                 description:
+                   "Melindungi baju klien dari percikan air saat pencucian rambut",
+               },
+               {
+                 subtitle: "Cape Pangkas",
+                 image: foto1,
+                 description:
+                   "Menghalangi rambut yang telah dipangkas agar tidak menempel pada baju atau kulit klien",
+               },
+               {
+                 subtitle: "Handuk Kecil",
+                 image: foto1,
+                 description:
+                   "Mengeringkan rambut dan melindungi bagian tengkuk klien dari pecikan kosmetik",
+               },
+               {
+                 subtitle: "Sisir Besar",
+                 image: foto1,
+                 description:
+                   "Menyisir rambut secara umum setelah memncuci rambut",
+               },
+               {
+                 subtitle: "Sisir Berekor",
+                 image: foto1,
+                 description: "Memudahkan pembagian (parting) rambut",
+               },
+               {
+                 subtitle: "Sisir Pangkas",
+                 image: foto1,
+                 description: "Alat bantu pemangkasan",
+               },
+               {
+                 subtitle: "Sisir Leher",
+                 image: foto1,
+                 description:
+                   "Membersihkan leher dan bahu dari sisa potongan rambut",
+               },
+               {
+                 subtitle: "Sisir Blow",
+                 image: foto1,
+                 description:
+                   "Membentuk volume pada rambut selama proses penataan Teknik blowdryer",
+               },
+               {
+                 subtitle: "Jepit Bergerigi",
+                 image: foto1,
+                 description: "Untuk menjepit rambut yang telah di parting",
+               },
+               {
+                 subtitle: "Jepit Bebek",
+                 image: foto1,
+                 description:
+                   "Untuk menejpit dan membagi section rambut yang akan dipangkas",
+               },
+               {
+                 subtitle: "Water Sprayer",
+                 image: foto1,
+                 description:
+                   "Membasahi rambut agar ujung rambut tetap dalam keadaan basah saat pemangkasan",
+               },
+               {
+                 subtitle: "Hair Dryer",
+                 image: foto1,
+                 description:
+                   "Mengeringkan rambut dengan suhuh yag dapat diatur sesuai kebutuhan",
+               },
+             ],
+           },
+         ],
+       },
+       {
+         subtitle: "Persiapan Pribadi",
+         description:
+           "Seorang hairstylist harus memperhatikan hal-hal berikut:",
+         items: [
+           "Mengenakan riasan wajah sehingga wajah tampak segar dan cerah",
+           "Rambut ditata rapi dan tidak mengganggu pekerjaan",
+           "Memakai baju kerja tidak kusut, licin dan bersih/tidak bernoda, tidak terlalu sempit",
+           "Mengenakan sepatu dengan hak rendah dan terbuat dari karet agar tidak licin",
+           "Tidak mengenakan perhiasan yang menyolok kecuali jam tangan",
+           "Menjaga bau mulut dan bau badan sehingga kebersihan gigi dan badan harus dijaga",
+           "Jaga kebersihan kuku dan kulit",
+           "Tampilkan ekspresi wajah yang ramah, dan sikap selalu ingin membantu pelanggan",
+           "Jaga suara bicara dan komunikasi dengan sopan",
+           "Siap mental dan penuh percaya diri",
+         ],
+       },
+       {
+         subtitle: "Persiapan Klien",
+         description: [
+           "Persiapan klien dilakukan untuk meingkatkan daya Tarik dan kenyamanan selama pelayanan pemangkasan. Berikan alas bahu dan pasangkan cape pemangkasan yang bersih dan menutup baju klien dengan sempurna, sehingga baju klien tidak kotor oleh serpihan potongan rambut.",
+           "Setelah menyelasikan Tindakan pemangkasan, kegiatan berkemas dilakukan untuk merapihkan Kembali area kerja sehingga bersih, kegiatan yang dilakukan dalam berkemas seperti :",
+         ],
+         items: [
+           "Membersihkan alat-alat yang sudah dipakai, simpan kembali pada tempatnya",
+           "Menyimpan kosmetik pada tempatnya.",
+           "Membersihkan ruangan, membuang sampah pada tempatnya",
+           "Mematikan semua aliran listrik (apabila sudah tidak digunakan)",
+         ],
+       },
+     ],
+   };
+
+  const treatments = [
+    {
+      title: "Deskripsi Kelas",
+      image: TreatmentImage,
+      description: "Perawatan Rambut Intensif",
+      content: {
+        ringkasan:
+          "Kelas ini menyajikan pengetahuan komprehensif tentang teknik pemangkasan rambut Uniform Layer, mulai dari konsep dasar hingga prosedur praktis. Peserta akan mempelajari definisi, tujuan, komponen, dan langkah-langkah detail dalam melakukan pemangkasan Uniform Layer.",
+        tujuan: [
+          "Memahami konsep dan prinsip dasar teknik Uniform Layer",
+          "Mengidentifikasi tujuan dan manfaat pemangkasan Uniform Layer",
+          "Mengenali komponen-komponen penting dalam teknik Uniform Layer",
+          "Melaksanakan prosedur pemangkasan Uniform Layer dengan benar",
+          "Mempersiapkan area kerja, alat, dan bahan yang diperlukan",
+          "Menerapkan persiapan pribadi dan klien yang tepat",
+          "Melakukan kegiatan berkemas pasca-pemangkasan",
+        ],
+        materi: [
+          {
+            title: "Pengantar Teknik Uniform Layer",
+            items: [
+              "Definisi dan etimologi pemangkasan",
+              "Penjelasan khusus tentang Uniform Layer",
+            ],
+          },
+          {
+            title: "Tujuan dan Manfaat Teknik Uniform Layer",
+            items: [],
+          },
+          {
+            title: "Komponen Teknik Uniform Layer",
+            items: ["Bentuk", "Tekstur", "Struktur", "Sudut Pemangkasan"],
+          },
+          {
+            title: "Prosedur Pemangkasan Uniform Layer",
+            items: [
+              "Langkah-langkah detail",
+              "Teknik pengambilan dan pemangkasan rambut",
+              "Cross check dan finishing",
+            ],
+          },
+          {
+            title: "Persiapan Kerja",
+            items: [
+              "Persiapan area kerja",
+              "Alat dan bahan yang diperlukan",
+              "Fungsi masing-masing alat",
+            ],
+          },
+          {
+            title: "Persiapan Pribadi dan Klien",
+            items: [
+              "Standar penampilan dan sikap profesional",
+              "Persiapan klien untuk kenyamanan dan keamanan",
+            ],
+          },
+          {
+            title: "Kegiatan Berkemas Pasca-Pemangkasan",
+            items: [],
+          },
+        ],
+        metode: [
+          "Teori dan konsep",
+          "Demonstrasi teknik",
+          "Praktik langsung",
+          "Diskusi dan tanya jawab",
+        ],
+        durasi: "8 jam atau 2 hari",
+        target: [
+          "Mahasiswa tata rias",
+          "Penata rambut pemula",
+          "Profesional yang ingin meningkatkan keterampilan",
+        ],
+        evaluasi: [
+          "Ujian tertulis untuk pemahaman teori",
+          "Praktik pemangkasan Uniform Layer",
+          "Penilaian persiapan dan kebersihan area kerja",
+        ],
+        sertifikasi:
+          "Peserta yang berhasil menyelesaikan kelas dan lulus evaluasi akan menerima sertifikat kompetensi dalam Teknik Pemangkasan Rambut Uniform Layer.",
+      },
+    },
+    {
+      title: "Materi",
+      content: [
+        {
+          image: TreatmentBackground,
+          title: "Konsep Modul",
+          description:
+            "Materi yang terdapat dalam E-Modul ini menyajikan pengetahuan tentang pemangkasan rambut Teknik uniform layer.",
+        },
+        {
+          image: FotoRambut,
+          title: "Apa itu Teknik Uniform Layer ?",
+          description:
+            "Secara “ethymologi”, kata pemangkasan terdiri dari kata “pangkas” yang artinya potong, sehingga pemangkasan merupakan tindakan memotong yang mana dalam dunia kecantikan tindakan pemangkasan rambut. Pengertian pemangkasan bisa diartikan sebagai tindakan untuk mengurangi panjang rambut semula dengan teknik-teknik tertentu, disesuaikan dengan bentuk wajah, jenis rambut, perawatan, pekerjaan dan kepribadian seseorang sehingga menghasilkan model pangkasan yang diinginkan oleh seseorang. Berdasarkan sudut pemangkatan, teknik pemangkasan dibagi dalam tiga teknik utama yaitu Pemangkasan teknik Solid, Pemangkasan teknik Graduasi, dan Pemangkasan teknik Layer. Pemangkasan bertrap penuh dikenal dengan istilah layer adalah pemangkasan yang dilakukan dengan sudut elevasi 90°-180°. Pemangkasan uniform layer adalah pemangkasan dengan sudut elevasi 90° merupakan bentuk pemangkasan mengikuti bentuk kepala, kepanjangan rambut yang sama.",
+        },
+        {
+          image: HairPhoto,
+          title: "Tujuan Teknik Uniform Layer",
+          description: [
+            "Memperindah bentuk kepala",
+            "Mempermudah pengaturan rambut",
+            "Memberi kesan wajah oval",
+            "Mempertajam garis wajah",
+            "Mencegah rambut jatuh ke depan wajah",
+            "Mengikuti model yang sedang berlaku dan sebagainya",
+          ],
+        },
+      ],
+      multiSectionContent: [
+        {
+          title: "Komponen Teknik Uniform Layer",
+          sections: [
+            {
+              image: Component1,
+              subTitle: "Bentuk",
+              description:
+                "Pemangkasan Uniform Layer menunjukkan bentuk desain guntingan rambut yang membulat sesuai dengan bentuk kepala, dengan kepanjangan rambut yang sama panjang.",
+            },
+            {
+              image: Component2,
+              subTitle: "Tekstur",
+              description:
+                "Susunan permukaan rambut bertekstur aktif (seluruh cahaya yang jatuh diserap seluruhnya dan tidak ada cahaya yang dipantulkan kembali) Jatuhnya ujung-ujung rambut tersusun dengan teratur.",
+            },
+            {
+              image: Component3,
+              subTitle: "Struktur",
+              description:
+                "Struktur kerangka pemangkasan di setiap kepanjangan rambut jatuh di daerah yang sama, struktur kerangka pemangkasan uniform layer dengan kepanjangan rambut yang sama.",
+            },
+            {
+              image: Component4,
+              subTitle: "Sudut Pemangkasan",
+              description: (
+                <>
+                  {
+                    "Uniform layer memiliki sudut sudut dan ketebalan rambut yang terbagi rata di seluruh kepala. Uniform layer memiliki sudut pemangkasan 90°. Setiap teknik pemangkasan memiliki pola garis yang berbeda. Adapun pola garis pemangkasan pada Uniform Layer yaitu:"
+                  }
+                  {
+                    <ol>
+                      <li>
+                        <strong>Garis pola pangkas melengkung:</strong>{" "}
+                        Pemangkasan dilakukan dengan menggunakan pola pangkas
+                        hairline. Rambut sekeliling hairline dipangkas sesuai
+                        desain dan panjang yang diinginkan. Setelah itu
+                        dilanjutkan pemangkasan dari luar (Eksterior) ke arah
+                        dalam (Interior) dengan patokan pola tersebut.
+                      </li>
+                      <li>
+                        <strong>Garis pola pangkas datar:</strong> Pemangkasan
+                        dengan patokan dari bagian dalam dengan panjang yang
+                        diinginkan, kemudian pangkas ke arah luar.
+                      </li>
+                    </ol>
+                  }
+                </>
+              ),
+            },
+          ],
+        },
+        {
+          title: "Langkah Prosedur Pemangkasan",
+          sections: [
+            {
+              image: Step1,
+              subTitle: "Pertama",
+              description: "Pahami garis pemangkasan uniform layer",
+            },
+            {
+              image: Step2,
+              subTitle: "Kedua",
+              description:
+                "Ambil rambut mulai dari bagian poni tengah seperti pola pemangkasan uniform layer, dengan sudut pemangkasan 90°",
+            },
+            {
+              image: Step3,
+              subTitle: "Ketiga",
+              description:
+                "Lanjutkan Pemangkasan pada daerah interior dengan mengambil guide line dari potongan sebelumnya. Pemangkasan dilakukan dengan sudut 90°",
+            },
+            {
+              image: Step4,
+              subTitle: "Keempat",
+              description:
+                "Lakukan hal yang sama pada bagian eksterior sesuai guide line, lakukan secara bertahap, hingga selesai pemangkasan",
+            },
+            {
+              image: Step5,
+              subTitle: "Kelima",
+              description:
+                "Lakukan crosss check, yakinkan seluruh bagian rambut sudah rata dan lurus juga simetris.",
+            },
+            {
+              image: Step6,
+              subTitle: "Keenam",
+              description: "Hasil akhir pemangkasan",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Video",
+      content: [
+        {
+          sectionTitle: "Pengenalan",
+          videos: [
+            {
+              title: "Pengenalan Hairstyling",
+              src: "https://youtu.be/c96leQ_fRII",
+            },
+            {
+              title: "Hairstyling",
+              src: "https://youtu.be/c96leQ_fRII",
+            },
+          ],
+        },
+        {
+          sectionTitle: "Tingkat Lanjut",
+          videos: [
+            {
+              title: "Hairstyling Belajar",
+              src: "https://youtu.be/c96leQ_fRII",
+            },
+            {
+              title: "Hairstyling Akhir",
+              src: "https://youtu.be/c96leQ_fRII",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Latihan",
+      questions: {
+        multipleChoice: [
+          {
+            question:
+              "Tindakan mengurangi panjang rambut semula dengan teknik tertentu, sesuai dengan bentuk wajah, jenis rambut, perawakan, pekerjaan dan kepribadian seseorang adalah definisi dari…",
+            options: [
+              "Pemangkasan",
+              "Pewarnaan",
+              "Pengeritingan",
+              "Pelurusan",
+              "Styling",
+            ],
+            answer: 0,
+          },
+          {
+            question:
+              "Tujuan pemangkasan rambut adalah sebagai berikut, kecuali…",
+            image: PilihanGanda,
+            options: [
+              "Mengurangi Panjang Rambut",
+              "Mengikuti Trend",
+              "Mengubah Bentuk Kepala",
+              "Merapikan Rambut",
+              "Mengubah Penampilan",
+            ],
+            answer: 2,
+          },
+          {
+            question:
+              "Karyawan salon yang biasa menangani pemangkasan disebut…",
+            options: ["Pelayan", "Capster", "Beauticient", "Suster", "Blester"],
+            answer: 1,
+          },
+          {
+            question:
+              "Susunan permukaan rambut yang dapat diraba, dilihat dan dirasakan adalah…",
+            options: [
+              "Struktur Rambut",
+              "Tekstur Rambut",
+              "Pola Pemangkasan",
+              "Arah Pemangkasan",
+              "Arah Pertumbuhan Rambut",
+            ],
+            answer: 1,
+          },
+          {
+            question:
+              "Penipisan pada rambut yang tebal dapat dilakukan dengan menggunakan alat…",
+            options: [
+              "Gunting",
+              "Gunting Penipisan",
+              "Gunting Bilah Satur",
+              "Mata Pisau",
+              "Cutter",
+            ],
+            answer: 1,
+          },
+          {
+            question:
+              "Pengeringan rambut yang dilakukan dengan cara menggunakan sisir blow juga dikenal dengan Teknik…",
+            options: [
+              "Teknik blow dry",
+              "Teknik block dry",
+              "Teknik parting dry",
+              "Teknik natural dry",
+              "Teknik finger dry",
+            ],
+            answer: 0,
+          },
+          {
+            question:
+              "Jepit gerigi atau jepit bebek dalam proses pemangkasan digunakan untuk…",
+            options: [
+              "Menjepit rambut yang diparting",
+              "Menjepit cape klien",
+              "Meringkas rambut",
+              "Membuat rambut menjadi berombak",
+              "Menjepit rambut operator",
+            ],
+            answer: 0,
+          },
+          {
+            question:
+              "Pemangkasan yang dilakukan dengan cara mengurangi sebagian panjang rambut dengan sudut pengangkatan 90° dinamakan dengan Teknik Pemangkasan…",
+            options: [
+              "Solid",
+              "Graduation",
+              "Uniform Layer",
+              "Increase Layer",
+              "Convace",
+            ],
+            answer: 2,
+          },
+          {
+            question:
+              "Saat melakukan pemangkasan rambut, rambut harus dalam keadaan basah agar mempermudah dalam pemangkasan. Alat yang digunakan adalah…",
+            options: [
+              "Gunting Pangkas",
+              "Sprayer",
+              "Cape Pangkas",
+              "Shower",
+              "Hairdryer",
+            ],
+            answer: 1,
+          },
+          {
+            question:
+              "Berikut ini hal yang penting dilakukan saat selesai melakukan pemangkasan rambut, kecuali…",
+            options: [
+              "Penataaan Rambut",
+              "Melakukan Pembersihan area leher dan bahu",
+              "Memberikan saran pasca pemangkasan",
+              "Melakukan Pengecekan",
+              "Menentukan guide line",
+            ],
+            answer: 4,
+          },
+        ],
+        essay: [
+          {
+            question:
+              "Jelaskan langkah-langkah dalam melakukan pemangkasan teknik uniform layer!",
+            image: SalonSoal,
+            keyWords: [
+              "basahi rambut",
+              "bagi rambut",
+              "sudut 90 derajat",
+              "potong merata",
+              "periksa hasil",
+            ],
+          },
+          {
+            question: "Apa perbedaan antara texturizing dan blunt cutting?",
+            keyWords: [
+              "tekstur",
+              "ujung rambut",
+              "volume",
+              "garis lurus",
+              "ketebalan",
+            ],
+          },
+          {
+            question:
+              "Bagaimana cara memastikan hasil pemangkasan uniform layer sudah tepat?",
+            keyWords: [
+              "simetris",
+              "panjang sama",
+              "jatuh merata",
+              "bentuk bulat",
+              "cek dari berbagai sudut",
+            ],
+          },
+        ],
+      },
+    },
+  ];
+
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+
+  const quillFormats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
 
   return (
-    <div>
-      <Navbar/>
+    <div className="treatment-page">
+      <Navbar />
       <div className="treatment-container">
-        <div className="hairstyling-title">
-          <div className="tag-badge">
-            <p>Free Course</p>
-          </div>
-          <div className="title-section">
-            <h1>Belajar Hairstyling Untuk Pemula</h1>
-            <p>Pemangkasan Rambut Teknik Uniform Layer</p>
-            <div className="created-container">
-              <div className="created">
-                <CgCalendarDates size={30} className="icons" color="#c41dd0" />
-                <p style={{ color: "#c41dd0" }}> Release date March 2023</p>
-              </div>
-              <div className="created">
-                <CgCheckO size={30} className="icons" color="#c41dd0" />
-                <p style={{ color: "#c41dd0" }}>Last updated March 2023</p>
-              </div>
+        <main>
+          <section className="treatment-hero">
+            <div className="hero-content">
+              <h1>Perawatan Rambut Intensif</h1>
+              <p>Teknik Treatment untuk Rambut Sehat dan Berkilau</p>
+              <button
+                onClick={() => scrollToSection("course-summary")}
+                className="cta-button"
+              >
+                Mulai Belajar
+              </button>
             </div>
-          </div>
-        </div>
-
-        <div className="hairstyling-content">
-          <div className="main-hairstyling">
-            <div className="video-container">
-              <img src={Imagez} alt="" style={{ width: "75%" }} />
-            </div>
-            <div className="card-list-video">
-              <p>10 video (3 Jam)</p>
-
-              <div className="list-video">
-                <BsFillPlayCircleFill
-                  size={30}
-                  style={{ marginRight: 10 }}
-                  color="#7c0a76"
-                />
-                <span>Pengenalan</span>
-              </div>
-              <div className="list-video">
-                <BsFillPlayCircleFill
-                  color="#7c0a76"
-                  size={30}
-                  style={{ marginRight: 10 }}
-                />
-                <span>Apa yang dibutuhkan</span>
-              </div>
-              <div className="list-video">
-                <BsFillPlayCircleFill
-                  color="#7c0a76"
-                  size={30}
-                  style={{ marginRight: 10 }}
-                />
-                <span>8 video lainnya</span>
-              </div>
-
-              <div className="button-gabung">
-                <span>Gabung Kelas</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="hairstyling-details">
-          <Tabs
-            selectedIndex={tabIndex}
-            onSelect={(index) => setTabIndex(index)}
-            selectedTabClassName="selected-tab"
-          >
-            <TabList className="badge-container">
-              <Tab className="course-badge">
-                <span>Tentang</span>
-              </Tab>
-              <Tab className="course-badge">
-                <span>Materi</span>
-              </Tab>
-              <Tab className="course-badge">
-                <span>Video</span>
-              </Tab>
-              <Tab className="course-badge">
-                <span>Latihan</span>
-              </Tab>
-            </TabList>
-            <div className="details-course-container">
-              <TabPanel>
-                <div className="about-course">
-                  <h2>Tentang Kelas</h2>
-                  <p>
-                    Materi yang terdapat dalam E-Modul ini menyajikan
-                    pengetahuan tentang pemangkasan rambut Teknik uniform layer
-                    mulai dari konsep, unsur desain, peralatan, sampai Langkah
-                    kerja pada pemangkasan rambut Teknik uniform layer. Dengan
-                    adanya E-Modul ini penulis berharap pembaca dapat menemukan
-                    wawasan baru, memudahkan pembelajaran mandiri, serta
-                    meningkatkan keterampilan diri yang sesuai dengan tingkat
-                    dan jenjang pembaca. Sehingga pembaca dapat menyerap dan
-                    memproses materi secara efektif serta memudahkan tercapainya
-                    tujuan pembelajaran.
-                  </p>
-                </div>
-                <div className="designed-for">
-                  <h2>Dibuat Untuk</h2>
-                  <div className="list-for-container">
-                    <div className="lists">
-                      <BsFillCheckCircleFill
-                        color="purple"
-                        size={20}
-                        style={{ marginRight: 10 }}
-                      />
-                      <span>Orang yang ingin belajar Teknik Pangkas</span>
-                    </div>
-                    <div className="lists">
-                      <BsFillCheckCircleFill
-                        color="purple"
-                        size={20}
-                        style={{ marginRight: 10 }}
-                      />
-                      <span>
-                        Pemula yang ingin belajar Teknik Uniform Layer
-                      </span>
-                    </div>
-                    <div className="lists">
-                      <BsFillCheckCircleFill
-                        color="purple"
-                        size={20}
-                        style={{ marginRight: 10 }}
-                      />
-                      <span>Orang yang ingin belajar hal baru</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="kompetensi-dasar">
-                  <h2>Kompetensi Dasar</h2>
-                  <h4>
-                    3.4 Menerapkan pemangkasan rambut Teknik uniform layer
-                  </h4>
-                  <h4>
-                    3.4 Menerapkan pemangkasan rambut Teknik uniform layer
-                  </h4>
-                </div>
-                <div className="indikator-pencapaian">
-                  <h2>Indikator Pencapaian Kompetensi</h2>
-                  <h4>
-                    1. Menguraikan konsep dasar pemangkasan rambut Teknik
-                    uniform layer
-                  </h4>
-                  <h4>
-                    2. Memilih alat pemangkasan rambut sesuai fungsi dan cara
-                    penggunaan alat
-                  </h4>
-                  <h4>
-                    3. Menganalisis Teknik pemangkasan rambut Teknik uniform
-                    layer sesuai dengan konsep pemangkasan rambut
-                  </h4>
-                  <h4>
-                    4. Merencanakan pemangkasan rambut Teknik uniform layer
-                    sesuai dengan prosedur
-                  </h4>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className="materi-container">
-                  <h2>Materi</h2>
-                  <p>
-                    Materi yang terdapat dalam E-Modul ini menyajikan
-                    pengetahuan tentang pemangkasan rambut Teknik uniform layer
-                    mulai dari konsep, unsur desain, peralatan, sampai Langkah
-                    kerja pada pemangkasan rambut Teknik uniform layer.
-                  </p>
-                </div>
-                <div className="materi-content">
-                  <h2>Apaitu Teknik Uniform Layer ?</h2>
-                  <p>
-                    Secara “ethymologi”, kata pemangkasan terdiri dari kata
-                    “pangkas” yang artinya potong, sehingga pemangkasan
-                    merupakan tindakan memotong yang mana dalam dunia kecantikan
-                    tindakan pemangkasan rambut. Pengertian pemangkasan bisa
-                    diartikan sebagai tindakan untuk mengurangi panjang rambut
-                    semula dengan teknik-teknik tertentu, disesuaikan dengan
-                    bentuk wajah, jenis rambut, perawatan, pekerjaan dan
-                    kepribadian seseorang sehingga menghasilkan model pangkasan
-                    yang diinginkan oleh seseorang. Berdasarkan sudut
-                    pemangkatan, teknik pemangkasan dibagi dalam tiga teknik
-                    utama yaitu Pemangkasan teknik Solid, Pemangkasan teknik
-                    Graduasi, dan Pemangkasan teknik Layer. Pemangkasan bertrap
-                    penuh dikenal dengan istilah layer adalah pemangkasan yang
-                    dilakukan dengan sudut elevasi 90°-180°. Pemangkasan uniform
-                    layer adalah pemangkasan dengan sudut elevasi 90° merupakan
-                    bentuk pemangkasan mengikuti bentuk kepala, kepanjangan
-                    rambut yang sama.
-                  </p>
-                  <h2>Tujuan Teknik Uniform Layer</h2>
-                  <p>1. Memperindah bentuk kepala</p>
-                  <p>2. Mempermudah pengaturan rambut</p>
-                  <p>3. Memberi kesan wajah oval</p>
-                  <p>4. Mempertajam garis wajah</p>
-                  <p>5. Mencegah rambut jatuh ke depan wajah</p>
-                  <p>6. Mengikuti model yang sedang berlaku dan sebagainya</p>
-                  <h2>Komponen Teknik Uniform Layer</h2>
-                  <p>1. Bentuk</p>
-                  <img src={Komponen1} alt="" width={200} />
-                  <p style={{ marginTop: 30 }}>
-                    Pemangkasan Uniform Layer menunjukkan bentuk desain
-                    guntingan rambut yang membulat sesuai dengan bentuk kepala,
-                    dengan kepanjangan rambut yang sama panjang.
-                  </p>
-                  <p style={{ marginTop: 30 }}>2. Tekstur</p>
-                  <img src={Komponen2} alt="" width={300} />
-                  <p style={{ marginTop: 30 }}>
-                    Susunan permukaan rambut bertekstur aktif (seluruh cahaya
-                    yang jatuh diserap seluruhnya dan tidak ada cahaya yang
-                    dipantulkan kembali) Jatuhnya ujung-ujung rambut tersusun
-                    dengan teratur.
-                  </p>
-                  <p style={{ marginTop: 30 }}>3. Struktur</p>
-                  <img src={Komponen3} alt="" width={300} />
-                  <p style={{ marginTop: 30 }}>
-                    Struktur kerangka pemangkasan di setiap kepanjangan rambut
-                    jatuh di daerah yang sama, struktur kerangka pemangkasan
-                    uniform layer dengan kepanjangan rambut yang sama.
-                  </p>
-                  <p style={{ marginTop: 30 }}>4. Sudut Pemangkasan</p>
-                  <img src={Komponen4} alt="" />
-                  <p style={{ marginTop: 30 }}>
-                    Uniform layer memiliki sudut sudut dan ketebalan rambut yang
-                    terbagi rata di seluruh kepala.Uniform layer memiliki sudut
-                    pemangkasan 90°. Setiap teknik pemangkasan memiliki pola
-                    garis yang berbeda. Adapun pola garis pemangkasan pada
-                    Uniform Layer yaitu : 1. Garis pola pangkas melengkung
-                    Pemangkasan dilakukan dengan menggunakan pola pangkas
-                    hairline. Rambut sekeliling hairline dipangkas sesuai desain
-                    dan panjang yang diinginkan. Setelah itu dilanjutkan
-                    pemangkasan dari luar (Eksterior) ke arah dalam (Interior)
-                    dengan patokan pola tersebut. 2. Garis pola pangkas datar
-                    Pemangkasan dengan patokan dari bagian dalam dengan panjang
-                    yang diinginkan, kemudian pangkas ke arah luar.
-                  </p>
-                  <h2>Langkah Prosedur Pemangkasan </h2>
-                  <img src={Langkah1} alt="" />
-                  <p style={{ marginTop: 20, marginBottom: 20 }}>
-                    1. Pahami garis pemangkasan uniform layer
-                  </p>
-                  <img src={Langkah2} alt="" />
-                  <p style={{ marginTop: 30, marginBottom: 20 }}>
-                    2. Ambil rambut mulai dari bagian poni tengah seperti pola
-                    pemangkasan uniform layer, dengan sudut pemangkasan 90°{" "}
-                  </p>
-                  <img src={Langkah3} alt="" />
-                  <p style={{ marginTop: 30, marginBottom: 20 }}>
-                    3. Lanjutkan Pemangkasan pada daerah interior dengan
-                    mengambil guide line dari potongan sebelumnya. Pemangkasan
-                    dilakukan dengan sudut 90°
-                  </p>
-                  <img src={Langkah4} alt="" />
-                  <p style={{ marginTop: 30, marginBottom: 20 }}>
-                    4. Lakukan hal yang sama pada bagian eksterior sesuai guide
-                    line, lakukan secara bertahap, hingga selesai pemangkasan
-                  </p>
-                  <img src={Langkah5} alt="" />
-                  <p style={{ marginTop: 30, marginBottom: 20 }}>
-                    5. Lakukan crosss check, yakinkan seluruh bagian rambut
-                    sudah rata dan lurus juga simetris.
-                  </p>
-                  <img src={Langkah6} alt="" width={200} />
-                  <p style={{ marginTop: 30, marginBottom: 20 }}>
-                    6. Hasil akhir pemangkasan
-                  </p>
-                  <h2>Persiapan Kerja</h2>
-                  <p style={{ fontSize: 20 }}> A. Persiapan Area Kerja</p>
-                  <p>
-                    Kondisi ruangan dalam keadaan nyaman , bersih dari kotoran
-                    dan debu
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>
-                    B. Persiapan Alat dan Bahan
-                  </p>
-                  <p>
-                    Berbagai alat pemangkasan rambut dapat digunakan, dengan
-                    ketentuan memenuhi standar minimal kebutuhan, kelayakan dan
-                    aman digunakan , contohnya
-                  </p>
-                  <h2>1. Gunting Pangkas Bilah Satu</h2>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>A. Bentuk 4 1/2</p>
-                  <img src={Gunting1} alt="" width={250} />
-                  <p style={{ marginTop: 20 }}>
-                    Memangkas tambut secara umum, layer dan untuk sudut
-                    pemangkasan
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>B. Bentuk 5</p>
-                  <img src={Gunting2} alt="" width={250} />
-                  <p style={{ marginTop: 20 }}>
-                    Memangkas tambut secara umum, layer dan untuk sudut
-                    pemangkasan
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>C. Bentuk 5 1/2</p>
-                  <img src={Gunting3} alt="" width={250} />
-                  <p style={{ marginTop: 20 }}>
-                    Memangkas tambut secara umum, layer dan untuk sudut
-                    pemangkasan
-                  </p>
-                  <h2>2. Gunting Penipis</h2>
-                  <p>
-                    Gunting penipis digunakan untuk meringankan volume rambut,
-                    mengurangi ketebalan dan kepadatan rambut, mempunyai ukuran
-                    gigi yang berbeda sesuai dengan desai pangkasan yang
-                    diinginkan.
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>
-                    A. Bentuk Satu Bilah
-                  </p>
-                  <img src={Gunting4} alt="" width={250} />
-                  <p style={{ marginTop: 20 }}>
-                    Memangkas garis pemangkasan lengkung karena memiliki gigi
-                    yang lebih Panjang.
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>
-                    B. Bentuk Dua Bilah
-                  </p>
-                  <img src={Gunting5} alt="" width={250} />
-                  <p style={{ marginTop: 20 }}>
-                    Memangkas garis pemangkasan lurus
-                  </p>
-                  <h2>3. Alat Penunjang Pemangkasan</h2>
-                  <p style={{ fontSize: 20, marginTop: 20 }}>
-                    1. Cape Penyampoan
-                  </p>
-                  <img src={Alat1} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Melindungi baju klien dari percikan air saat pencucian
-                    rambut
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>2. Cape Pangkas</p>
-                  <img src={Alat2} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Menghalangi rambut yang telah dipangkas sagar tidak menempel
-                    pada baju atau kulit klien
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>3. Handuk Kecil</p>
-                  <img src={Alat3} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Mengeringkan rambut dan melindungi bagian tengkuk klien dari
-                    pecikan kosmetik
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>4. Sisir Besar</p>
-                  <img src={Alat4} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Menyisir rambut secara umum setelah memncuci rambut
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    5. Sisir Berekor
-                  </p>
-                  <img src={Alat5} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Memudahkan pembagian (parting) rambut
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    6. Sisir Pangkas
-                  </p>
-                  <img src={Alat6} alt="" />
-                  <p style={{ marginTop: 20 }}>Alat bantu pemangkasan</p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>7. Sisir Leher</p>
-                  <img src={Alat7} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Membersihkan leher dan bahu dari sisa potongan rambut
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>8. Sisir Blow</p>
-                  <img src={Alat8} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Membentuk volume pada rambut selama proses penataan Teknik
-                    blowdryer
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    9. Jepit Bergerigi
-                  </p>
-                  <img src={Alat9} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Untuk menjepit rambut yang telah di parting
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>10. Jepit Bebek</p>
-                  <img src={Alat10} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Untuk menejpit dan membagi section rambut yang akan
-                    dipangkas
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    11. Water Sprayer
-                  </p>
-                  <img src={Alat11} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Membasahi rambut agar ujung rambut tetap dalam keadaan basah
-                    saat pemangkasant
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>12. Hair Dryer</p>
-                  <img src={Alat12} alt="" />
-                  <p style={{ marginTop: 20 }}>
-                    Mengeringkan rambut dengan suhuh yag dapat diatur sesuai
-                    kebutuhan
-                  </p>
-                  <h2>Persiapan Pribadi</h2>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    1. mengenakan riasan wajah sehingga wajah tambpak segar dan
-                    cerah
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    2. Rambut ditata rapi dan tidak mengganggu pekerjaan
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    3. Memakai baju kerja tidak kusut, licin dan bersih/tidak
-                    bernoda, tidak terlalu sempit
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    4. Mengenakan sepatu dengan hak rendah dan terbuat dari
-                    karet agar tidak licin
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    5. Tidak mengenakan perhiasan yang menyolok kecuali jam
-                    tangan
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    6. Menjaga bau mulut dan bau badan sehingga kebersihan gigi
-                    dan badan harus dijaga
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    7. Jaga kebersihan kuku dan kulit
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    8. Tampilkan ekspresi wajah yang ramah, dan sikap selalu
-                    ingin membantu pelanggan
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    9. Jaga suara bicara dan komunikasi dengan sopan
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    10. Siap mental dan penuh percaya diri
-                  </p>
-                  <img
-                    src={Klien}
-                    alt=""
-                    width={200}
-                    style={{ marginTop: 80 }}
-                  />
-                  <h2>Persiapan Klien </h2>
-                  <p>
-                    Persiapan klien dilakukan untuk meingkatkan daya Tarik dan
-                    kenyamanan selama pelayanan pemangkasan. Berikan alas bahu
-                    dan pasangkan cape pemangkasan yang bersih dan menutup baju
-                    klien dengan sempurna, sehingga baju klien tidak kotor oleh
-                    serpihan potongan rambut. Berkemas
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30, color: "#c41dd0 " }}>
-                    Berkemas
-                  </p>
-                  <p>
-                    Setelah menyelasikan Tindakan pemangkasan, kegiatan berkemas
-                    dilakukan untuk merapihkan Kembali area kerja sehingga
-                    bersih, kegiatan yang dilakukan dalam berkemas seperti :
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    1. Membersihkan alat-alat yang sudah dipakai, simpan kembali
-                    pada tempatnya
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    2. Menyimpan kosmetik pada tempatnya.
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    3. Membersihkan ruangan, membuang sampah pada tempatnya
-                  </p>
-                  <p style={{ fontSize: 20, marginTop: 30 }}>
-                    4. Mematikan semua aliran listrik (apabila sudah tidak
-                    digunakan)
-                  </p>{" "}
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className="course-content">
-                  <h2>Video Materi</h2>
-                  <div className="list-video-container">
-                    <div className="title-video">
-                      <div className="rounded">
-                        <span>1</span>
-                      </div>
-                      <div className="title">
-                        <a href="https://www.youtube.com/watch?v=w0RDnWdGn1g&t=1s&ab_channel=LattcCosmo2020">
-                          Pengenalan
-                        </a>
-                      </div>
-                    </div>
-                    <div className="list-video-courses-container">
-                      <div className="list-video-courses">
-                        <BsFillPlayCircleFill size={25} color="#490846" />
-                        <span>Pengenalan Hairstyling</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className="latihan-content">
-                  <h2>Soal Latihan</h2>
-                  <div className="soal-latihan-container">
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>1</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Tindakan mengurangi Panjang rambut semula dengan
-                            Teknik tertentu, sesuai dengan bentuk wajah, jenis
-                            rambut, perawakan, pekerjaan dan kepribadian
-                            seseorang adalah definisi dari….
-                          </h3>
+            <div className="hero-media">
+              <div className="video-container">
+                <div className="video-wrapper">
+                  <div className="video-inner">
+                    <div id="youtube-player"></div>
+                    {(!isHeroPlaying ||
+                      !isHeroVideoReady ||
+                      Object.values(activeVideos).some(Boolean)) && (
+                      <div className="video-cover">
+                        <div className="cover-content">
+                          {Object.values(activeVideos).some(Boolean) ? (
+                            <div className="video-warning">
+                              <h3>Video sedang diputar di section lain</h3>
+                              <p>
+                                Matikan video terlebih dahulu untuk melanjutkan
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="cover-text">
+                              <h2>Teknik Uniform Layer</h2>
+                              <p>Tutorial Lengkap Pemangkasan Rambut</p>
+                            </div>
+                          )}
+                          <button
+                            className="cover-play-btn"
+                            onClick={handleHeroPlayPause}
+                            aria-label="Play video"
+                            disabled={Object.values(activeVideos).some(Boolean)}
+                          >
+                            <Play size={40} />
+                          </button>
                         </div>
                       </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Pemangkasan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Pewarnaan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Pengeritingan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Pelurusan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Styling</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>2</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Tujuan pemangkasan rambut adalah sebagai berikut,
-                            kecuali….
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Mengurangi Panjang Rambut</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Mengikuti Trend</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Mengubah Bentuk Kepala</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Merapikan Rambut</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Mengubah Penampilan</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>3</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Karyawan salon yang biasa menangani pemangkasan
-                            disebut…..
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Pelayan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Capster</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Beauticient</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Suster</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Blester</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>4</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Susunan permukaan rambut yang dapat diraba, dilihat
-                            dan dirasakan adalah….
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Struktur Rambut </span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Tekstur Rambut </span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Pola Pemangkasan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Arah Pemangkasan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Arah Pertumbuhan Rambut</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>5</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Penipisan pada rambut yang tebal dapat dilakukan
-                            dengan menggunakan alat….
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Gunting</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Gunting Penipisan </span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Gunting Bilah Satur</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Mata Pisau</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Cutter</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>6</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Pengeringan rambut yang dilakukan dengan cara
-                            menggunakan sisir blow juga dikenal dengan Teknik….
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Teknik blow dry</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Teknik block dry</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Teknik parting dry</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Teknik natural dry</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Teknik finger dry</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>7</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Jepit gerigi atau jepit bebek dalam proses
-                            pemangkasan digunakan untuk…..
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Menjepit rambut yang diparting</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Menjepit cape klien</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Meringkas rambut</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Membuat rambut menjadi berombak</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Menjepit rambut operator</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>8</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Pemangkasan yang dilakukan dengan cara mengurangi
-                            sebagai Panjang rambut dengan sudut pengangkatan 90°
-                            dinamakan dengan Teknik Pemangkasan ….
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Solid</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Graduation</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Uniform Layer</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Increase Layer</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Convace</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>9</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Saat melakukan pemangkasan rambut, rambut harus
-                            dalam keadaan basah agar mempermudah dalam
-                            pemangkasan. Alat yang digunakan adalah….
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Gunting Pangkas</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Sprayer</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Cape Pangkas</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Shower</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Hairdryer</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="soal-containers">
-                      <div className="title-video">
-                        <div className="roundedd">
-                          <span>10</span>
-                        </div>
-                        <div className="title">
-                          <h3 className="soalnya">
-                            Berikut ini hal yang penting dilakukan saat selesai
-                            melakukan pemangkasan rambut, kecuali…
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="list-video-courses-container">
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Penataaan Rambut</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Melakukan Pembersihan area leher dan bahu</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Memberikan saran pasca pemangkasan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Melakukan Pengecekan</span>
-                        </div>
-                        <div className="list-video-courses">
-                          <input type="checkbox" />
-                          <span>Menentukan guide line</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="button-container">
-                      <button
-                        className="button"
-                        onClick={() =>
-                          Swal.fire({
-                            title: "Apakah kamu yakin dengan jawaban mu?",
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            confirmButtonText: "Ya",
-                            denyButtonText: `Tidak`,
-                          }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                              Swal.fire("Dikumpulkan !", "", "success");
-                              setIskumpul(true);
-                            } else if (result.isDenied) {
-                              Swal.fire(
-                                "Jawaban gagal dikumpulkan",
-                                "",
-                                "info"
-                              );
-                            }
-                          })
-                        }
-                      >
-                        Submit
-                      </button>
-                    </div>
-                    {isKumpul ? (
-                      <div className="jawaban-container">
-                        <h3>Kunci Jawaban </h3>
-                        <p>1. Pemangkasan</p>
-                        <p>2. Mengubah bentuk kepala</p>
-                        <p>3. Capster</p>
-                        <p> 4. Tekstur Rambut</p>
-                        <p> 5. Gunting Penipisan</p>
-                        <p> 6. Teknik Blow Dry</p>
-                        <p>7. Menjepit rambut yang departing</p>
-                        <p>8. Uniform layer</p>
-                        <p> 9. Sprayer</p>
-                        <p>10. Menentukan guidline</p>
-                      </div>
-                    ) : (
-                      <div></div>
                     )}
+                    <div className="video-controls">
+                      <button
+                        className="play-pause-btn"
+                        onClick={handleHeroPlayPause}
+                        aria-label={isHeroPlaying ? "Pause" : "Play"}
+                      >
+                        {isHeroPlaying ? (
+                          <Pause size={24} />
+                        ) : (
+                          <Play size={24} />
+                        )}
+                      </button>
+                      <div className="progress-container">
+                        <input
+                          type="range"
+                          ref={progressRef}
+                          className="progress-bar"
+                          min="0"
+                          max={heroDuration}
+                          value={heroCurrentTime}
+                          onChange={handleHeroProgressChange}
+                        />
+                        <span className="time-display">
+                          {formatTime(heroCurrentTime)} /{" "}
+                          {formatTime(heroDuration)}
+                        </span>
+                      </div>
+                      <div className="volume-container">
+                        <button
+                          className="mute-btn"
+                          onClick={toggleHeroMute}
+                          aria-label={isHeroMuted ? "Unmute" : "Mute"}
+                        >
+                          {isHeroMuted ? (
+                            <VolumeX size={24} />
+                          ) : (
+                            <Volume2 size={24} />
+                          )}
+                        </button>
+                        <input
+                          type="range"
+                          className="volume-slider"
+                          min="0"
+                          max="100"
+                          value={isHeroMuted ? 0 : heroVolume}
+                          onChange={handleHeroVolumeChange}
+                          aria-label="Volume"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </TabPanel>
+              </div>
             </div>
-          </Tabs>
-        </div>
+          </section>
+          <section className="services-section" id="course-summary">
+            <h2>Course Summary</h2>
+            <Tabs
+              selectedIndex={activeTab}
+              onSelect={(index) => setActiveTab(index)}
+              className="services-tabs"
+            >
+              <TabList>
+                {services.map((service, index) => (
+                  <Tab key={index}>
+                    {service.icon}
+                    <h3>{service.title}</h3>
+                  </Tab>
+                ))}
+              </TabList>
+
+              {services.map((service, index) => (
+                <TabPanel key={index}>
+                  {service.descriptions &&
+                    service.descriptions.map((desc, i) => (
+                      <p key={i}>{desc}</p>
+                    ))}
+                  {service.title === "Pengenalan" && (
+                    <div className="service-details">
+                      {service.details.map((detailSet, i) => (
+                        <div key={i} className="competency-section">
+                          <h4>{detailSet.title}</h4>
+                          <ul className="service-details">
+                            {detailSet.items.map((item, j) => (
+                              <li key={j}>
+                                <BsFillCheckCircleFill />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {service.title === "Apa yang dibutuhkan" && (
+                    <ul className="service-details equipment-list">
+                      {service.details.map((detail, i) => (
+                        <li key={i}>
+                          {detail.icon}
+                          {detail.text}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {service.title === "Video" &&
+                    renderVideoSection(service.videos, "service")}
+                </TabPanel>
+              ))}
+            </Tabs>
+          </section>
+          <section id="class-course">
+            <h2>Class Course</h2>
+            <Tabs className="treatment-tabs">
+              <TabList>
+                {treatments.map((style, index) => (
+                  <Tab key={index}>{style.title}</Tab>
+                ))}
+              </TabList>
+
+              {treatments.map((style, index) => (
+                <TabPanel key={index}>
+                  {style.title === "Deskripsi Kelas" ? (
+                    <div className="treatment-content">
+                      <img src={style.image} alt={style.title} />
+                      <div className="treatment-info">
+                        <h3>{style.description}</h3>
+                        <h4>Ringkasan Kelas</h4>
+                        <p>{style.content.ringkasan}</p>
+                        <h4>Tujuan Pembelajaran</h4>
+                        <ul>
+                          {style.content.tujuan.map((item, i) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                        </ul>
+                        <h4>Materi Kelas</h4>
+                        {style.content.materi.map((section, i) => (
+                          <div key={i}>
+                            <h5>●&nbsp;&nbsp;{section.title}</h5>
+                            {section.items.length > 0 && (
+                              <ul>
+                                {section.items.map((item, j) => (
+                                  <li key={j}>{item}</li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ))}
+                        <h4>Metode Pembelajaran</h4>
+                        <ul>
+                          {style.content.metode.map((item, i) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                        </ul>
+                        <h4>Durasi</h4>
+                        <p>{style.content.durasi}</p>
+                        <h4>Target Peserta</h4>
+                        <ul>
+                          {style.content.target.map((item, i) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                        </ul>
+                        <h4>Evaluasi</h4>
+                        <ul>
+                          {style.content.evaluasi.map((item, i) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                        </ul>
+                        <h4>Sertifikasi</h4>
+                        <p>{style.content.sertifikasi}</p>
+                      </div>
+                    </div>
+                  ) : style.title === "Materi" ? (
+                    <>
+                      {style.content.map((classInfo, i) => (
+                        <React.Fragment key={i}>
+                          {renderClassDescription(classInfo)}
+                        </React.Fragment>
+                      ))}
+                      {style.multiSectionContent.map((sectionContent, i) => (
+                        <React.Fragment key={i}>
+                          {renderMultiSectionContent(
+                            sectionContent.title,
+                            sectionContent.sections
+                          )}
+                        </React.Fragment>
+                      ))}
+                      {renderFlexibleContentSection(
+                        flexibleContent.title,
+                        flexibleContent.contents
+                      )}
+                    </>
+                  ) : style.title === "Video" ? (
+                    <div className="video-treatment">
+                      <h2 className="video-main-title">Video Materi</h2>
+                      {style.content.map((section, sectionIndex) => (
+                        <div key={sectionIndex} className="video-section">
+                          <div className="section-header">
+                            <div className="section-number">
+                              {sectionIndex + 1}
+                            </div>
+                            <h3 className="section-title">
+                              {section.sectionTitle}
+                            </h3>
+                          </div>
+                          {renderVideoSection(
+                            section.videos,
+                            `course-${sectionIndex}`
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : style.title === "Latihan" ? (
+                    <div className="exercise-section" ref={exerciseSectionRef}>
+                      <h3>{style.title}</h3>
+                      <div className="multiple-choice">
+                        <h4>Pilihan Ganda:</h4>
+                        {style.questions.multipleChoice.map((q, i) => (
+                          <div
+                            key={i}
+                            className={`question ${
+                              errors[`mc-${i}`] ? "unanswered" : ""
+                            }`}
+                          >
+                            <div className="question-header">
+                              <div className="question-number">
+                                Soal {i + 1}
+                              </div>
+                              {q.image && (
+                                <div className="question-image-container">
+                                  <img
+                                    src={q.image}
+                                    alt={`Question ${i + 1}`}
+                                    className="question-image"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                            <p>{q.question}</p>
+                            <ul>
+                              {q.options.map((option, j) => (
+                                <li key={j}>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name={`mc-${i}`}
+                                      value={j}
+                                      checked={mcAnswers[i] === j}
+                                      onChange={() => handleMCAnswer(i, j)}
+                                      disabled={showResults}
+                                    />
+                                    {option}
+                                  </label>
+                                </li>
+                              ))}
+                            </ul>
+                            {errors[`mc-${i}`] && (
+                              <div className="error-message">
+                                {errors[`mc-${i}`]}
+                              </div>
+                            )}
+                            {showResults && (
+                              <div className="answer-feedback">
+                                {mcAnswers[i] === q.answer ? (
+                                  <span className="correct">Benar!</span>
+                                ) : (
+                                  <span className="incorrect">
+                                    Salah. Jawaban yang benar:{" "}
+                                    {q.options[q.answer]}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="essay">
+                        <h4>Essay:</h4>
+                        {style.questions.essay.map((q, i) => (
+                          <div
+                            key={i}
+                            className={`question ${
+                              errors[`essay-${i}`] ? "unanswered" : ""
+                            }`}
+                          >
+                            <div className="question-header">
+                              <div className="question-number">
+                                Soal {i + 1}
+                              </div>
+                              {q.image && (
+                                <div className="question-image-container">
+                                  <img
+                                    src={q.image}
+                                    alt={`Question ${i + 1}`}
+                                    className="question-image"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                            <p>{q.question}</p>
+                            <ReactQuill
+                              theme="snow"
+                              value={essayAnswers[i] || ""}
+                              onChange={(content) =>
+                                handleEssayAnswer(i, content)
+                              }
+                              modules={quillModules}
+                              formats={quillFormats}
+                              readOnly={showResults}
+                            />
+                            {errors[`essay-${i}`] && (
+                              <div className="error-message">
+                                {errors[`essay-${i}`]}
+                              </div>
+                            )}
+                            {showResults && (
+                              <div className="answer-feedback">
+                                <p>Kata kunci yang diharapkan:</p>
+                                <div className="keyword-container">
+                                  {q.keyWords.map((keyword, j) => (
+                                    <span key={j} className="keyword">
+                                      {keyword}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      {!showResults ? (
+                        <button
+                          onClick={handleSubmit}
+                          className="submit-button"
+                        >
+                          Submit
+                        </button>
+                      ) : (
+                        <div className="results" ref={resultsRef}>
+                          <h4>Hasil:</h4>
+                          <p>Skor Anda: {score}%</p>
+                          <button
+                            onClick={handleReset}
+                            className="reset-button"
+                          >
+                            Reset
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
+                </TabPanel>
+              ))}
+            </Tabs>
+          </section>
+        </main>
       </div>
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>{popupMessage}</p>
+            {popupType === "error" && (
+              <button onClick={() => setShowPopup(false)}>Oke</button>
+            )}
+            {popupType === "confirm" && (
+              <>
+                <button onClick={handleConfirmSubmit}>Ya</button>
+                <button onClick={() => setShowPopup(false)}>Tidak</button>
+              </>
+            )}
+            {popupType === "reset" && (
+              <>
+                <button onClick={handleConfirmReset}>Ya</button>
+                <button onClick={() => setShowPopup(false)}>Tidak</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
-}
+};
 
-export default HairStyling;
+export default Treatment;

@@ -1,48 +1,41 @@
-/* Container utama navbar */
 .navbar-home {
   position: absolute;
-  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
+  padding: 3rem 1.5rem;
   background-color: rgba(255, 255, 255, 0.315);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  top: 0; 
-  right: 0;
-  padding: 3rem 1.5rem;
 }
 
-.navbar-art {
-  flex: 1;
-}
-
-.navbar-art img {
+.art {
   width: 20vh;
   height: auto;
 }
 
-.left-art {
+.art-left {
   position: fixed;
   top: 0;
   left: 0;
 }
 
-.right-art {
+.art-right {
   position: fixed;
-  right: 0;
   top: 0;
+  right: 0;
 }
 
 .navbar-logos {
   position: absolute;
-  top: 50%;
-  left: 51.6%;
-  transform: translate(-50%, -50%);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 2rem;
+  align-items: center;
 }
 
 .navbar-logos img {
@@ -50,27 +43,29 @@
   height: auto;
 }
 
-/* Media queries for responsiveness */
 @media screen and (max-width: 768px) {
   .navbar-home {
     flex-direction: column;
     padding: 1rem;
+    justify-content: center;
   }
 
-  .navbar-art img {
+  .art {
     width: 15vh;
   }
 
   .navbar-logos {
-    position: static;
+    position: relative; /* Ubah ke relative agar tetap di tengah */
+    left: 0;
     transform: none;
+    width: 100%;
+    justify-content: center; /* Pastikan konten tetap di tengah */
     gap: 1rem;
   }
 
   .navbar-logos img {
     width: 50px;
   }
-
 }
 
 @media screen and (max-width: 480px) {
@@ -78,15 +73,15 @@
     padding: 0.5rem;
   }
 
-  .navbar-art img {
+  .art {
     width: 10vh;
-  }
-
-  .navbar-logos img {
-    width: 40px;
   }
 
   .navbar-logos {
     gap: 0.5rem;
+  }
+
+  .navbar-logos img {
+    width: 40px;
   }
 }

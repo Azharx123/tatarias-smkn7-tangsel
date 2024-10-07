@@ -42,7 +42,7 @@ function Pengenalan({ scrollToService }) {
             Mulai Belajar
           </button>
           <div className="button-tonton">
-            <div className="play-button">
+            <div className="play-tonton">
               <Link className="circle" to="#" onClick={handlePlayButtonClick}>
                 <BsFillPlayFill size={25} />
               </Link>

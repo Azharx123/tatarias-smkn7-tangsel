@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import HairStyling from "./pages/HairStyling";
+import Hairstyle from "./pages/Hairstyle";
 import Salon from "./pages/Salon";
 import Treatment from "./pages/Treatment";
 import Tatarias from "./pages/Tatarias";
@@ -19,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/belajar-hairstyling" element={<HairStyling />} />
+            <Route path="/belajar-hairstyle" element={<Hairstyle />} />
             <Route path="/belajar-salon" element={<Salon />} />
             <Route path="/belajar-treatment" element={<Treatment />} />
             <Route path="/belajar-tatarias" element={<Tatarias />} />

@@ -82,15 +82,15 @@
   background-size: 200%;
 }
 
-.play-button {
+.play-tonton {
   filter: drop-shadow(0 0 1.4rem rgba(203, 200, 200, 0.8));
 }
 
-.play-button:hover {
+.play-tonton:hover {
   filter: drop-shadow(0 0 1.4rem rgba(167, 164, 164, 0.8));
 }
 
-.play-button .circle {
+.play-tonton .circle {
   width: 50px;
   height: 50px;
   border-radius: 100%;
@@ -102,7 +102,7 @@
   margin-right: 5px;
 }
 
-.play-button .circle svg {
+.play-tonton .circle svg {
   color: #fe3efb;
 }
 
@@ -115,7 +115,7 @@
   }
 }
 
-.play-button .circle:hover svg {
+.play-tonton .circle:hover svg {
   color: #fe3efb;
   animation: zoomOut 0.5s forwards;
 }
@@ -155,7 +155,7 @@
     margin-bottom: 20px;
   }
 
-  .play-button .circle {
+  .play-tonton .circle {
     margin-left: 0px;
   }
 

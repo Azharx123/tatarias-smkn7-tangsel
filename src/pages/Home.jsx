@@ -27,10 +27,10 @@ const sliderSettings = {
   autoplaySpeed: 2000,
   fade: true,
   cssEase: "linear",
-  arrows: false, // Menyembunyikan tombol panah
-  swipe: false, // Menonaktifkan swipe
-  pauseOnHover: false, // Menonaktifkan pause saat hover
-  pauseOnFocus: false, // Menonaktifkan pause saat fokus
+  arrows: false,
+  swipe: false,
+  pauseOnHover: false,
+  pauseOnFocus: false,
 };
 
 const WelcomeSection = ({ onStartLearning }) => (
@@ -61,8 +61,8 @@ const WelcomeSection = ({ onStartLearning }) => (
   </div>
 );
 
-const MainContent = ({ scrollToService, serviceRef }) => (
-  <>
+const MainContent = ({ scrollToService, serviceRef, contentRef }) => (
+  <div ref={contentRef}>
     <Navbar />
     <Pengenalan scrollToService={scrollToService} />
     <div ref={serviceRef}>
@@ -71,12 +71,13 @@ const MainContent = ({ scrollToService, serviceRef }) => (
     <Explore />
     <Review scrollToService={scrollToService} />
     <Contact />
-  </>
+  </div>
 );
 
 function Home() {
   const [showWelcome, setShowWelcome] = useState(true);
   const serviceRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     AOS.init({
@@ -89,17 +90,34 @@ function Home() {
     serviceRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleStartLearning = () => {
+    setShowWelcome(false);
+    setTimeout(() => {
+      if (contentRef.current) {
+        const navbarHeight =
+          document.querySelector(".navbar")?.offsetHeight || 0;
+        const yOffset = -navbarHeight; // Adjust this value if needed
+        const y =
+          contentRef.current.getBoundingClientRect().top +
+          window.pageYOffset +
+          yOffset;
+        window.scrollTo({ top: y, behavior: "instant" });
+      }
+    }, 0);
+  };
+
   return (
     <div className="home-component">
       {showWelcome ? (
         <>
           <NavbarHome />
-          <WelcomeSection onStartLearning={() => setShowWelcome(false)} />
+          <WelcomeSection onStartLearning={handleStartLearning} />
         </>
       ) : (
         <MainContent
           scrollToService={scrollToService}
           serviceRef={serviceRef}
+          contentRef={contentRef}
         />
       )}
       <Footer />
