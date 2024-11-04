@@ -22,11 +22,11 @@ const SocialLink = ({ href, icon: Icon, label }) => (
   </a>
 );
 
-const Footer = () => {
+const Footer = ({ theme = "original" }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer">
+    <footer className={`footer footer-${theme}`}>
       <div
         className="footer-content"
         data-aos="fade-up"

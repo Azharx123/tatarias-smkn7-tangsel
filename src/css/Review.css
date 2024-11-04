@@ -25,7 +25,6 @@
   text-align: left;
 }
 
-
 .review-text-container {
   align-self: center;
 }
@@ -106,7 +105,7 @@
   padding: 20px;
   width: 400px;
   height: 200px;
-  flex-shrink: 0;;
+  flex-shrink: 0;
 }
 
 .review-person-container:hover .card-review {
@@ -177,7 +176,7 @@
 }
 
 @media screen and (max-width: 500px) {
-    .card-review {
+  .card-review {
     width: 250px;
   }
   .card-review-text {

@@ -2,23 +2,48 @@
   --primary-color: #fe3efb;
   --secondary-color: #ffffff;
   --background-color: #000000;
-  --gradient-bg: linear-gradient(rgba(255, 255, 255, 0.49), rgba(29, 14, 27, 0.593), rgba(255, 0, 230, 0.434));
-  --text-gradient: linear-gradient(90deg, var(--secondary-color), var(--primary-color), var(--secondary-color));
+  --gradient-bg: linear-gradient(
+    rgba(255, 255, 255, 0.49),
+    rgba(29, 14, 27, 0.593),
+    rgba(255, 0, 230, 0.434)
+  );
+  --text-gradient: linear-gradient(
+    90deg,
+    var(--secondary-color),
+    var(--primary-color),
+    var(--secondary-color)
+  );
 }
 
 @keyframes shine {
-  0% { background-position: 0%; }
-  100% { background-position: 200%; }
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
+@keyframes move {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% -200%;
+  }
 }
 
 @keyframes borderGlow {
-  0%, 100% {
+  0%,
+  100% {
     border-color: var(--secondary-color);
-    box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color),
+      0 0 30px var(--secondary-color);
   }
   50% {
     border-color: var(--primary-color);
-    box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color),
+      0 0 30px var(--primary-color);
   }
 }
 
@@ -64,7 +89,16 @@
 }
 
 .welcome-title .highlight {
-  color: var(--primary-color);
+  color: transparent;
+  background: linear-gradient(
+    to bottom,
+    var(--primary-color) 50%,
+    var(--secondary-color) 50%
+  );
+  background-size: 100% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: move 2s infinite;
 }
 
 .welcome-description {
@@ -111,15 +145,15 @@
     width: 95%;
     padding: 15px;
   }
-  
+
   .welcome-title {
     font-size: clamp(24px, 6vw, 36px);
   }
-  
+
   .welcome-description {
     font-size: clamp(12px, 3vw, 16px);
   }
-  
+
   .welcome-button {
     padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 25px);
     font-size: clamp(12px, 2vw, 16px);

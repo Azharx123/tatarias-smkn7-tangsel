@@ -1,43 +1,64 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import ReactQuill from "react-quill";
-import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  BsFillPlayCircleFill,
   BsFillCheckCircleFill,
   BsFillPauseFill,
+  BsFillPlayCircleFill,
 } from "react-icons/bs";
-import { FaScissors, FaRuler, FaSprayCan } from "react-icons/fa6";
+import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import { FaRegSmileBeam } from "react-icons/fa";
+import { FaEye, FaRuler, FaScissors, FaSprayCan } from "react-icons/fa6";
+import { GiLipstick, GiSemiClosedEye } from "react-icons/gi";
 import { PiHairDryerFill } from "react-icons/pi";
-import YouTube from "react-youtube";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import YouTube from "react-youtube";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 import "../css/Tatarias.css";
 
 import TatariasBackground from "../assets/images/Class Tatarias.png";
-import MaterialImage from "../assets/images/Tatarias Material.png";
 import FotoRambut from "../assets/images/Foto Rambut.png";
-import HairPhoto from "../assets/images/Uniform Layer.png";
-import Component1 from "../assets/images/komponen1.jpg";
-import Component2 from "../assets/images/komponen2.jpg";
-import Component3 from "../assets/images/komponen3.jpg";
-import Component4 from "../assets/images/komponen4.jpg";
-import Step1 from "../assets/images/langkah1.jpg";
-import Step2 from "../assets/images/langkah2.png";
-import Step3 from "../assets/images/langkah3.jpg";
-import Step4 from "../assets/images/langkah4.jpg";
-import Step5 from "../assets/images/langkah5.png";
-import Step6 from "../assets/images/langkah6.jpeg";
-import foto1 from "../assets/images/nomor1.png";
-import Bahagia from "../assets/images/Pribadi Bahagia.png";
-import FotoKlien from "../assets/images/klien.png";
-import PilihanGanda from "../assets/images/Sudut 90.png";
+import Bahagia from "../assets/images/Pribadi Tatarias.png";
 import SalonSoal from "../assets/images/SalonSoal.png";
+import FotoKlien from "../assets/images/Tatarias Klien.png";
+import Component1 from "../assets/images/Tatarias komponen1.png";
+import Component2 from "../assets/images/Tatarias komponen2.png";
+import Component3 from "../assets/images/Tatarias komponen3.png";
+import Component4 from "../assets/images/Tatarias komponen4.png";
+import Step1 from "../assets/images/Tatarias langkah1.png";
+import Step2 from "../assets/images/Tatarias langkah2.png";
+import Step3 from "../assets/images/Tatarias langkah3.png";
+import Step4 from "../assets/images/Tatarias langkah4.png";
+import Step5 from "../assets/images/Tatarias langkah5.png";
+import Step6 from "../assets/images/Tatarias langkah6.png";
+import MaterialImage from "../assets/images/Tatarias Material.png";
+import foto1 from "../assets/images/Tatarias nomor1.png";
+import foto10 from "../assets/images/Tatarias nomor10.png";
+import foto11 from "../assets/images/Tatarias nomor11.png";
+import foto12 from "../assets/images/Tatarias nomor12.png";
+import foto13 from "../assets/images/Tatarias nomor13.png";
+import foto14 from "../assets/images/Tatarias nomor14.png";
+import foto15 from "../assets/images/Tatarias nomor15.png";
+import foto2 from "../assets/images/Tatarias nomor2.png";
+import foto3 from "../assets/images/Tatarias nomor3.png";
+import foto4 from "../assets/images/Tatarias nomor4.png";
+import foto5 from "../assets/images/Tatarias nomor5.png";
+import foto6 from "../assets/images/Tatarias nomor6.png";
+import foto7 from "../assets/images/Tatarias nomor7.png";
+import foto8 from "../assets/images/Tatarias nomor8.webp";
+import foto9 from "../assets/images/Tatarias nomor9.png";
+import HairPhoto from "../assets/images/Uniform Layer.png";
 
 const Tatarias = () => {
+  useEffect(() => {
+    AOS.init({});
+  }, []);
+
   const [activeTab, setActiveTab] = useState(0);
   const [isHeroPlaying, setIsHeroPlaying] = useState(false);
   const [heroDuration, setHeroDuration] = useState(0);
@@ -545,21 +566,21 @@ const Tatarias = () => {
       title: "Pengenalan",
       icon: <CgCalendarDates />,
       descriptions: [
-        "Website kami menyediakan semua yang kamu butuhkan untuk belajar Tatarias secara mandiri. Mulai dari video tutorial berkualitas tinggi, panduan langkah demi langkah, hingga forum diskusi yang aktif. Semua dikemas dalam satu platform yang mudah diakses dan dinavigasi.",
+        "Website kami menyediakan semua yang kamu butuhkan untuk belajar Tata Rias secara mandiri. Mulai dari video tutorial berkualitas tinggi, panduan langkah demi langkah, hingga forum diskusi yang aktif. Semua dikemas dalam satu platform yang mudah diakses dan dinavigasi.",
       ],
       details: [
         {
           title: "Dibuat untuk",
           items: [
-            "Orang yang ingin belajar Teknik Pangkas.",
-            "Pemula yang ingin belajar Teknik Uniform Layer.",
-            "Orang yang ingin belajar hal baru.",
+            "Orang yang ingin belajar Teknik Dasar Tata Rias.",
+            "Pemula yang ingin belajar Teknik Riasan Wajah.",
+            "Orang yang ingin belajar hal baru dalam dunia kecantikan.",
           ],
         },
         {
           title: "Kompetensi Dasar",
           items: [
-            "Menerapkan pemangkasan rambut Teknik uniform layer.",
+            "Menerapkan teknik dasar tata rias wajah.",
             "Menganalisis berbagai jenis kulit dan bentuk wajah untuk menentukan teknik riasan yang sesuai.",
             "Memilih produk kosmetik yang tepat sesuai dengan jenis kulit, warna kulit, dan tujuan riasan.",
             "Merawat peralatan dan bahan riasan agar tetap bersih dan awet.",
@@ -568,10 +589,10 @@ const Tatarias = () => {
         {
           title: "Indikator Pencapaian Kompetensi",
           items: [
-            "Menguraikan konsep dasar pemangkasan rambut Teknik uniform layer.",
-            "Memilih alat pemangkasan rambut sesuai fungsi dan cara penggunaan alat.",
-            "Menganalisis Teknik pemangkasan rambut Teknik uniform layer sesuai dengan konsep pemangkasan.",
-            "Merencanakan pemangkasan rambut Teknik uniform layer sesuai dengan prosedur.",
+            "Menguraikan konsep dasar tata rias wajah.",
+            "Memilih alat dan bahan rias wajah sesuai fungsi dan cara penggunaan.",
+            "Menganalisis teknik tata rias wajah sesuai dengan konsep dasar.",
+            "Merencanakan tata rias wajah sesuai dengan prosedur.",
           ],
         },
       ],
@@ -580,23 +601,17 @@ const Tatarias = () => {
       title: "Apa yang dibutuhkan",
       icon: <CgCheckO />,
       descriptions: [
-        "Untuk mengikuti kursus ini dengan efektif, Anda akan memerlukan beberapa peralatan dan bahan penting. Berikut adalah daftar lengkap yang akan membantu Anda mempersiapkan diri untuk memulai perjalanan belajar Tatarias Anda.",
+        "Untuk mengikuti kursus ini dengan efektif, Anda akan memerlukan beberapa peralatan dan bahan penting. Berikut adalah daftar lengkap yang akan membantu Anda mempersiapkan diri untuk memulai perjalanan belajar Tata Rias Anda.",
       ],
       details: [
-        { icon: <FaScissors />, text: "Gunting profesional" },
-        { icon: <FaRuler />, text: "Sisir dan sikat rambut" },
-        {
-          icon: <FaSprayCan />,
-          text: "Produk styling (gel, mousse, hairspray)",
-        },
-        { icon: <PiHairDryerFill />, text: "Pengering rambut" },
-        { icon: <BsFillCheckCircleFill />, text: "Cape potong rambut" },
-        { icon: <BsFillCheckCircleFill />, text: "Botol semprot" },
-        { icon: <BsFillCheckCircleFill />, text: "Handuk kecil" },
-        {
-          icon: <BsFillCheckCircleFill />,
-          text: "Mannequin head untuk latihan",
-        },
+        { icon: <FaScissors />, text: "Kuas makeup set" },
+        { icon: <FaRuler />, text: "Spons dan beauty blender" },
+        { icon: <FaSprayCan />, text: "Foundation dan concealer" },
+        { icon: <PiHairDryerFill />, text: "Bedak tabur dan padat" },
+        { icon: <FaEye />, text: "Eyeshadow palette" },
+        { icon: <GiSemiClosedEye />, text: "Mascara dan eyeliner" },
+        { icon: <GiLipstick />, text: "Lipstick dan lip liner" },
+        { icon: <FaRegSmileBeam />, text: "Blush on dan bronzer" },
       ],
     },
     {
@@ -607,12 +622,12 @@ const Tatarias = () => {
       ],
       videos: [
         {
-          title: "Pengenalan Alat dan Bahan",
+          title: "Pengenalan Alat dan Bahan Tata Rias",
           src: "https://www.youtube.com/watch?v=c96leQ_fRII",
           type: "youtube",
         },
         {
-          title: "Dasar-dasar Pemangkasan",
+          title: "Dasar-dasar Tata Rias Wajah",
           src: "https://youtu.be.com/watch?v=7RGiRqOVxeo",
           type: "youtube",
         },
@@ -631,122 +646,99 @@ const Tatarias = () => {
       {
         subtitle: "Persiapan Alat dan Bahan",
         description:
-          "Berbagai alat pemangkasan rambut dapat digunakan, dengan ketentuan memenuhi standar minimal kebutuhan, kelayakan dan aman digunakan, contohnya:",
+          "Berbagai alat tata rias wajah dapat digunakan, dengan ketentuan memenuhi standar minimal kebutuhan, kelayakan dan aman digunakan, contohnya:",
         categories: [
           {
             title: "Pertama",
-            description: "Gunting Pangkas Bilah Satu",
+            description: "Kuas Makeup",
             items: [
               {
-                subtitle: "Bentuk 4 1/2",
+                subtitle: "Kuas Foundation",
                 image: foto1,
-                description:
-                  "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
+                description: "Mengaplikasikan foundation secara merata",
               },
               {
-                subtitle: "Bentuk 5",
-                image: foto1,
-                description:
-                  "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
+                subtitle: "Kuas Blush On",
+                image: foto2,
+                description: "Mengaplikasikan perona pipi",
               },
               {
-                subtitle: "Bentuk 5 1/2",
-                image: foto1,
-                description:
-                  "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
+                subtitle: "Kuas Eyeshadow",
+                image: foto3,
+                description: "Mengaplikasikan eyeshadow pada kelopak mata",
               },
             ],
           },
           {
             title: "Kedua",
-
-            description: "Gunting Penipis",
+            description: "Spons dan Beauty Blender",
             items: [
               {
-                subtitle: "Bentuk Satu Bilah",
-                image: foto1,
-                description:
-                  "Memangkas garis pemangkasan lengkung karena memiliki gigi yang lebih panjang.",
+                subtitle: "Beauty Blender",
+                image: foto4,
+                description: "Mengaplikasikan dan meratakan foundation",
               },
               {
-                subtitle: "Bentuk Dua Bilah",
-                image: foto1,
-                description: "Memangkas garis pemangkasan lurus",
+                subtitle: "Spons Bedak",
+                image: foto5,
+                description: "Mengaplikasikan bedak tabur atau padat",
               },
             ],
           },
           {
             title: "Ketiga",
-            description: "Alat Penunjang Pemangkasan",
+            description: "Alat Penunjang Tata Rias",
             items: [
               {
-                subtitle: "Cape Penyampoan",
-                image: foto1,
+                subtitle: "Palet Makeup",
+                image: foto6,
+                description: "Mencampur foundation atau concealer",
+              },
+              {
+                subtitle: "Penjepit Bulu Mata",
+                image: foto7,
+                description: "Melentikkan bulu mata sebelum aplikasi mascara",
+              },
+              {
+                subtitle: "Pisau Alis",
+                image: foto8,
+                description: "Membentuk dan merapikan alis",
+              },
+              {
+                subtitle: "Pencukur Alis",
+                image: foto9,
+                description: "Merapikan dan membentuk alis",
+              },
+              {
+                subtitle: "Kapas",
+                image: foto10,
+                description: "Membersihkan wajah atau menghapus makeup",
+              },
+              {
+                subtitle: "Cotton Bud",
+                image: foto11,
+                description: "Mengoreksi kesalahan kecil dalam aplikasi makeup",
+              },
+              {
+                subtitle: "Cermin",
+                image: foto12,
+                description: "Melihat hasil riasan dan detail wajah",
+              },
+              {
+                subtitle: "Tissue",
+                image: foto13,
                 description:
-                  "Melindungi baju klien dari percikan air saat pencucian rambut",
+                  "Menghapus kelebihan produk atau membersihkan alat",
               },
               {
-                subtitle: "Cape Pangkas",
-                image: foto1,
-                description:
-                  "Menghalangi rambut yang telah dipangkas agar tidak menempel pada baju atau kulit klien",
+                subtitle: "Tempat Kuas",
+                image: foto14,
+                description: "Menyimpan kuas agar tetap bersih dan rapi",
               },
               {
-                subtitle: "Handuk Kecil",
-                image: foto1,
-                description:
-                  "Mengeringkan rambut dan melindungi bagian tengkuk klien dari pecikan kosmetik",
-              },
-              {
-                subtitle: "Sisir Besar",
-                image: foto1,
-                description:
-                  "Menyisir rambut secara umum setelah memncuci rambut",
-              },
-              {
-                subtitle: "Sisir Berekor",
-                image: foto1,
-                description: "Memudahkan pembagian (parting) rambut",
-              },
-              {
-                subtitle: "Sisir Pangkas",
-                image: foto1,
-                description: "Alat bantu pemangkasan",
-              },
-              {
-                subtitle: "Sisir Leher",
-                image: foto1,
-                description:
-                  "Membersihkan leher dan bahu dari sisa potongan rambut",
-              },
-              {
-                subtitle: "Sisir Blow",
-                image: foto1,
-                description:
-                  "Membentuk volume pada rambut selama proses penataan Teknik blowdryer",
-              },
-              {
-                subtitle: "Jepit Bergerigi",
-                image: foto1,
-                description: "Untuk menjepit rambut yang telah di parting",
-              },
-              {
-                subtitle: "Jepit Bebek",
-                image: foto1,
-                description:
-                  "Untuk menejpit dan membagi section rambut yang akan dipangkas",
-              },
-              {
-                subtitle: "Water Sprayer",
-                image: foto1,
-                description:
-                  "Membasahi rambut agar ujung rambut tetap dalam keadaan basah saat pemangkasan",
-              },
-              {
-                subtitle: "Hair Dryer",
-                image: foto1,
-                description:
-                  "Mengeringkan rambut dengan suhuh yag dapat diatur sesuai kebutuhan",
+                subtitle: "Tas Makeup",
+                image: foto15,
+                description: "Menyimpan dan membawa peralatan makeup",
               },
             ],
           },
@@ -754,31 +746,36 @@ const Tatarias = () => {
       },
       {
         subtitle: "Persiapan Pribadi",
-        description: "Seorang hairstylist harus memperhatikan hal-hal berikut:",
+        description:
+          "Seorang makeup artist profesional harus mempersiapkan diri secara profesional sebelum melayani klien. Berikut adalah standar persiapan yang wajib dilakukan:",
         items: [
-          "Mengenakan riasan wajah sehingga wajah tampak segar dan cerah",
-          "Rambut ditata rapi dan tidak mengganggu pekerjaan",
-          "Memakai baju kerja tidak kusut, licin dan bersih/tidak bernoda, tidak terlalu sempit",
-          "Mengenakan sepatu dengan hak rendah dan terbuat dari karet agar tidak licin",
-          "Tidak mengenakan perhiasan yang menyolok kecuali jam tangan",
-          "Menjaga bau mulut dan bau badan sehingga kebersihan gigi dan badan harus dijaga",
-          "Jaga kebersihan kuku dan kulit",
-          "Tampilkan ekspresi wajah yang ramah, dan sikap selalu ingin membantu pelanggan",
-          "Jaga suara bicara dan komunikasi dengan sopan",
-          "Siap mental dan penuh percaya diri",
+          "Mengenakan seragam kerja yang rapi dan profesional",
+          "Menjaga kebersihan diri termasuk kuku, rambut, dan nafas",
+          "Menggunakan makeup natural namun tetap profesional",
+          "Menata rambut dengan rapi agar tidak mengganggu pekerjaan",
+          "Menggunakan sepatu yang nyaman dan anti slip",
+          "Menghindari penggunaan perhiasan berlebihan",
+          "Menjaga kesehatan dan kebersihan tangan",
+          "Menggunakan masker saat diperlukan",
+          "Menjaga sikap profesional dan ramah",
+          "Mempersiapkan mental dan kepercayaan diri",
         ],
       },
       {
         subtitle: "Persiapan Klien",
-        description: [
-          "Persiapan klien dilakukan untuk meingkatkan daya Tarik dan kenyamanan selama pelayanan pemangkasan. Berikan alas bahu dan pasangkan cape pemangkasan yang bersih dan menutup baju klien dengan sempurna, sehingga baju klien tidak kotor oleh serpihan potongan rambut.",
-          "Setelah menyelasikan Tindakan pemangkasan, kegiatan berkemas dilakukan untuk merapihkan Kembali area kerja sehingga bersih, kegiatan yang dilakukan dalam berkemas seperti :",
-        ],
+        description:
+          "Layanan makeup yang profesional memerlukan tahapan dan prosedur yang tepat. Berikut adalah prosedur standar dalam pelayanan makeup:",
         items: [
-          "Membersihkan alat-alat yang sudah dipakai, simpan kembali pada tempatnya",
-          "Menyimpan kosmetik pada tempatnya.",
-          "Membersihkan ruangan, membuang sampah pada tempatnya",
-          "Mematikan semua aliran listrik (apabila sudah tidak digunakan)",
+          "Melakukan konsultasi awal dengan klien tentang look yang diinginkan",
+          "Menganalisa jenis kulit dan warna kulit klien",
+          "Membersihkan wajah klien dengan produk yang sesuai",
+          "Mengaplikasikan skincare dan primer yang tepat",
+          "Melakukan color matching untuk foundation",
+          "Mengaplikasikan makeup sesuai teknik dan tahapan yang benar",
+          "Melakukan check up berkala selama proses makeup",
+          "Memastikan hasil akhir sesuai keinginan klien",
+          "Memberikan tips touch up dan maintenance",
+          "Mendokumentasikan hasil makeup (dengan izin klien)",
         ],
       },
     ],
@@ -788,41 +785,46 @@ const Tatarias = () => {
     {
       title: "Deskripsi Kelas",
       image: MaterialImage,
-      description: "Teknik Pemangkasan Rambut Uniform Layer",
+      description: "Teknik Dasar Tata Rias Wajah",
       content: {
         ringkasan:
-          "Kelas ini menyajikan pengetahuan komprehensif tentang teknik pemangkasan rambut Uniform Layer, mulai dari konsep dasar hingga prosedur praktis. Peserta akan mempelajari definisi, tujuan, komponen, dan langkah-langkah detail dalam melakukan pemangkasan Uniform Layer.",
+          "Kelas ini menyajikan pengetahuan komprehensif tentang teknik dasar tata rias wajah, mulai dari konsep dasar hingga prosedur praktis. Peserta akan mempelajari definisi, tujuan, komponen, dan langkah-langkah detail dalam melakukan tata rias wajah dasar.",
         tujuan: [
-          "Memahami konsep dan prinsip dasar teknik Uniform Layer",
-          "Mengidentifikasi tujuan dan manfaat pemangkasan Uniform Layer",
-          "Mengenali komponen-komponen penting dalam teknik Uniform Layer",
-          "Melaksanakan prosedur pemangkasan Uniform Layer dengan benar",
+          "Memahami konsep dan prinsip dasar teknik tata rias wajah",
+          "Mengidentifikasi tujuan dan manfaat tata rias wajah",
+          "Mengenali komponen-komponen penting dalam teknik tata rias wajah",
+          "Melaksanakan prosedur tata rias wajah dengan benar",
           "Mempersiapkan area kerja, alat, dan bahan yang diperlukan",
           "Menerapkan persiapan pribadi dan klien yang tepat",
-          "Melakukan kegiatan berkemas pasca-pemangkasan",
+          "Melakukan kegiatan berkemas pasca-tata rias",
         ],
         materi: [
           {
-            title: "Pengantar Teknik Uniform Layer",
+            title: "Pengantar Teknik Tata Rias Wajah",
             items: [
-              "Definisi dan etimologi pemangkasan",
-              "Penjelasan khusus tentang Uniform Layer",
+              "Definisi dan etimologi tata rias wajah",
+              "Penjelasan khusus tentang tata rias wajah dasar",
             ],
           },
           {
-            title: "Tujuan dan Manfaat Teknik Uniform Layer",
+            title: "Tujuan dan Manfaat Teknik Tata Rias Wajah",
             items: [],
           },
           {
-            title: "Komponen Teknik Uniform Layer",
-            items: ["Bentuk", "Tekstur", "Struktur", "Sudut Pemangkasan"],
+            title: "Komponen Teknik Tata Rias Wajah",
+            items: [
+              "Bentuk Wajah",
+              "Warna Kulit",
+              "Jenis Kulit",
+              "Koreksi Wajah",
+            ],
           },
           {
-            title: "Prosedur Pemangkasan Uniform Layer",
+            title: "Prosedur Tata Rias Wajah",
             items: [
               "Langkah-langkah detail",
-              "Teknik pengambilan dan pemangkasan rambut",
-              "Cross check dan finishing",
+              "Teknik aplikasi produk makeup",
+              "Finishing dan touch up",
             ],
           },
           {
@@ -841,7 +843,7 @@ const Tatarias = () => {
             ],
           },
           {
-            title: "Kegiatan Berkemas Pasca-Pemangkasan",
+            title: "Kegiatan Berkemas Pasca-Tata Rias",
             items: [],
           },
         ],
@@ -854,16 +856,16 @@ const Tatarias = () => {
         durasi: "8 jam atau 2 hari",
         target: [
           "Mahasiswa tata rias",
-          "Penata rambut pemula",
+          "Makeup artist pemula",
           "Profesional yang ingin meningkatkan keterampilan",
         ],
         evaluasi: [
           "Ujian tertulis untuk pemahaman teori",
-          "Praktik pemangkasan Uniform Layer",
+          "Praktik tata rias wajah",
           "Penilaian persiapan dan kebersihan area kerja",
         ],
         sertifikasi:
-          "Peserta yang berhasil menyelesaikan kelas dan lulus evaluasi akan menerima sertifikat kompetensi dalam Teknik Pemangkasan Rambut Uniform Layer.",
+          "Peserta yang berhasil menyelesaikan kelas dan lulus evaluasi akan menerima sertifikat kompetensi dalam Teknik Dasar Tata Rias Wajah.",
       },
     },
     {
@@ -873,71 +875,69 @@ const Tatarias = () => {
           image: TatariasBackground,
           title: "Konsep Modul",
           description:
-            "Materi yang terdapat dalam E-Modul ini menyajikan pengetahuan tentang pemangkasan rambut Teknik uniform layer.",
+            "Materi yang terdapat dalam E-Modul ini menyajikan pengetahuan tentang teknik dasar tata rias wajah.",
         },
         {
           image: FotoRambut,
-          title: "Apa itu Teknik Uniform Layer ?",
+          title: "Apa itu Teknik Tata Rias Wajah Dasar?",
           description:
-            "Secara “ethymologi”, kata pemangkasan terdiri dari kata “pangkas” yang artinya potong, sehingga pemangkasan merupakan tindakan memotong yang mana dalam dunia kecantikan tindakan pemangkasan rambut. Pengertian pemangkasan bisa diartikan sebagai tindakan untuk mengurangi panjang rambut semula dengan teknik-teknik tertentu, disesuaikan dengan bentuk wajah, jenis rambut, perawatan, pekerjaan dan kepribadian seseorang sehingga menghasilkan model pangkasan yang diinginkan oleh seseorang. Berdasarkan sudut pemangkatan, teknik pemangkasan dibagi dalam tiga teknik utama yaitu Pemangkasan teknik Solid, Pemangkasan teknik Graduasi, dan Pemangkasan teknik Layer. Pemangkasan bertrap penuh dikenal dengan istilah layer adalah pemangkasan yang dilakukan dengan sudut elevasi 90°-180°. Pemangkasan uniform layer adalah pemangkasan dengan sudut elevasi 90° merupakan bentuk pemangkasan mengikuti bentuk kepala, kepanjangan rambut yang sama.",
+            "Secara 'etimologi', kata tata rias terdiri dari kata 'tata' yang artinya atur, dan 'rias' yang artinya hias, sehingga tata rias merupakan tindakan mengatur atau menghias yang dalam dunia kecantikan tindakan menghias wajah. Pengertian tata rias wajah bisa diartikan sebagai seni mengubah penampilan wajah menjadi lebih sempurna menggunakan kosmetika yang dapat menutupi atau menyamarkan kekurangan-kekurangan yang ada pada wajah dan menonjolkan kelebihan yang ada pada wajah sehingga tercapai kecantikan yang sempurna. Tata rias wajah dasar adalah riasan wajah sehari-hari dengan penekanan pada penggunaan kosmetik yang minimal untuk mendapatkan hasil yang alami.",
         },
         {
           image: HairPhoto,
-          title: "Tujuan Teknik Uniform Layer",
+          title: "Tujuan Teknik Tata Rias Wajah Dasar",
           description: [
-            "Memperindah bentuk kepala",
-            "Mempermudah pengaturan rambut",
-            "Memberi kesan wajah oval",
-            "Mempertajam garis wajah",
-            "Mencegah rambut jatuh ke depan wajah",
-            "Mengikuti model yang sedang berlaku dan sebagainya",
+            "Meningkatkan penampilan wajah",
+            "Menutupi kekurangan pada wajah",
+            "Menonjolkan kelebihan pada wajah",
+            "Memberikan kesan segar pada wajah",
+            "Meningkatkan kepercayaan diri",
+            "Menyesuaikan penampilan dengan acara atau kesempatan tertentu",
           ],
         },
       ],
       multiSectionContent: [
         {
-          title: "Komponen Teknik Uniform Layer",
+          title: "Komponen Teknik Tata Rias Wajah Dasar",
           sections: [
             {
               image: Component1,
-              subTitle: "Bentuk",
+              subTitle: "Analisis Wajah",
               description:
-                "Pemangkasan Uniform Layer menunjukkan bentuk desain guntingan rambut yang membulat sesuai dengan bentuk kepala, dengan kepanjangan rambut yang sama panjang.",
+                "Tata rias wajah dasar dimulai dengan menganalisis bentuk wajah, jenis kulit, dan warna kulit untuk menentukan teknik dan produk yang sesuai.",
             },
             {
               image: Component2,
-              subTitle: "Tekstur",
+              subTitle: "Persiapan Kulit",
               description:
-                "Susunan permukaan rambut bertekstur aktif (seluruh cahaya yang jatuh diserap seluruhnya dan tidak ada cahaya yang dipantulkan kembali) Jatuhnya ujung-ujung rambut tersusun dengan teratur.",
+                "Membersihkan, melembabkan, dan mempersiapkan kulit wajah sebelum aplikasi makeup untuk hasil yang lebih baik dan tahan lama.",
             },
             {
               image: Component3,
-              subTitle: "Struktur",
+              subTitle: "Aplikasi Dasar",
               description:
-                "Struktur kerangka pemangkasan di setiap kepanjangan rambut jatuh di daerah yang sama, struktur kerangka pemangkasan uniform layer dengan kepanjangan rambut yang sama.",
+                "Pengaplikasian primer, foundation, dan concealer untuk menciptakan kanvas yang sempurna dan menutupi ketidaksempurnaan.",
             },
             {
               image: Component4,
-              subTitle: "Sudut Pemangkasan",
+              subTitle: "Teknik Contouring",
               description: (
                 <>
                   {
-                    "Uniform layer memiliki sudut sudut dan ketebalan rambut yang terbagi rata di seluruh kepala. Uniform layer memiliki sudut pemangkasan 90°. Setiap teknik pemangkasan memiliki pola garis yang berbeda. Adapun pola garis pemangkasan pada Uniform Layer yaitu:"
+                    "Teknik contouring dan highlighting digunakan untuk membentuk struktur wajah dan memberikan dimensi. Beberapa teknik dasar meliputi:"
                   }
                   {
                     <ol>
                       <li>
-                        <strong>Garis pola pangkas melengkung:</strong>{" "}
-                        Pemangkasan dilakukan dengan menggunakan pola pangkas
-                        hairline. Rambut sekeliling hairline dipangkas sesuai
-                        desain dan panjang yang diinginkan. Setelah itu
-                        dilanjutkan pemangkasan dari luar (Eksterior) ke arah
-                        dalam (Interior) dengan patokan pola tersebut.
+                        <strong>Contouring pipi:</strong> Mengaplikasikan produk
+                        lebih gelap di bawah tulang pipi untuk memberikan kesan
+                        tulang pipi yang tinggi.
                       </li>
                       <li>
-                        <strong>Garis pola pangkas datar:</strong> Pemangkasan
-                        dengan patokan dari bagian dalam dengan panjang yang
-                        diinginkan, kemudian pangkas ke arah luar.
+                        <strong>Highlight:</strong> Mengaplikasikan produk lebih
+                        terang pada bagian-bagian wajah yang menonjol seperti
+                        tulang pipi, batang hidung, dan dagu untuk memberikan
+                        kesan bercahaya.
                       </li>
                     </ol>
                   }
@@ -947,41 +947,42 @@ const Tatarias = () => {
           ],
         },
         {
-          title: "Langkah Prosedur Pemangkasan",
+          title: "Langkah Prosedur Tata Rias Wajah Dasar",
           sections: [
             {
               image: Step1,
               subTitle: "Pertama",
-              description: "Pahami garis pemangkasan uniform layer",
+              description: "Bersihkan wajah dan aplikasikan pelembab",
             },
             {
               image: Step2,
               subTitle: "Kedua",
               description:
-                "Ambil rambut mulai dari bagian poni tengah seperti pola pemangkasan uniform layer, dengan sudut pemangkasan 90°",
+                "Aplikasikan primer untuk mempersiapkan kulit dan membuat makeup lebih tahan lama",
             },
             {
               image: Step3,
               subTitle: "Ketiga",
               description:
-                "Lanjutkan Pemangkasan pada daerah interior dengan mengambil guide line dari potongan sebelumnya. Pemangkasan dilakukan dengan sudut 90°",
+                "Aplikasikan foundation sesuai dengan warna kulit, ratakan dengan beauty blender",
             },
             {
               image: Step4,
               subTitle: "Keempat",
               description:
-                "Lakukan hal yang sama pada bagian eksterior sesuai guide line, lakukan secara bertahap, hingga selesai pemangkasan",
+                "Gunakan concealer untuk menutupi lingkaran hitam dan noda",
             },
             {
               image: Step5,
               subTitle: "Kelima",
               description:
-                "Lakukan crosss check, yakinkan seluruh bagian rambut sudah rata dan lurus juga simetris.",
+                "Set makeup dengan bedak tabur atau padat untuk hasil yang tahan lama",
             },
             {
               image: Step6,
               subTitle: "Keenam",
-              description: "Hasil akhir pemangkasan",
+              description:
+                "Aplikasikan blush on, eyeshadow, mascara, dan lipstik untuk sentuhan akhir",
             },
           ],
         },
@@ -994,11 +995,11 @@ const Tatarias = () => {
           sectionTitle: "Pengenalan",
           videos: [
             {
-              title: "Pengenalan Tatarias",
+              title: "Pengenalan Tata Rias Wajah",
               src: "https://youtu.be/c96leQ_fRII",
             },
             {
-              title: "Tatarias",
+              title: "Dasar-dasar Tata Rias",
               src: "https://youtu.be/c96leQ_fRII",
             },
           ],
@@ -1007,11 +1008,11 @@ const Tatarias = () => {
           sectionTitle: "Tingkat Lanjut",
           videos: [
             {
-              title: "Tatarias Belajar",
+              title: "Teknik Contouring Lanjutan",
               src: "https://youtu.be/c96leQ_fRII",
             },
             {
-              title: "Tatarias Akhir",
+              title: "Tata Rias untuk Acara Khusus",
               src: "https://youtu.be/c96leQ_fRII",
             },
           ],
@@ -1024,116 +1025,121 @@ const Tatarias = () => {
         multipleChoice: [
           {
             question:
-              "Tindakan mengurangi panjang rambut semula dengan teknik tertentu, sesuai dengan bentuk wajah, jenis rambut, perawakan, pekerjaan dan kepribadian seseorang adalah definisi dari…",
+              "Tindakan mengubah penampilan wajah menjadi lebih sempurna menggunakan kosmetika adalah definisi dari…",
             options: [
-              "Pemangkasan",
-              "Pewarnaan",
-              "Pengeritingan",
-              "Pelurusan",
-              "Styling",
+              "Tata rias wajah",
+              "Perawatan wajah",
+              "Facial",
+              "Massage wajah",
+              "Peeling wajah",
             ],
             answer: 0,
           },
           {
-            question:
-              "Tujuan pemangkasan rambut adalah sebagai berikut, kecuali…",
-            image: PilihanGanda,
+            question: "Tujuan tata rias wajah adalah sebagai berikut, kecuali…",
             options: [
-              "Mengurangi Panjang Rambut",
-              "Mengikuti Trend",
-              "Mengubah Bentuk Kepala",
-              "Merapikan Rambut",
-              "Mengubah Penampilan",
+              "Meningkatkan penampilan",
+              "Menutupi kekurangan",
+              "Mengubah bentuk wajah secara permanen",
+              "Menonjolkan kelebihan",
+              "Memberikan kesan segar",
             ],
             answer: 2,
           },
           {
             question:
-              "Karyawan salon yang biasa menangani pemangkasan disebut…",
-            options: ["Pelayan", "Capster", "Beauticient", "Suster", "Blester"],
-            answer: 1,
-          },
-          {
-            question:
-              "Susunan permukaan rambut yang dapat diraba, dilihat dan dirasakan adalah…",
+              "Profesional yang biasa menangani tata rias wajah disebut…",
+            image: Component1,
             options: [
-              "Struktur Rambut",
-              "Tekstur Rambut",
-              "Pola Pemangkasan",
-              "Arah Pemangkasan",
-              "Arah Pertumbuhan Rambut",
-            ],
-            answer: 1,
-          },
-          {
-            question:
-              "Penipisan pada rambut yang tebal dapat dilakukan dengan menggunakan alat…",
-            options: [
-              "Gunting",
-              "Gunting Penipisan",
-              "Gunting Bilah Satur",
-              "Mata Pisau",
-              "Cutter",
-            ],
-            answer: 1,
-          },
-          {
-            question:
-              "Pengeringan rambut yang dilakukan dengan cara menggunakan sisir blow juga dikenal dengan Teknik…",
-            options: [
-              "Teknik blow dry",
-              "Teknik block dry",
-              "Teknik parting dry",
-              "Teknik natural dry",
-              "Teknik finger dry",
-            ],
-            answer: 0,
-          },
-          {
-            question:
-              "Jepit gerigi atau jepit bebek dalam proses pemangkasan digunakan untuk…",
-            options: [
-              "Menjepit rambut yang diparting",
-              "Menjepit cape klien",
-              "Meringkas rambut",
-              "Membuat rambut menjadi berombak",
-              "Menjepit rambut operator",
-            ],
-            answer: 0,
-          },
-          {
-            question:
-              "Pemangkasan yang dilakukan dengan cara mengurangi sebagian panjang rambut dengan sudut pengangkatan 90° dinamakan dengan Teknik Pemangkasan…",
-            options: [
-              "Solid",
-              "Graduation",
-              "Uniform Layer",
-              "Increase Layer",
-              "Convace",
+              "Perias",
+              "Beautician",
+              "Makeup Artist",
+              "Estetisian",
+              "Kosmetolog",
             ],
             answer: 2,
           },
           {
             question:
-              "Saat melakukan pemangkasan rambut, rambut harus dalam keadaan basah agar mempermudah dalam pemangkasan. Alat yang digunakan adalah…",
+              "Produk yang digunakan untuk menyamarkan noda atau lingkaran hitam di bawah mata adalah…",
             options: [
-              "Gunting Pangkas",
-              "Sprayer",
-              "Cape Pangkas",
-              "Shower",
-              "Hairdryer",
+              "Foundation",
+              "Concealer",
+              "Blush On",
+              "Highlighter",
+              "Bedak",
             ],
             answer: 1,
           },
           {
             question:
-              "Berikut ini hal yang penting dilakukan saat selesai melakukan pemangkasan rambut, kecuali…",
+              "Teknik untuk membentuk struktur wajah dengan menggunakan produk yang lebih gelap dari warna kulit disebut…",
             options: [
-              "Penataaan Rambut",
-              "Melakukan Pembersihan area leher dan bahu",
-              "Memberikan saran pasca pemangkasan",
-              "Melakukan Pengecekan",
-              "Menentukan guide line",
+              "Highlighting",
+              "Contouring",
+              "Strobing",
+              "Baking",
+              "Setting",
+            ],
+            answer: 1,
+          },
+          {
+            question:
+              "Proses mempersiapkan kulit sebelum aplikasi makeup agar hasil lebih tahan lama disebut…",
+            options: [
+              "Priming",
+              "Setting",
+              "Finishing",
+              "Cleansing",
+              "Moisturizing",
+            ],
+            answer: 0,
+          },
+          {
+            question:
+              "Alat berbentuk telur yang digunakan untuk meratakan foundation disebut…",
+            options: [
+              "Powder puff",
+              "Makeup sponge",
+              "Beauty blender",
+              "Kuas foundation",
+              "Spatula makeup",
+            ],
+            answer: 2,
+          },
+          {
+            question:
+              "Tata rias wajah yang dilakukan dengan cara mengaplikasikan kosmetik secara tipis untuk hasil yang natural disebut…",
+            options: [
+              "Tata rias panggung",
+              "Tata rias karakter",
+              "Tata rias fantasi",
+              "Tata rias korektif",
+              "Tata rias sehari-hari",
+            ],
+            answer: 4,
+          },
+          {
+            question:
+              "Untuk membuat mata terlihat lebih besar, produk yang diaplikasikan pada garis air mata adalah…",
+            options: [
+              "Eyeliner hitam",
+              "Eyeliner putih atau nude",
+              "Maskara",
+              "Eyeshadow gelap",
+              "Bulu mata palsu",
+            ],
+            answer: 1,
+          },
+          {
+            question:
+              "Berikut ini hal yang penting dilakukan saat selesai melakukan tata rias wajah, kecuali…",
+            options: [
+              "Mengaplikasikan setting spray",
+              "Memberikan saran perawatan pasca makeup",
+              "Melakukan koreksi akhir",
+              "Membersihkan area kerja",
+              "Mencuci wajah klien",
             ],
             answer: 4,
           },
@@ -1141,35 +1147,35 @@ const Tatarias = () => {
         essay: [
           {
             question:
-              "Jelaskan langkah-langkah dalam melakukan pemangkasan teknik uniform layer!",
+              "Jelaskan langkah-langkah dalam melakukan tata rias wajah dasar!",
             image: SalonSoal,
             keyWords: [
-              "basahi rambut",
-              "bagi rambut",
-              "sudut 90 derajat",
-              "potong merata",
-              "periksa hasil",
+              "bersihkan wajah",
+              "aplikasikan primer",
+              "foundation",
+              "concealer",
+              "set dengan bedak",
             ],
           },
           {
-            question: "Apa perbedaan antara texturizing dan blunt cutting?",
+            question: "Apa perbedaan antara highlighting dan contouring?",
             keyWords: [
-              "tekstur",
-              "ujung rambut",
-              "volume",
-              "garis lurus",
-              "ketebalan",
+              "terang",
+              "gelap",
+              "menonjolkan",
+              "menyamarkan",
+              "dimensi wajah",
             ],
           },
           {
             question:
-              "Bagaimana cara memastikan hasil pemangkasan uniform layer sudah tepat?",
+              "Bagaimana cara memilih shade foundation yang tepat untuk kulit?",
             keyWords: [
-              "simetris",
-              "panjang sama",
-              "jatuh merata",
-              "bentuk bulat",
-              "cek dari berbagai sudut",
+              "uji di rahang",
+              "sesuaikan undertone",
+              "cek di bawah sinar alami",
+              "pertimbangkan jenis kulit",
+              "sesuaikan dengan musim",
             ],
           },
         ],
@@ -1635,7 +1641,7 @@ const Tatarias = () => {
           </div>
         </div>
       )}
-      <Footer />
+      <Footer theme="dark" />
     </div>
   );
 };

@@ -14,8 +14,16 @@ import Footer from "../components/Footer";
 import Pengenalan from "../sections/Pengenalan";
 import Explore from "../sections/Explore";
 import Service from "../sections/Service";
+import PDFplayer from "../components/PDFplayer";
 import Review from "../sections/Review";
+import Logo from "../sections/Logo";
 import Contact from "../sections/Contact";
+
+import Waloon from "../assets/images/logo-brand/waloon.png";
+import Spariyon from "../assets/images/logo-brand/Spariyon.png";
+import Pantene from "../assets/images/logo-brand/pantene.png";
+import M from "../assets/images/logo-brand/M.png";
+import Glory from "../assets/images/logo-brand/glory.png";
 
 const sliderSettings = {
   dots: true,
@@ -32,6 +40,14 @@ const sliderSettings = {
   pauseOnHover: false,
   pauseOnFocus: false,
 };
+
+const brands = [
+  { name: "Brand 1", logo: Waloon },
+  { name: "Brand 2", logo: Spariyon },
+  { name: "Brand 3", logo: Pantene },
+  { name: "Brand 4", logo: M },
+  { name: "Brand 5", logo: Glory },
+];
 
 const WelcomeSection = ({ onStartLearning }) => (
   <div
@@ -69,7 +85,18 @@ const MainContent = ({ scrollToService, serviceRef, contentRef }) => (
       <Service />
     </div>
     <Explore />
+    <PDFplayer
+      pdfUrl={
+        process.env.PUBLIC_URL +
+        "/pdfs/Buku Panduan Pembuatan Masker Beras Merah dan Yoghurt untuk Kelembapan Kulit Wajah Kering_Tariyana Putri.pdf"
+      }
+      title="Buku Panduan Pembuatan Masker Beras Merah dan Yoghurt"
+    />
     <Review scrollToService={scrollToService} />
+    <Logo
+      brands={brands}
+      text="Brand yang Sudah Mempercayai Kami" // opsional
+    />
     <Contact />
   </div>
 );

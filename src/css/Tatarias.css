@@ -779,7 +779,6 @@ body {
 .tool-item img {
   width: 100%;
   height: 150px;
-  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
@@ -1048,16 +1047,25 @@ input[type="radio"]:hover {
 .keyword-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding: 0 60px 0 60px;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 1rem;
 }
 
 .keyword {
   background-color: var(--primary-color);
   color: white;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
   font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.keyword:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  background-color: var(--secondary-color);
 }
 
 .submit-button,
@@ -1313,16 +1321,16 @@ input[type="radio"]:hover {
   .hero-content h1 {
     font-size: 3rem;
   }
-  
+
   .hero-content {
     padding-left: 60px;
   }
-  
+
   .hero-media {
     padding-right: 60px;
   }
 
-   .video-controls {
+  .video-controls {
     padding: 8px;
   }
 
@@ -1335,7 +1343,7 @@ input[type="radio"]:hover {
     width: 60px;
   }
 
-   .cover-text {
+  .cover-text {
     margin-bottom: 0.5rem;
   }
 
@@ -1364,7 +1372,7 @@ input[type="radio"]:hover {
     margin-bottom: 3rem;
   }
 
-    .hero-media {
+  .hero-media {
     padding-right: 0;
     width: 100%;
   }
@@ -1375,7 +1383,7 @@ input[type="radio"]:hover {
     max-width: calc(100% - 2rem);
   }
 
-   .video-controls {
+  .video-controls {
     padding: 6px;
   }
 
@@ -1400,7 +1408,7 @@ input[type="radio"]:hover {
 }
 
 @media (max-width: 768px) {
-   .tatarias-hero {
+  .tatarias-hero {
     padding: 3rem 1rem;
   }
 
@@ -1410,7 +1418,7 @@ input[type="radio"]:hover {
     padding-right: 1rem;
   }
 
-   .hero-content h1 {
+  .hero-content h1 {
     font-size: 2.5rem;
   }
 
@@ -1452,7 +1460,7 @@ input[type="radio"]:hover {
     width: 40px;
   }
 
- .cover-content {
+  .cover-content {
     padding: 1.5rem;
   }
 
@@ -1468,12 +1476,12 @@ input[type="radio"]:hover {
   .cover-text p {
     font-size: min(3vw, 1rem);
   }
-  
+
   .cover-play-btn {
     width: 60px;
     height: 60px;
   }
-  
+
   .cover-play-btn svg {
     width: 30px;
     height: 30px;
@@ -1655,9 +1663,8 @@ input[type="radio"]:hover {
   }
 }
 
-
 @media (max-width: 480px) {
- .tatarias-hero h1 {
+  .tatarias-hero h1 {
     font-size: 2rem;
   }
 
@@ -1684,7 +1691,7 @@ input[type="radio"]:hover {
     width: 25px;
   }
 
-   .cover-content {
+  .cover-content {
     padding: 1rem;
   }
 
@@ -1700,12 +1707,12 @@ input[type="radio"]:hover {
   .cover-text p {
     font-size: min(3.5vw, 0.9rem);
   }
-  
+
   .cover-play-btn {
     width: 50px;
     height: 50px;
   }
-  
+
   .cover-play-btn svg {
     width: 24px;
     height: 24px;

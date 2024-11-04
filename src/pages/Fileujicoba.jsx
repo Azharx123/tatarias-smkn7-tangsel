@@ -1,42 +1,32 @@
-import { Pause, Play, Volume2, VolumeX } from "lucide-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  BsFillPauseFill,
-  BsFillPlayCircleFill
-} from "react-icons/bs";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
-import YouTube from "react-youtube";
-import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import "react-tabs/style/react-tabs.css";
+import "../css/Hairstyle.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import MaterialImage from "../assets/images/Hairstyle Material.png";
 
-import HairstylingBackground from "../assets/images/Class Hairstyling.png";
-import FotoRambut from "../assets/images/Foto Rambut.png";
-import Component1 from "../assets/images/komponen1.jpg";
-import Component2 from "../assets/images/komponen2.jpg";
-import Component3 from "../assets/images/komponen3.jpg";
-import Component4 from "../assets/images/komponen4.jpg";
-import Step1 from "../assets/images/langkah1.jpg";
-import Step2 from "../assets/images/langkah2.png";
-import Step3 from "../assets/images/langkah3.jpg";
-import Step4 from "../assets/images/langkah4.jpg";
-import Step5 from "../assets/images/langkah5.png";
-import Step6 from "../assets/images/langkah6.jpeg";
-import HairPhoto from "../assets/images/Uniform Layer.png";
-
-const HairStyling = () => {
+const Hairstyle = () => {
+  useEffect(() => {
+    AOS.init({});
+  }, []);
   const [activeTab, setActiveTab] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [volume, setVolume] = useState(100);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const videoRef = useRef(null);
-  const progressRef = useRef(null);
+  const heroVideoRef = useRef(null);
   const timeUpdateIntervalRef = useRef(null);
-  const [activeVideos, setActiveVideos] = useState({});
+  const [mcAnswers, setMcAnswers] = useState({});
+  const [essayAnswers, setEssayAnswers] = useState({});
+  const [showResults, setShowResults] = useState(false);
+  const [score, setScore] = useState(0);
+  const [errors, setErrors] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("");
+  const resultsRef = useRef(null);
+  const exerciseSectionRef = useRef(null);
 
   const stopTimeUpdate = useCallback(() => {
     if (timeUpdateIntervalRef.current) {
@@ -48,30 +38,30 @@ const HairStyling = () => {
   const startTimeUpdate = useCallback(() => {
     stopTimeUpdate();
     timeUpdateIntervalRef.current = setInterval(() => {
-      if (videoRef.current) {
-        setCurrentTime(videoRef.current.getCurrentTime());
+      if (heroVideoRef.current) {
+        setHeroCurrentTime(heroVideoRef.current.getCurrentTime());
       }
     }, 1000);
   }, [stopTimeUpdate]);
 
   useEffect(() => {
     const onPlayerReady = (event) => {
-      setDuration(event.target.getDuration());
-      setIsVideoReady(true);
+      setHeroDuration(event.target.getDuration());
+      setIsHeroVideoReady(true);
     };
 
     const onPlayerStateChange = (event) => {
       if (event.data === window.YT.PlayerState.PLAYING) {
-        setIsPlaying(true);
+        setIsHeroPlaying(true);
         startTimeUpdate();
       } else if (event.data === window.YT.PlayerState.PAUSED) {
-        setIsPlaying(false);
+        setIsHeroPlaying(false);
         stopTimeUpdate();
       }
     };
 
     const initializeYouTubePlayer = () => {
-      videoRef.current = new window.YT.Player("youtube-player", {
+      heroVideoRef.current = new window.YT.Player("youtube-player", {
         height: "100%",
         width: "100%",
         videoId: "mHQFy8IZPLY",
@@ -103,283 +93,227 @@ const HairStyling = () => {
     };
   }, [startTimeUpdate, stopTimeUpdate]);
 
-  const handlePlayPause = useCallback(() => {
-    if (!videoRef.current) return;
-
-    if (isPlaying) {
-      videoRef.current.pauseVideo();
-    } else {
-      videoRef.current.playVideo();
-    }
-    setIsPlaying(!isPlaying);
-  }, [isPlaying]);
-
-  const handleProgressChange = useCallback((e) => {
-    if (!videoRef.current) return;
-
-    const newTime = e.target.value;
-    videoRef.current.seekTo(newTime);
-    setCurrentTime(newTime);
-  }, []);
-
-  const handleVolumeChange = useCallback((e) => {
-    if (!videoRef.current) return;
-
-    const newVolume = e.target.value;
-    videoRef.current.setVolume(newVolume);
-    setVolume(newVolume);
-    setIsMuted(newVolume === 0);
-  }, []);
-
-  const toggleMute = useCallback(() => {
-    if (!videoRef.current) return;
-
-    if (isMuted) {
-      videoRef.current.unMute();
-      videoRef.current.setVolume(volume);
-    } else {
-      videoRef.current.mute();
-    }
-    setIsMuted(!isMuted);
-  }, [isMuted, volume]);
-
-  const formatTime = useCallback((time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  }, []);
-
-  const toggleVideo = (sectionIndex, videoIndex) => {
-    setActiveVideos((prev) => ({
-      ...prev,
-      [`${sectionIndex}-${videoIndex}`]: !prev[`${sectionIndex}-${videoIndex}`],
-    }));
+  const handleMCAnswer = (questionIndex, answerIndex) => {
+    setMcAnswers((prev) => {
+      const newAnswers = { ...prev };
+      if (newAnswers[questionIndex] === answerIndex) {
+        delete newAnswers[questionIndex];
+      } else {
+        newAnswers[questionIndex] = answerIndex;
+      }
+      return newAnswers;
+    });
+    setErrors((prev) => ({ ...prev, [`mc-${questionIndex}`]: null }));
   };
 
-  const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  const handleEssayAnswer = (questionIndex, content) => {
+    setEssayAnswers((prev) => ({ ...prev, [questionIndex]: content }));
+    setErrors((prev) => ({ ...prev, [`essay-${questionIndex}`]: null }));
   };
 
-  const VideoPlayer = ({ src }) => {
-    const videoId = src.split("v=")[1]?.split("&")[0] || src.split("/").pop();
-    return (
-      <YouTube videoId={videoId} opts={{ width: "100%", height: "315" }} />
+  const calculateScore = () => {
+    let totalScore = 0;
+    const mcQuestions =
+      hairstyles.find((style) => style.title === "Latihan")?.questions
+        ?.multipleChoice || [];
+    const essayQuestions =
+      hairstyles.find((style) => style.title === "Latihan")?.questions?.essay ||
+      [];
+
+    mcQuestions.forEach((q, index) => {
+      if (mcAnswers[index] === q.answer) totalScore += 1;
+    });
+
+    essayQuestions.forEach((q, index) => {
+      const answer = essayAnswers[index] || "";
+      const matchedKeywords = q.keyWords.filter((keyword) =>
+        answer.toLowerCase().includes(keyword.toLowerCase())
+      );
+      totalScore += matchedKeywords.length / q.keyWords.length;
+    });
+
+    const percentageScore =
+      (totalScore / (mcQuestions.length + essayQuestions.length)) * 100;
+    setScore(percentageScore.toFixed(2));
+  };
+
+  const validateAnswers = () => {
+    const newErrors = {};
+    const mcQuestions =
+      hairstyles.find((style) => style.title === "Latihan")?.questions
+        ?.multipleChoice || [];
+    const essayQuestions =
+      hairstyles.find((style) => style.title === "Latihan")?.questions?.essay ||
+      [];
+
+    mcQuestions.forEach((_, index) => {
+      if (mcAnswers[index] === undefined) {
+        newErrors[`mc-${index}`] = "Harap pilih salah satu jawaban.";
+      }
+    });
+
+    essayQuestions.forEach((_, index) => {
+      if (!essayAnswers[index] || essayAnswers[index].trim() === "") {
+        newErrors[`essay-${index}`] = "Harap isi jawaban essay.";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateAnswers()) {
+      setShowPopup(true);
+      setPopupMessage("Apakah yakin ingin mengumpulkan?");
+      setPopupType("confirm");
+    } else {
+      setShowPopup(true);
+      setPopupMessage("Harap mengisi seluruh jawaban");
+      setPopupType("error");
+      scrollToFirstUnanswered();
+    }
+  };
+
+  const handleConfirmSubmit = () => {
+    calculateScore();
+    setShowResults(true);
+    setShowPopup(false);
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
+  const handleReset = () => {
+    setShowPopup(true);
+    setPopupMessage("Mau reset soal?");
+    setPopupType("reset");
+  };
+
+  const handleConfirmReset = () => {
+    setMcAnswers({});
+    setEssayAnswers({});
+    setShowResults(false);
+    setScore(0);
+    setErrors({});
+    setShowPopup(false);
+    scrollToExerciseSection();
+  };
+
+  const scrollToFirstUnanswered = () => {
+    const firstUnansweredQuestion = document.querySelector(
+      ".question.unanswered"
     );
+    if (firstUnansweredQuestion) {
+      firstUnansweredQuestion.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
+  const scrollToExerciseSection = () => {
+    if (exerciseSectionRef.current) {
+      exerciseSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
   const hairstyles = [
     {
-      title: "Materi",
-      content: [
-        {
-          image: HairstylingBackground,
-          title: "Konsep Modul",
-          description:
-            "Materi yang terdapat dalam E-Modul ini menyajikan pengetahuan tentang pemangkasan rambut Teknik uniform layer.",
-        },
-        {
-          image: FotoRambut,
-          title: "Apa itu Teknik Uniform Layer ?",
-          description:
-            "Secara “ethymologi”, kata pemangkasan terdiri dari kata “pangkas” yang artinya potong, sehingga pemangkasan merupakan tindakan memotong yang mana dalam dunia kecantikan tindakan pemangkasan rambut. Pengertian pemangkasan bisa diartikan sebagai tindakan untuk mengurangi panjang rambut semula dengan teknik-teknik tertentu, disesuaikan dengan bentuk wajah, jenis rambut, perawatan, pekerjaan dan kepribadian seseorang sehingga menghasilkan model pangkasan yang diinginkan oleh seseorang. Berdasarkan sudut pemangkatan, teknik pemangkasan dibagi dalam tiga teknik utama yaitu Pemangkasan teknik Solid, Pemangkasan teknik Graduasi, dan Pemangkasan teknik Layer. Pemangkasan bertrap penuh dikenal dengan istilah layer adalah pemangkasan yang dilakukan dengan sudut elevasi 90°-180°. Pemangkasan uniform layer adalah pemangkasan dengan sudut elevasi 90° merupakan bentuk pemangkasan mengikuti bentuk kepala, kepanjangan rambut yang sama.",
-        },
-        {
-          image: HairPhoto,
-          title: "Tujuan Teknik Uniform Layer",
-          description: [
-            "Memperindah bentuk kepala",
-            "Mempermudah pengaturan rambut",
-            "Memberi kesan wajah oval",
-            "Mempertajam garis wajah",
-            "Mencegah rambut jatuh ke depan wajah",
-            "Mengikuti model yang sedang berlaku dan sebagainya",
-          ],
-        },
-      ],
-      multiSectionContent: [
-        {
-          title: "Komponen Teknik Uniform Layer",
-          sections: [
-            {
-              image: Component1,
-              subTitle: "Bentuk",
-              description:
-                "Pemangkasan Uniform Layer menunjukkan bentuk desain guntingan rambut yang membulat sesuai dengan bentuk kepala, dengan kepanjangan rambut yang sama panjang.",
-            },
-            {
-              image: Component2,
-              subTitle: "Tekstur",
-              description:
-                "Susunan permukaan rambut bertekstur aktif (seluruh cahaya yang jatuh diserap seluruhnya dan tidak ada cahaya yang dipantulkan kembali) Jatuhnya ujung-ujung rambut tersusun dengan teratur.",
-            },
-            {
-              image: Component3,
-              subTitle: "Struktur",
-              description:
-                "Struktur kerangka pemangkasan di setiap kepanjangan rambut jatuh di daerah yang sama, struktur kerangka pemangkasan uniform layer dengan kepanjangan rambut yang sama.",
-            },
-            {
-              image: Component4,
-              subTitle: "Sudut Pemangkasan",
-              description: (
-                <>
-                  {
-                    "Uniform layer memiliki sudut sudut dan ketebalan rambut yang terbagi rata di seluruh kepala. Uniform layer memiliki sudut pemangkasan 90°. Setiap teknik pemangkasan memiliki pola garis yang berbeda. Adapun pola garis pemangkasan pada Uniform Layer yaitu:"
-                  }
-                  {
-                    <ol>
-                      <li>
-                        <strong>Garis pola pangkas melengkung:</strong>{" "}
-                        Pemangkasan dilakukan dengan menggunakan pola pangkas
-                        hairline. Rambut sekeliling hairline dipangkas sesuai
-                        desain dan panjang yang diinginkan. Setelah itu
-                        dilanjutkan pemangkasan dari luar (Eksterior) ke arah
-                        dalam (Interior) dengan patokan pola tersebut.
-                      </li>
-                      <li>
-                        <strong>Garis pola pangkas datar:</strong> Pemangkasan
-                        dengan patokan dari bagian dalam dengan panjang yang
-                        diinginkan, kemudian pangkas ke arah luar.
-                      </li>
-                    </ol>
-                  }
-                </>
-              ),
-            },
-          ],
-        },
-        {
-          title: "Langkah Prosedur Pemangkasan",
-          sections: [
-            {
-              image: Step1,
-              subTitle: "Pertama",
-              description: "Pahami garis pemangkasan uniform layer",
-            },
-            {
-              image: Step2,
-              subTitle: "Kedua",
-              description:
-                "Ambil rambut mulai dari bagian poni tengah seperti pola pemangkasan uniform layer, dengan sudut pemangkasan 90°",
-            },
-            {
-              image: Step3,
-              subTitle: "Ketiga",
-              description:
-                "Lanjutkan Pemangkasan pada daerah interior dengan mengambil guide line dari potongan sebelumnya. Pemangkasan dilakukan dengan sudut 90°",
-            },
-            {
-              image: Step4,
-              subTitle: "Keempat",
-              description:
-                "Lakukan hal yang sama pada bagian eksterior sesuai guide line, lakukan secara bertahap, hingga selesai pemangkasan",
-            },
-            {
-              image: Step5,
-              subTitle: "Kelima",
-              description:
-                "Lakukan crosss check, yakinkan seluruh bagian rambut sudah rata dan lurus juga simetris.",
-            },
-            {
-              image: Step6,
-              subTitle: "Keenam",
-              description: "Hasil akhir pemangkasan",
-            },
-          ],
-        },
-      ],
+      title: "Deskripsi Kelas",
+      image: MaterialImage,
+      description: "Teknik Pemangkasan Rambut Uniform Layer",
+      content: {
+        ringkasan:
+          "Kelas ini menyajikan pengetahuan komprehensif tentang teknik pemangkasan rambut Uniform Layer, mulai dari konsep dasar hingga prosedur praktis. Peserta akan mempelajari definisi, tujuan, komponen, dan langkah-langkah detail dalam melakukan pemangkasan Uniform Layer.",
+        tujuan: [
+          "Memahami konsep dan prinsip dasar teknik Uniform Layer",
+          "Mengidentifikasi tujuan dan manfaat pemangkasan Uniform Layer",
+          "Mengenali komponen-komponen penting dalam teknik Uniform Layer",
+          "Melaksanakan prosedur pemangkasan Uniform Layer dengan benar",
+          "Mempersiapkan area kerja, alat, dan bahan yang diperlukan",
+          "Menerapkan persiapan pribadi dan klien yang tepat",
+          "Melakukan kegiatan berkemas pasca-pemangkasan",
+        ],
+        materi: [
+          {
+            title: "Kegiatan Berkemas Pasca-Pemangkasan",
+            items: [],
+          },
+        ],
+        metode: [
+          "Teori dan konsep",
+          "Demonstrasi teknik",
+          "Praktik langsung",
+          "Diskusi dan tanya jawab",
+        ],
+      },
+    },
+    {
+      title: "Latihan",
+      questions: {
+        multipleChoice: [
+          {
+            question:
+              "Tindakan mengurangi panjang rambut semula dengan teknik tertentu, sesuai dengan bentuk wajah, jenis rambut, perawakan, pekerjaan dan kepribadian seseorang adalah definisi dari…",
+            options: [
+              "Pemangkasan",
+              "Pewarnaan",
+              "Pengeritingan",
+              "Pelurusan",
+              "Styling",
+            ],
+            answer: 0,
+          },
+          {
+            question: "Apa perbedaan antara texturizing dan blunt cutting?",
+            keyWords: [
+              "tekstur",
+              "ujung rambut",
+              "volume",
+              "garis lurus",
+              "ketebalan",
+            ],
+          },
+        ],
+      },
     },
   ];
 
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+
+  const quillFormats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
+
   return (
-    <div className="hairstyling-page">
+    <div className="hairstyle-page">
       <Navbar />
-      <div className="hairstyling-container">
+      <div className="hairstyle-container">
         <main>
-          <section className="hairstyling-hero">
-            <div className="hero-content">
-              <h1>Belajar Hairstyling Untuk Pemula</h1>
-              <p>Pemangkasan Rambut Teknik Uniform Layer</p>
-              <button
-                onClick={() => scrollToSection("course-summary")}
-                className="cta-button"
-              >
-                Gabung Kelas
-              </button>
-            </div>
-            <div className="hero-media">
-              <div className="video-container">
-                <div className="video-wrapper">
-                  <div className="video-inner">
-                    <div id="youtube-player"></div>
-                    {(!isPlaying || !isVideoReady) && (
-                      <div className="video-cover">
-                        <div className="cover-content">
-                          <div className="cover-text">
-                            <h2>Teknik Uniform Layer</h2>
-                            <p>Tutorial Lengkap Pemangkasan Rambut</p>
-                          </div>
-                          <button
-                            className="cover-play-btn"
-                            onClick={handlePlayPause}
-                            aria-label="Play video"
-                          >
-                            <Play size={40} />
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                    <div className="video-controls">
-                      <button
-                        className="play-pause-btn"
-                        onClick={handlePlayPause}
-                        aria-label={isPlaying ? "Pause" : "Play"}
-                      >
-                        {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-                      </button>
-                      <div className="progress-container">
-                        <input
-                          type="range"
-                          ref={progressRef}
-                          className="progress-bar"
-                          min="0"
-                          max={duration}
-                          value={currentTime}
-                          onChange={handleProgressChange}
-                        />
-                        <span className="time-display">
-                          {formatTime(currentTime)} / {formatTime(duration)}
-                        </span>
-                      </div>
-                      <div className="volume-container">
-                        <button
-                          className="mute-btn"
-                          onClick={toggleMute}
-                          aria-label={isMuted ? "Unmute" : "Mute"}
-                        >
-                          {isMuted ? (
-                            <VolumeX size={24} />
-                          ) : (
-                            <Volume2 size={24} />
-                          )}
-                        </button>
-                        <input
-                          type="range"
-                          className="volume-slider"
-                          min="0"
-                          max="100"
-                          value={isMuted ? 0 : volume}
-                          onChange={handleVolumeChange}
-                          aria-label="Volume"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
           <section id="class-course">
             <h2>Class Course</h2>
             <Tabs className="hairstyle-tabs">
@@ -388,54 +322,145 @@ const HairStyling = () => {
                   <Tab key={index}>{style.title}</Tab>
                 ))}
               </TabList>
-
               {hairstyles.map((style, index) => (
                 <TabPanel key={index}>
-                  {style.title === "Video" ? (
-                    <div className="video-hairstyle">
-                      <h2 className="video-main-title">Video Materi</h2>
-                      {style.content.map((section, sectionIndex) => (
-                        <div key={sectionIndex} className="video-section">
-                          <div className="section-header">
-                            <div className="section-number">
-                              {sectionIndex + 1}
-                            </div>
-                            <h3 className="section-title">
-                              {section.sectionTitle}
-                            </h3>
-                          </div>
-                          <div className="video-list">
-                            {section.videos.map((video, videoIndex) => (
-                              <div key={videoIndex} className="video-item">
-                                <div
-                                  className="video-title-wrapper"
-                                  onClick={() =>
-                                    toggleVideo(sectionIndex, videoIndex)
-                                  }
-                                >
-                                  {activeVideos[
-                                    `${sectionIndex}-${videoIndex}`
-                                  ] ? (
-                                    <BsFillPauseFill className="play-icon" />
-                                  ) : (
-                                    <BsFillPlayCircleFill className="play-icon" />
-                                  )}
-                                  <span className="video-title">
-                                    {video.title}
-                                  </span>
+                  {style.title === "Latihan" ? (
+                    <div className="exercise-section" ref={exerciseSectionRef}>
+                      <h3>{style.title}</h3>
+                      <div className="multiple-choice">
+                        <h4>Pilihan Ganda:</h4>
+                        {style.questions.multipleChoice.map((q, i) => (
+                          <div
+                            key={i}
+                            className={`question ${
+                              errors[`mc-${i}`] ? "unanswered" : ""
+                            }`}
+                          >
+                            <div className="question-header">
+                              <div className="question-number">
+                                Soal {i + 1}
+                              </div>
+                              {q.image && (
+                                <div className="question-image-container">
+                                  <img
+                                    src={q.image}
+                                    alt={`Question ${i + 1}`}
+                                    className="question-image"
+                                  />
                                 </div>
-                                {activeVideos[
-                                  `${sectionIndex}-${videoIndex}`
-                                ] && (
-                                  <div className="video-player">
-                                    <VideoPlayer src={video.src} />
-                                  </div>
+                              )}
+                            </div>
+                            <p>{q.question}</p>
+                            <ul>
+                              {q.options.map((option, j) => (
+                                <li key={j}>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name={`mc-${i}`}
+                                      value={j}
+                                      checked={mcAnswers[i] === j}
+                                      onChange={() => handleMCAnswer(i, j)}
+                                      disabled={showResults}
+                                    />
+                                    {option}
+                                  </label>
+                                </li>
+                              ))}
+                            </ul>
+                            {errors[`mc-${i}`] && (
+                              <div className="error-message">
+                                {errors[`mc-${i}`]}
+                              </div>
+                            )}
+                            {showResults && (
+                              <div className="answer-feedback">
+                                {mcAnswers[i] === q.answer ? (
+                                  <span className="correct">Benar!</span>
+                                ) : (
+                                  <span className="incorrect">
+                                    Salah. Jawaban yang benar:{" "}
+                                    {q.options[q.answer]}
+                                  </span>
                                 )}
                               </div>
-                            ))}
+                            )}
                           </div>
+                        ))}
+                      </div>
+                      <div className="essay">
+                        <h4>Essay:</h4>
+                        {style.questions.essay.map((q, i) => (
+                          <div
+                            key={i}
+                            className={`question ${
+                              errors[`essay-${i}`] ? "unanswered" : ""
+                            }`}
+                          >
+                            <div className="question-header">
+                              <div className="question-number">
+                                Soal {i + 1}
+                              </div>
+                              {q.image && (
+                                <div className="question-image-container">
+                                  <img
+                                    src={q.image}
+                                    alt={`Question ${i + 1}`}
+                                    className="question-image"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                            <p>{q.question}</p>
+                            <ReactQuill
+                              theme="snow"
+                              value={essayAnswers[i] || ""}
+                              onChange={(content) =>
+                                handleEssayAnswer(i, content)
+                              }
+                              modules={quillModules}
+                              formats={quillFormats}
+                              readOnly={showResults}
+                            />
+                            {errors[`essay-${i}`] && (
+                              <div className="error-message">
+                                {errors[`essay-${i}`]}
+                              </div>
+                            )}
+                            {showResults && (
+                              <div className="answer-feedback">
+                                <p>Kata kunci yang diharapkan:</p>
+                                <div className="keyword-container">
+                                  {q.keyWords.map((keyword, j) => (
+                                    <span key={j} className="keyword">
+                                      {keyword}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      {!showResults ? (
+                        <button
+                          onClick={handleSubmit}
+                          className="submit-button"
+                        >
+                          Submit
+                        </button>
+                      ) : (
+                        <div className="results" ref={resultsRef}>
+                          <h4>Hasil:</h4>
+                          <p>Skor Anda: {score}%</p>
+                          <button
+                            onClick={handleReset}
+                            className="reset-button"
+                          >
+                            Reset
+                          </button>
                         </div>
-                      ))}
+                      )}
                     </div>
                   ) : null}
                 </TabPanel>
@@ -444,9 +469,31 @@ const HairStyling = () => {
           </section>
         </main>
       </div>
-      <Footer />
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>{popupMessage}</p>
+            {popupType === "error" && (
+              <button onClick={() => setShowPopup(false)}>Oke</button>
+            )}
+            {popupType === "confirm" && (
+              <>
+                <button onClick={handleConfirmSubmit}>Ya</button>
+                <button onClick={() => setShowPopup(false)}>Tidak</button>
+              </>
+            )}
+            {popupType === "reset" && (
+              <>
+                <button onClick={handleConfirmReset}>Ya</button>
+                <button onClick={() => setShowPopup(false)}>Tidak</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+      <Footer theme="dark" />
     </div>
   );
 };
 
-export default HairStyling;
+export default Hairstyle;

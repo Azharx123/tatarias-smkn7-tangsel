@@ -1,43 +1,53 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import ReactQuill from "react-quill";
-import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  BsFillPlayCircleFill,
   BsFillCheckCircleFill,
   BsFillPauseFill,
+  BsFillPlayCircleFill,
 } from "react-icons/bs";
-import { FaScissors, FaRuler, FaSprayCan } from "react-icons/fa6";
+import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import { FaSprayCan } from "react-icons/fa6";
 import { PiHairDryerFill } from "react-icons/pi";
-import YouTube from "react-youtube";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import YouTube from "react-youtube";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 import "../css/Treatment.css";
 
 import TreatmentBackground from "../assets/images/Class Treatment.png";
-import TreatmentImage from "../assets/images/Treatment Material.png";
 import FotoRambut from "../assets/images/Foto Rambut.png";
+import FotoKlien from "../assets/images/Treatment Klien.png";
+import Bahagia from "../assets/images/Pribadi Treatment.png";
+import Component1 from "../assets/images/Treatment komponen1.png";
+import Component2 from "../assets/images/Treatment komponen2.png";
+import Component3 from "../assets/images/Treatment komponen3.png";
+import Component4 from "../assets/images/Treatment komponen4.png";
+import Step1 from "../assets/images/Treatment langkah1.png";
+import Step2 from "../assets/images/Treatment langkah2.png";
+import Step3 from "../assets/images/Treatment langkah3.png";
+import Step4 from "../assets/images/Treatment langkah4.png";
+import Step5 from "../assets/images/Treatment langkah5.png";
+import Step6 from "../assets/images/Treatment langkah6.png";
+import Step7 from "../assets/images/Treatment langkah7.png";
+import Step8 from "../assets/images/Treatment langkah8.png";
+import TreatmentImage from "../assets/images/Treatment Material.png";
+import foto1 from "../assets/images/Treatment nomor1.png";
+import foto2 from "../assets/images/Treatment nomor2.png";
+import foto3 from "../assets/images/Treatment nomor3.jpg";
+import foto4 from "../assets/images/Treatment nomor4.png";
+import foto5 from "../assets/images/Treatment nomor5.png";
 import HairPhoto from "../assets/images/Uniform Layer.png";
-import Component1 from "../assets/images/komponen1.jpg";
-import Component2 from "../assets/images/komponen2.jpg";
-import Component3 from "../assets/images/komponen3.jpg";
-import Component4 from "../assets/images/komponen4.jpg";
-import Step1 from "../assets/images/langkah1.jpg";
-import Step2 from "../assets/images/langkah2.png";
-import Step3 from "../assets/images/langkah3.jpg";
-import Step4 from "../assets/images/langkah4.jpg";
-import Step5 from "../assets/images/langkah5.png";
-import Step6 from "../assets/images/langkah6.jpeg";
-import foto1 from "../assets/images/nomor1.png";
-import Bahagia from "../assets/images/Pribadi Bahagia.png";
-import FotoKlien from "../assets/images/klien.png";
-import PilihanGanda from "../assets/images/Sudut 90.png";
-import SalonSoal from "../assets/images/SalonSoal.png";
 
 const Treatment = () => {
+  useEffect(() => {
+    AOS.init({});
+  }, []);
+
   const [activeTab, setActiveTab] = useState(0);
   const [isHeroPlaying, setIsHeroPlaying] = useState(false);
   const [heroDuration, setHeroDuration] = useState(0);
@@ -545,33 +555,33 @@ const Treatment = () => {
       title: "Pengenalan",
       icon: <CgCalendarDates />,
       descriptions: [
-        "Website kami menyediakan semua yang kamu butuhkan untuk belajar hairstyling secara mandiri. Mulai dari video tutorial berkualitas tinggi, panduan langkah demi langkah, hingga forum diskusi yang aktif. Semua dikemas dalam satu platform yang mudah diakses dan dinavigasi.",
+        "Website kami menyediakan program pelatihan lengkap untuk treatment dan styling rambut profesional. Dari teknik dasar hingga advanced, semua dikemas dalam platform yang mudah diakses dengan materi berkualitas tinggi, video tutorial, dan forum diskusi interaktif.",
       ],
       details: [
         {
-          title: "Dibuat untuk",
+          title: "Program Ditujukan Untuk",
           items: [
-            "Orang yang ingin belajar Teknik Pangkas.",
-            "Pemula yang ingin belajar Teknik Uniform Layer.",
-            "Orang yang ingin belajar hal baru.",
+            "Calon hair stylist profesional",
+            "Praktisi salon yang ingin meningkatkan keahlian",
+            "Pemilik salon yang ingin memahami standar layanan",
           ],
         },
         {
           title: "Kompetensi Dasar",
           items: [
-            "Menerapkan pemangkasan rambut Teknik uniform layer.",
-            "Menganalisis berbagai jenis kulit dan bentuk wajah untuk menentukan teknik riasan yang sesuai.",
-            "Memilih produk kosmetik yang tepat sesuai dengan jenis kulit, warna kulit, dan tujuan riasan.",
-            "Merawat peralatan dan bahan riasan agar tetap bersih dan awet.",
+            "Menerapkan prosedur treatment rambut profesional",
+            "Menganalisis kondisi dan kebutuhan rambut klien",
+            "Memilih produk treatment yang sesuai dengan jenis rambut",
+            "Melakukan perawatan dan styling rambut sesuai standar",
           ],
         },
         {
           title: "Indikator Pencapaian Kompetensi",
           items: [
-            "Menguraikan konsep dasar pemangkasan rambut Teknik uniform layer.",
-            "Memilih alat pemangkasan rambut sesuai fungsi dan cara penggunaan alat.",
-            "Menganalisis Teknik pemangkasan rambut Teknik uniform layer sesuai dengan konsep pemangkasan.",
-            "Merencanakan pemangkasan rambut Teknik uniform layer sesuai dengan prosedur.",
+            "Mampu melakukan diagnosa rambut secara akurat",
+            "Menguasai teknik aplikasi produk treatment dengan benar",
+            "Dapat melakukan massage dan teknik styling profesional",
+            "Memberikan rekomendasi perawatan yang tepat untuk klien",
           ],
         },
       ],
@@ -580,291 +590,181 @@ const Treatment = () => {
       title: "Apa yang dibutuhkan",
       icon: <CgCheckO />,
       descriptions: [
-        "Untuk mengikuti kursus ini dengan efektif, Anda akan memerlukan beberapa peralatan dan bahan penting. Berikut adalah daftar lengkap yang akan membantu Anda mempersiapkan diri untuk memulai perjalanan belajar hairstyling Anda.",
+        "Program ini memerlukan peralatan profesional untuk hasil optimal. Berikut adalah daftar peralatan yang diperlukan untuk mengikuti program dengan efektif.",
       ],
       details: [
-        { icon: <FaScissors />, text: "Gunting profesional" },
-        { icon: <FaRuler />, text: "Sisir dan sikat rambut" },
-        {
-          icon: <FaSprayCan />,
-          text: "Produk styling (gel, mousse, hairspray)",
-        },
-        { icon: <PiHairDryerFill />, text: "Pengering rambut" },
-        { icon: <BsFillCheckCircleFill />, text: "Cape potong rambut" },
-        { icon: <BsFillCheckCircleFill />, text: "Botol semprot" },
-        { icon: <BsFillCheckCircleFill />, text: "Handuk kecil" },
+        { icon: <FaSprayCan />, text: "Produk treatment profesional" },
+        { icon: <PiHairDryerFill />, text: "Hair steamer" },
+        { icon: <BsFillCheckCircleFill />, text: "Cape treatment" },
+        { icon: <BsFillCheckCircleFill />, text: "Handuk khusus" },
+        { icon: <BsFillCheckCircleFill />, text: "Sisir treatment" },
+        { icon: <BsFillCheckCircleFill />, text: "Botol aplikator" },
+        { icon: <BsFillCheckCircleFill />, text: "Timer profesional" },
         {
           icon: <BsFillCheckCircleFill />,
-          text: "Mannequin head untuk latihan",
+          text: "Mannequin head untuk praktik",
         },
       ],
     },
     {
       title: "Video",
       icon: <BsFillPlayCircleFill />,
-      descriptions: [
-        "Dibawah ini adalah video yang wajib ditonton untuk pembelajaran yang memadai",
-      ],
+      descriptions: ["Setiap modul dilengkapi video pembelajaran komprehensif"],
       videos: [
         {
-          title: "Pengenalan Alat dan Bahan",
-          src: "https://www.youtube.com/watch?v=c96leQ_fRII",
+          title: "Dasar-dasar Treatment Rambut",
+          src: "https://www.youtube.com/watch?v=pGJNGtH_R0A",
           type: "youtube",
         },
         {
-          title: "Dasar-dasar Pemangkasan",
-          src: "https://youtu.be.com/watch?v=7RGiRqOVxeo",
+          title: "Teknik Massage Profesional",
+          src: "https://www.youtube.com/watch?v=YQvNUHaGGiw",
           type: "youtube",
         },
       ],
     },
   ];
 
-   const flexibleContent = {
-     title: "Persiapan Kerja",
-     contents: [
-       {
-         subtitle: "Persiapan Area Kerja",
-         description:
-           "Kondisi ruangan dalam keadaan nyaman, bersih dari kotoran dan debu",
-       },
-       {
-         subtitle: "Persiapan Alat dan Bahan",
-         description:
-           "Berbagai alat pemangkasan rambut dapat digunakan, dengan ketentuan memenuhi standar minimal kebutuhan, kelayakan dan aman digunakan, contohnya:",
-         categories: [
-           {
-             title: "Pertama",
-             description: "Gunting Pangkas Bilah Satu",
-             items: [
-               {
-                 subtitle: "Bentuk 4 1/2",
-                 image: foto1,
-                 description:
-                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
-               },
-               {
-                 subtitle: "Bentuk 5",
-                 image: foto1,
-                 description:
-                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
-               },
-               {
-                 subtitle: "Bentuk 5 1/2",
-                 image: foto1,
-                 description:
-                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
-               },
-             ],
-           },
-           {
-             title: "Kedua",
-
-             description: "Gunting Penipis",
-             items: [
-               {
-                 subtitle: "Bentuk Satu Bilah",
-                 image: foto1,
-                 description:
-                   "Memangkas garis pemangkasan lengkung karena memiliki gigi yang lebih panjang.",
-               },
-               {
-                 subtitle: "Bentuk Dua Bilah",
-                 image: foto1,
-                 description: "Memangkas garis pemangkasan lurus",
-               },
-             ],
-           },
-           {
-             title: "Ketiga",
-             description: "Alat Penunjang Pemangkasan",
-             items: [
-               {
-                 subtitle: "Cape Penyampoan",
-                 image: foto1,
-                 description:
-                   "Melindungi baju klien dari percikan air saat pencucian rambut",
-               },
-               {
-                 subtitle: "Cape Pangkas",
-                 image: foto1,
-                 description:
-                   "Menghalangi rambut yang telah dipangkas agar tidak menempel pada baju atau kulit klien",
-               },
-               {
-                 subtitle: "Handuk Kecil",
-                 image: foto1,
-                 description:
-                   "Mengeringkan rambut dan melindungi bagian tengkuk klien dari pecikan kosmetik",
-               },
-               {
-                 subtitle: "Sisir Besar",
-                 image: foto1,
-                 description:
-                   "Menyisir rambut secara umum setelah memncuci rambut",
-               },
-               {
-                 subtitle: "Sisir Berekor",
-                 image: foto1,
-                 description: "Memudahkan pembagian (parting) rambut",
-               },
-               {
-                 subtitle: "Sisir Pangkas",
-                 image: foto1,
-                 description: "Alat bantu pemangkasan",
-               },
-               {
-                 subtitle: "Sisir Leher",
-                 image: foto1,
-                 description:
-                   "Membersihkan leher dan bahu dari sisa potongan rambut",
-               },
-               {
-                 subtitle: "Sisir Blow",
-                 image: foto1,
-                 description:
-                   "Membentuk volume pada rambut selama proses penataan Teknik blowdryer",
-               },
-               {
-                 subtitle: "Jepit Bergerigi",
-                 image: foto1,
-                 description: "Untuk menjepit rambut yang telah di parting",
-               },
-               {
-                 subtitle: "Jepit Bebek",
-                 image: foto1,
-                 description:
-                   "Untuk menejpit dan membagi section rambut yang akan dipangkas",
-               },
-               {
-                 subtitle: "Water Sprayer",
-                 image: foto1,
-                 description:
-                   "Membasahi rambut agar ujung rambut tetap dalam keadaan basah saat pemangkasan",
-               },
-               {
-                 subtitle: "Hair Dryer",
-                 image: foto1,
-                 description:
-                   "Mengeringkan rambut dengan suhuh yag dapat diatur sesuai kebutuhan",
-               },
-             ],
-           },
-         ],
-       },
-       {
-         subtitle: "Persiapan Pribadi",
-         description:
-           "Seorang hairstylist harus memperhatikan hal-hal berikut:",
-         items: [
-           "Mengenakan riasan wajah sehingga wajah tampak segar dan cerah",
-           "Rambut ditata rapi dan tidak mengganggu pekerjaan",
-           "Memakai baju kerja tidak kusut, licin dan bersih/tidak bernoda, tidak terlalu sempit",
-           "Mengenakan sepatu dengan hak rendah dan terbuat dari karet agar tidak licin",
-           "Tidak mengenakan perhiasan yang menyolok kecuali jam tangan",
-           "Menjaga bau mulut dan bau badan sehingga kebersihan gigi dan badan harus dijaga",
-           "Jaga kebersihan kuku dan kulit",
-           "Tampilkan ekspresi wajah yang ramah, dan sikap selalu ingin membantu pelanggan",
-           "Jaga suara bicara dan komunikasi dengan sopan",
-           "Siap mental dan penuh percaya diri",
-         ],
-       },
-       {
-         subtitle: "Persiapan Klien",
-         description: [
-           "Persiapan klien dilakukan untuk meingkatkan daya Tarik dan kenyamanan selama pelayanan pemangkasan. Berikan alas bahu dan pasangkan cape pemangkasan yang bersih dan menutup baju klien dengan sempurna, sehingga baju klien tidak kotor oleh serpihan potongan rambut.",
-           "Setelah menyelasikan Tindakan pemangkasan, kegiatan berkemas dilakukan untuk merapihkan Kembali area kerja sehingga bersih, kegiatan yang dilakukan dalam berkemas seperti :",
-         ],
-         items: [
-           "Membersihkan alat-alat yang sudah dipakai, simpan kembali pada tempatnya",
-           "Menyimpan kosmetik pada tempatnya.",
-           "Membersihkan ruangan, membuang sampah pada tempatnya",
-           "Mematikan semua aliran listrik (apabila sudah tidak digunakan)",
-         ],
-       },
-     ],
-   };
+  const flexibleContent = {
+    title: "Persiapan Program",
+    contents: [
+      {
+        subtitle: "Persiapan Area Treatment",
+        description: "Standar area kerja profesional yang nyaman dan higienis",
+      },
+      {
+        subtitle: "Persiapan Alat dan Bahan",
+        description:
+          "Peralatan treatment lengkap dengan standar salon profesional:",
+        categories: [
+          {
+            title: "Pertama",
+            description: "Peralatan Dasar Treatment",
+            items: [
+              {
+                subtitle: "Hair Steamer",
+                image: foto1,
+                description:
+                  "Untuk treatment mendalam dan penetrasi produk optimal",
+              },
+              {
+                subtitle: "Massage Tools",
+                image: foto2,
+                description: "Set peralatan untuk teknik massage profesional",
+              },
+              {
+                subtitle: "Treatment Cape",
+                image: foto3,
+                description: "Pelindung profesional selama proses treatment",
+              },
+            ],
+          },
+          {
+            title: "Kedua",
+            description: "Produk Treatment Profesional",
+            items: [
+              {
+                subtitle: "Deep Treatment Series",
+                image: foto4,
+                description:
+                  "Range produk untuk berbagai jenis treatment rambut",
+              },
+              {
+                subtitle: "Styling Products",
+                image: foto5,
+                description: "Produk styling profesional post-treatment",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subtitle: "Persiapan Pribadi",
+        description:
+          "Terapis profesional harus mempersiapkan diri dengan standar yang tinggi. Berikut standar persiapan terapis:",
+        items: [
+          "Mengenakan seragam spa yang bersih dan nyaman",
+          "Menjaga kebersihan diri secara menyeluruh",
+          "Menggunakan sepatu khusus spa yang bersih",
+          "Menata rambut dengan rapi dan terikat",
+          "Menjaga kebersihan kuku (pendek dan bersih)",
+          "Menghindari penggunaan perhiasan",
+          "Menjaga kesegaran tubuh dan nafas",
+          "Menggunakan masker jika diperlukan",
+          "Mencuci tangan sebelum dan sesudah treatment",
+          "Menjaga energi dan kondisi fisik",
+        ],
+      },
+      {
+        subtitle: "Persiapan Klien",
+        description:
+          "Layanan treatment memerlukan prosedur yang terstruktur dan profesional. Berikut tahapan yang perlu diperhatikan:",
+        items: [
+          "Melakukan konsultasi awal dan analisa kulit",
+          "Menjelaskan prosedur treatment yang akan dilakukan",
+          "Memastikan kenyamanan klien",
+          "Melakukan pembersihan awal",
+          "Mengaplikasikan produk sesuai jenis treatment",
+          "Melakukan teknik massage yang tepat",
+          "Memantau reaksi kulit klien",
+          "Memberikan waktu relaksasi yang cukup",
+          "Melakukan pembersihan akhir",
+          "Memberikan saran perawatan lanjutan",
+        ],
+      },
+    ],
+  };
 
   const treatments = [
     {
       title: "Deskripsi Kelas",
       image: TreatmentImage,
-      description: "Perawatan Rambut Intensif",
+      description: "Program Pelatihan Treatment & Styling Rambut Profesional",
       content: {
         ringkasan:
-          "Kelas ini menyajikan pengetahuan komprehensif tentang teknik pemangkasan rambut Uniform Layer, mulai dari konsep dasar hingga prosedur praktis. Peserta akan mempelajari definisi, tujuan, komponen, dan langkah-langkah detail dalam melakukan pemangkasan Uniform Layer.",
+          "Program komprehensif yang mencakup teknik treatment, styling, dan perawatan rambut profesional. Dari diagnosa hingga finishing, peserta akan menguasai seluruh aspek perawatan rambut.",
         tujuan: [
-          "Memahami konsep dan prinsip dasar teknik Uniform Layer",
-          "Mengidentifikasi tujuan dan manfaat pemangkasan Uniform Layer",
-          "Mengenali komponen-komponen penting dalam teknik Uniform Layer",
-          "Melaksanakan prosedur pemangkasan Uniform Layer dengan benar",
-          "Mempersiapkan area kerja, alat, dan bahan yang diperlukan",
-          "Menerapkan persiapan pribadi dan klien yang tepat",
-          "Melakukan kegiatan berkemas pasca-pemangkasan",
+          "Menguasai teknik diagnosa rambut profesional",
+          "Memahami berbagai jenis treatment dan aplikasinya",
+          "Menguasai teknik massage dan styling",
+          "Mampu memberikan konsultasi profesional",
         ],
         materi: [
           {
-            title: "Pengantar Teknik Uniform Layer",
+            title: "Modul 1: Dasar Treatment",
             items: [
-              "Definisi dan etimologi pemangkasan",
-              "Penjelasan khusus tentang Uniform Layer",
+              "Pengenalan jenis rambut dan masalahnya",
+              "Teknik diagnosa profesional",
             ],
           },
           {
-            title: "Tujuan dan Manfaat Teknik Uniform Layer",
-            items: [],
+            title: "Modul 2: Advanced Treatment",
+            items: ["Teknik treatment spesifik", "Aplikasi produk profesional"],
           },
           {
-            title: "Komponen Teknik Uniform Layer",
-            items: ["Bentuk", "Tekstur", "Struktur", "Sudut Pemangkasan"],
-          },
-          {
-            title: "Prosedur Pemangkasan Uniform Layer",
-            items: [
-              "Langkah-langkah detail",
-              "Teknik pengambilan dan pemangkasan rambut",
-              "Cross check dan finishing",
-            ],
-          },
-          {
-            title: "Persiapan Kerja",
-            items: [
-              "Persiapan area kerja",
-              "Alat dan bahan yang diperlukan",
-              "Fungsi masing-masing alat",
-            ],
-          },
-          {
-            title: "Persiapan Pribadi dan Klien",
-            items: [
-              "Standar penampilan dan sikap profesional",
-              "Persiapan klien untuk kenyamanan dan keamanan",
-            ],
-          },
-          {
-            title: "Kegiatan Berkemas Pasca-Pemangkasan",
-            items: [],
+            title: "Modul 3: Styling Profesional",
+            items: ["Teknik styling dasar", "Advanced styling techniques"],
           },
         ],
         metode: [
-          "Teori dan konsep",
-          "Demonstrasi teknik",
-          "Praktik langsung",
-          "Diskusi dan tanya jawab",
+          "Teori komprehensif",
+          "Demonstrasi langsung",
+          "Praktik intensif",
+          "Evaluasi berkala",
         ],
-        durasi: "8 jam atau 2 hari",
+        durasi: "24 jam atau 6 hari",
         target: [
-          "Mahasiswa tata rias",
-          "Penata rambut pemula",
-          "Profesional yang ingin meningkatkan keterampilan",
+          "Calon profesional hair treatment",
+          "Hair stylist aktif",
+          "Pemilik salon",
         ],
         evaluasi: [
-          "Ujian tertulis untuk pemahaman teori",
-          "Praktik pemangkasan Uniform Layer",
-          "Penilaian persiapan dan kebersihan area kerja",
+          "Ujian teori treatment",
+          "Praktik treatment lengkap",
+          "Assessment teknik styling",
         ],
         sertifikasi:
-          "Peserta yang berhasil menyelesaikan kelas dan lulus evaluasi akan menerima sertifikat kompetensi dalam Teknik Pemangkasan Rambut Uniform Layer.",
+          "Sertifikat Profesional Hair Treatment & Styling setelah menyelesaikan seluruh program.",
       },
     },
     {
@@ -872,73 +772,62 @@ const Treatment = () => {
       content: [
         {
           image: TreatmentBackground,
-          title: "Konsep Modul",
+          title: "Konsep Program",
           description:
-            "Materi yang terdapat dalam E-Modul ini menyajikan pengetahuan tentang pemangkasan rambut Teknik uniform layer.",
-        },
-        {
-          image: FotoRambut,
-          title: "Apa itu Teknik Uniform Layer ?",
-          description:
-            "Secara “ethymologi”, kata pemangkasan terdiri dari kata “pangkas” yang artinya potong, sehingga pemangkasan merupakan tindakan memotong yang mana dalam dunia kecantikan tindakan pemangkasan rambut. Pengertian pemangkasan bisa diartikan sebagai tindakan untuk mengurangi panjang rambut semula dengan teknik-teknik tertentu, disesuaikan dengan bentuk wajah, jenis rambut, perawatan, pekerjaan dan kepribadian seseorang sehingga menghasilkan model pangkasan yang diinginkan oleh seseorang. Berdasarkan sudut pemangkatan, teknik pemangkasan dibagi dalam tiga teknik utama yaitu Pemangkasan teknik Solid, Pemangkasan teknik Graduasi, dan Pemangkasan teknik Layer. Pemangkasan bertrap penuh dikenal dengan istilah layer adalah pemangkasan yang dilakukan dengan sudut elevasi 90°-180°. Pemangkasan uniform layer adalah pemangkasan dengan sudut elevasi 90° merupakan bentuk pemangkasan mengikuti bentuk kepala, kepanjangan rambut yang sama.",
+            "Program ini menyajikan pengetahuan lengkap tentang treatment dan styling rambut profesional.",
         },
         {
           image: HairPhoto,
-          title: "Tujuan Teknik Uniform Layer",
-          description: [
-            "Memperindah bentuk kepala",
-            "Mempermudah pengaturan rambut",
-            "Memberi kesan wajah oval",
-            "Mempertajam garis wajah",
-            "Mencegah rambut jatuh ke depan wajah",
-            "Mengikuti model yang sedang berlaku dan sebagainya",
-          ],
+          title: "Apa itu Professional Hair Treatment?",
+          description:
+            "Treatment rambut profesional adalah serangkaian prosedur perawatan rambut menggunakan teknik dan produk profesional untuk mengatasi berbagai masalah rambut dan meningkatkan kesehatannya secara optimal.",
+        },
+        {
+          image: FotoRambut,
+          title: "Apa itu Professional Hair Treatment?",
+          description:
+            "Treatment rambut profesional adalah serangkaian prosedur perawatan rambut menggunakan teknik dan produk profesional untuk mengatasi berbagai masalah rambut dan meningkatkan kesehatannya secara optimal.",
         },
       ],
       multiSectionContent: [
         {
-          title: "Komponen Teknik Uniform Layer",
+          title: "Komponen Dasar Treatment Wajah",
           sections: [
             {
               image: Component1,
-              subTitle: "Bentuk",
+              subTitle: "Analisis Kondisi Kulit",
               description:
-                "Pemangkasan Uniform Layer menunjukkan bentuk desain guntingan rambut yang membulat sesuai dengan bentuk kepala, dengan kepanjangan rambut yang sama panjang.",
+                "Mengidentifikasi jenis kulit, masalah kulit, dan kondisi khusus untuk menentukan jenis treatment yang sesuai.",
             },
             {
               image: Component2,
-              subTitle: "Tekstur",
+              subTitle: "Pembersihan Mendalam",
               description:
-                "Susunan permukaan rambut bertekstur aktif (seluruh cahaya yang jatuh diserap seluruhnya dan tidak ada cahaya yang dipantulkan kembali) Jatuhnya ujung-ujung rambut tersusun dengan teratur.",
+                "Proses double cleansing untuk menghilangkan kotoran, makeup, dan sel kulit mati secara menyeluruh.",
             },
             {
               image: Component3,
-              subTitle: "Struktur",
+              subTitle: "Eksfoliasi",
               description:
-                "Struktur kerangka pemangkasan di setiap kepanjangan rambut jatuh di daerah yang sama, struktur kerangka pemangkasan uniform layer dengan kepanjangan rambut yang sama.",
+                "Pengangkatan sel kulit mati menggunakan scrub atau peeling untuk memperbarui sel kulit.",
             },
             {
               image: Component4,
-              subTitle: "Sudut Pemangkasan",
+              subTitle: "Perawatan Intensif",
               description: (
                 <>
                   {
-                    "Uniform layer memiliki sudut sudut dan ketebalan rambut yang terbagi rata di seluruh kepala. Uniform layer memiliki sudut pemangkasan 90°. Setiap teknik pemangkasan memiliki pola garis yang berbeda. Adapun pola garis pemangkasan pada Uniform Layer yaitu:"
+                    "Pemberian nutrisi dan bahan aktif sesuai kebutuhan kulit. Beberapa jenis perawatan meliputi:"
                   }
                   {
                     <ol>
                       <li>
-                        <strong>Garis pola pangkas melengkung:</strong>{" "}
-                        Pemangkasan dilakukan dengan menggunakan pola pangkas
-                        hairline. Rambut sekeliling hairline dipangkas sesuai
-                        desain dan panjang yang diinginkan. Setelah itu
-                        dilanjutkan pemangkasan dari luar (Eksterior) ke arah
-                        dalam (Interior) dengan patokan pola tersebut.
+                        <strong>Masker:</strong> Aplikasi masker sesuai jenis
+                        kulit untuk memberikan nutrisi mendalam.
                       </li>
                       <li>
-                        <strong>Garis pola pangkas datar:</strong> Pemangkasan
-                        dengan patokan dari bagian dalam dengan panjang yang
-                        diinginkan, kemudian pangkas ke arah luar.
+                        <strong>Serum:</strong> Penggunaan serum dengan
+                        kandungan aktif untuk mengatasi masalah kulit spesifik.
                       </li>
                     </ol>
                   }
@@ -948,41 +837,53 @@ const Treatment = () => {
           ],
         },
         {
-          title: "Langkah Prosedur Pemangkasan",
+          title: "Tahapan Prosedur Treatment Wajah",
           sections: [
             {
               image: Step1,
               subTitle: "Pertama",
-              description: "Pahami garis pemangkasan uniform layer",
+              description:
+                "Konsultasi dan analisis kondisi kulit untuk menentukan treatment yang sesuai",
             },
             {
               image: Step2,
               subTitle: "Kedua",
               description:
-                "Ambil rambut mulai dari bagian poni tengah seperti pola pemangkasan uniform layer, dengan sudut pemangkasan 90°",
+                "Pembersihan awal dengan milk cleanser atau deep cleanser",
             },
             {
               image: Step3,
               subTitle: "Ketiga",
               description:
-                "Lanjutkan Pemangkasan pada daerah interior dengan mengambil guide line dari potongan sebelumnya. Pemangkasan dilakukan dengan sudut 90°",
+                "Eksfoliasi dengan scrub atau peeling sesuai jenis kulit",
             },
             {
               image: Step4,
               subTitle: "Keempat",
               description:
-                "Lakukan hal yang sama pada bagian eksterior sesuai guide line, lakukan secara bertahap, hingga selesai pemangkasan",
+                "Steam wajah untuk membuka pori-pori dan memudahkan ekstraksi komedo (jika diperlukan)",
             },
             {
               image: Step5,
               subTitle: "Kelima",
-              description:
-                "Lakukan crosss check, yakinkan seluruh bagian rambut sudah rata dan lurus juga simetris.",
+              description: "Aplikasi toner untuk menyeimbangkan pH kulit",
             },
             {
               image: Step6,
               subTitle: "Keenam",
-              description: "Hasil akhir pemangkasan",
+              description:
+                "Pemijatan wajah dengan cream massage untuk melancarkan peredaran darah",
+            },
+            {
+              image: Step7,
+              subTitle: "Ketujuh",
+              description: "Penggunaan masker sesuai jenis dan kebutuhan kulit",
+            },
+            {
+              image: Step8,
+              subTitle: "Kedelapan",
+              description:
+                "Aplikasi serum, moisturizer, dan sunscreen sebagai tahap akhir",
             },
           ],
         },
@@ -995,11 +896,11 @@ const Treatment = () => {
           sectionTitle: "Pengenalan",
           videos: [
             {
-              title: "Pengenalan Hairstyling",
+              title: "Pengenalan Hairstyle",
               src: "https://youtu.be/c96leQ_fRII",
             },
             {
-              title: "Hairstyling",
+              title: "Hairstyle",
               src: "https://youtu.be/c96leQ_fRII",
             },
           ],
@@ -1008,11 +909,11 @@ const Treatment = () => {
           sectionTitle: "Tingkat Lanjut",
           videos: [
             {
-              title: "Hairstyling Belajar",
+              title: "Hairstyle Belajar",
               src: "https://youtu.be/c96leQ_fRII",
             },
             {
-              title: "Hairstyling Akhir",
+              title: "Hairstyle Akhir",
               src: "https://youtu.be/c96leQ_fRII",
             },
           ],
@@ -1025,152 +926,47 @@ const Treatment = () => {
         multipleChoice: [
           {
             question:
-              "Tindakan mengurangi panjang rambut semula dengan teknik tertentu, sesuai dengan bentuk wajah, jenis rambut, perawakan, pekerjaan dan kepribadian seseorang adalah definisi dari…",
+              "Langkah pertama dalam melakukan treatment rambut profesional adalah...",
             options: [
-              "Pemangkasan",
-              "Pewarnaan",
-              "Pengeritingan",
-              "Pelurusan",
+              "Diagnosa rambut",
+              "Aplikasi produk",
+              "Massage",
               "Styling",
+              "Blow dry",
             ],
             answer: 0,
           },
           {
-            question:
-              "Tujuan pemangkasan rambut adalah sebagai berikut, kecuali…",
-            image: PilihanGanda,
+            question: "Berapa lama waktu ideal untuk deep treatment?",
             options: [
-              "Mengurangi Panjang Rambut",
-              "Mengikuti Trend",
-              "Mengubah Bentuk Kepala",
-              "Merapikan Rambut",
-              "Mengubah Penampilan",
+              "5 menit",
+              "10 menit",
+              "15-20 menit",
+              "30-45 menit",
+              "60 menit",
             ],
-            answer: 2,
-          },
-          {
-            question:
-              "Karyawan salon yang biasa menangani pemangkasan disebut…",
-            options: ["Pelayan", "Capster", "Beauticient", "Suster", "Blester"],
-            answer: 1,
-          },
-          {
-            question:
-              "Susunan permukaan rambut yang dapat diraba, dilihat dan dirasakan adalah…",
-            options: [
-              "Struktur Rambut",
-              "Tekstur Rambut",
-              "Pola Pemangkasan",
-              "Arah Pemangkasan",
-              "Arah Pertumbuhan Rambut",
-            ],
-            answer: 1,
-          },
-          {
-            question:
-              "Penipisan pada rambut yang tebal dapat dilakukan dengan menggunakan alat…",
-            options: [
-              "Gunting",
-              "Gunting Penipisan",
-              "Gunting Bilah Satur",
-              "Mata Pisau",
-              "Cutter",
-            ],
-            answer: 1,
-          },
-          {
-            question:
-              "Pengeringan rambut yang dilakukan dengan cara menggunakan sisir blow juga dikenal dengan Teknik…",
-            options: [
-              "Teknik blow dry",
-              "Teknik block dry",
-              "Teknik parting dry",
-              "Teknik natural dry",
-              "Teknik finger dry",
-            ],
-            answer: 0,
-          },
-          {
-            question:
-              "Jepit gerigi atau jepit bebek dalam proses pemangkasan digunakan untuk…",
-            options: [
-              "Menjepit rambut yang diparting",
-              "Menjepit cape klien",
-              "Meringkas rambut",
-              "Membuat rambut menjadi berombak",
-              "Menjepit rambut operator",
-            ],
-            answer: 0,
-          },
-          {
-            question:
-              "Pemangkasan yang dilakukan dengan cara mengurangi sebagian panjang rambut dengan sudut pengangkatan 90° dinamakan dengan Teknik Pemangkasan…",
-            options: [
-              "Solid",
-              "Graduation",
-              "Uniform Layer",
-              "Increase Layer",
-              "Convace",
-            ],
-            answer: 2,
-          },
-          {
-            question:
-              "Saat melakukan pemangkasan rambut, rambut harus dalam keadaan basah agar mempermudah dalam pemangkasan. Alat yang digunakan adalah…",
-            options: [
-              "Gunting Pangkas",
-              "Sprayer",
-              "Cape Pangkas",
-              "Shower",
-              "Hairdryer",
-            ],
-            answer: 1,
-          },
-          {
-            question:
-              "Berikut ini hal yang penting dilakukan saat selesai melakukan pemangkasan rambut, kecuali…",
-            options: [
-              "Penataaan Rambut",
-              "Melakukan Pembersihan area leher dan bahu",
-              "Memberikan saran pasca pemangkasan",
-              "Melakukan Pengecekan",
-              "Menentukan guide line",
-            ],
-            answer: 4,
+            answer: 3,
           },
         ],
         essay: [
           {
-            question:
-              "Jelaskan langkah-langkah dalam melakukan pemangkasan teknik uniform layer!",
-            image: SalonSoal,
+            question: "Jelaskan prosedur lengkap melakukan hair spa treatment!",
             keyWords: [
-              "basahi rambut",
-              "bagi rambut",
-              "sudut 90 derajat",
-              "potong merata",
-              "periksa hasil",
+              "diagnosa",
+              "shampooing",
+              "massage",
+              "steam",
+              "conditioning",
             ],
           },
           {
-            question: "Apa perbedaan antara texturizing dan blunt cutting?",
+            question: "Bagaimana cara menangani rambut sangat kering?",
             keyWords: [
-              "tekstur",
-              "ujung rambut",
-              "volume",
-              "garis lurus",
-              "ketebalan",
-            ],
-          },
-          {
-            question:
-              "Bagaimana cara memastikan hasil pemangkasan uniform layer sudah tepat?",
-            keyWords: [
-              "simetris",
-              "panjang sama",
-              "jatuh merata",
-              "bentuk bulat",
-              "cek dari berbagai sudut",
+              "moisturizing",
+              "deep conditioning",
+              "protein treatment",
+              "serum",
+              "maintenance",
             ],
           },
         ],
@@ -1242,7 +1038,7 @@ const Treatment = () => {
                             </div>
                           ) : (
                             <div className="cover-text">
-                              <h2>Teknik Uniform Layer</h2>
+                              <h2>Teknik Treatment Optimal</h2>
                               <p>Tutorial Lengkap Pemangkasan Rambut</p>
                             </div>
                           )}
@@ -1635,7 +1431,7 @@ const Treatment = () => {
           </div>
         </div>
       )}
-      <Footer />
+      <Footer theme="dark" />
     </div>
   );
 };

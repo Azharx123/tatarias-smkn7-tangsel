@@ -105,7 +105,6 @@
   animation: shine 4s infinite linear;
 }
 
-
 .form__field {
   width: 100%;
   padding: 10px 0;
@@ -114,6 +113,8 @@
   border-bottom: 2px solid #e410cb;
   background-color: transparent;
   transition: border-color 0.3s ease;
+  resize: none; /* Mencegah resize manual */
+  box-sizing: border-box; /* Memastikan padding termasuk dalam width */
 }
 
 .form__field:focus {
@@ -123,8 +124,11 @@
 }
 
 textarea.form__field {
-  resize: vertical;
+  resize: none;
   min-height: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: auto; /* Menambahkan scrollbar jika konten melebihi height */
 }
 
 .submit-button {
@@ -144,8 +148,8 @@ textarea.form__field {
 }
 
 .submit-button:hover {
-  background-color: rgb(199, 52, 175);
-  transform: translateY(-3px);
+  background-color: rgb(199, 52, 175) !important;
+  transform: translateY(-3px) !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

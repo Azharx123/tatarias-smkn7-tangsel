@@ -1,54 +1,75 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import ReactQuill from "react-quill";
-import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  BsFillPlayCircleFill,
   BsFillCheckCircleFill,
   BsFillPauseFill,
+  BsFillPlayCircleFill,
 } from "react-icons/bs";
-import { FaScissors, FaRuler, FaSprayCan } from "react-icons/fa6";
+import { CgCalendarDates, CgCheckO } from "react-icons/cg";
+import { FaRuler, FaScissors, FaSprayCan } from "react-icons/fa6";
 import { PiHairDryerFill } from "react-icons/pi";
-import YouTube from "react-youtube";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import YouTube from "react-youtube";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 import "../css/Hairstyle.css";
 
 import HairstyleBackground from "../assets/images/Class Hairstyle.png";
-import MaterialImage from "../assets/images/Hairstyle Material.png";
 import FotoRambut from "../assets/images/Foto Rambut.png";
-import HairPhoto from "../assets/images/Uniform Layer.png";
-import Component1 from "../assets/images/komponen1.jpg";
-import Component2 from "../assets/images/komponen2.jpg";
-import Component3 from "../assets/images/komponen3.jpg";
-import Component4 from "../assets/images/komponen4.jpg";
-import Step1 from "../assets/images/langkah1.jpg";
-import Step2 from "../assets/images/langkah2.png";
-import Step3 from "../assets/images/langkah3.jpg";
-import Step4 from "../assets/images/langkah4.jpg";
-import Step5 from "../assets/images/langkah5.png";
-import Step6 from "../assets/images/langkah6.jpeg";
-import foto1 from "../assets/images/nomor1.png";
-import Bahagia from "../assets/images/Pribadi Bahagia.png";
-import FotoKlien from "../assets/images/klien.png";
-import PilihanGanda from "../assets/images/Sudut 90.png";
+import MaterialImage from "../assets/images/Hairstyle Material.png";
+import gunting1 from "../assets/images/hairstylegunting1.png";
+import gunting2 from "../assets/images/hairstylegunting2.png";
+import gunting3 from "../assets/images/hairstylegunting3.png";
+import gunting4 from "../assets/images/hairstylegunting4.png";
+import gunting5 from "../assets/images/hairstylegunting5.png";
+import Component1 from "../assets/images/hairstylekomponen1.jpg";
+import Component2 from "../assets/images/hairstylekomponen2.jpg";
+import Component3 from "../assets/images/hairstylekomponen3.jpg";
+import Component4 from "../assets/images/hairstylekomponen4.jpg";
+import Step1 from "../assets/images/hairstylelangkah1.jpg";
+import Step2 from "../assets/images/hairstylelangkah2.png";
+import Step3 from "../assets/images/hairstylelangkah3.jpg";
+import Step4 from "../assets/images/hairstylelangkah4.jpg";
+import Step5 from "../assets/images/hairstylelangkah5.png";
+import Step6 from "../assets/images/hairstylelangkah6.jpeg";
+import nomor1 from "../assets/images/hairstylenomor1.png";
+import nomor10 from "../assets/images/hairstylenomor10.png";
+import nomor11 from "../assets/images/hairstylenomor11.png";
+import nomor12 from "../assets/images/hairstylenomor12.png";
+import nomor2 from "../assets/images/hairstylenomor2.png";
+import nomor3 from "../assets/images/hairstylenomor3.png";
+import nomor4 from "../assets/images/hairstylenomor4.png";
+import nomor5 from "../assets/images/hairstylenomor5.png";
+import nomor6 from "../assets/images/hairstylenomor6.png";
+import nomor7 from "../assets/images/hairstylenomor7.png";
+import nomor8 from "../assets/images/hairstylenomor8.png";
+import nomor9 from "../assets/images/hairstylenomor9.png";
+import FotoKlien from "../assets/images/Hairstyle Klien.png";
+import Bahagia from "../assets/images/Pribadi Hairstyle.png";
 import SalonSoal from "../assets/images/SalonSoal.png";
+import PilihanGanda from "../assets/images/Sudut 90.png";
+import HairPhoto from "../assets/images/Uniform Layer.png";
 
- const Hairstyle = () => {
+const Hairstyle = () => {
+  useEffect(() => {
+    AOS.init({});
+  }, []);
   const [activeTab, setActiveTab] = useState(0);
-   const [isHeroPlaying, setIsHeroPlaying] = useState(false);
-   const [heroDuration, setHeroDuration] = useState(0);
-   const [heroCurrentTime, setHeroCurrentTime] = useState(0);
-   const [heroVolume, setHeroVolume] = useState(100);
-   const [isHeroMuted, setIsHeroMuted] = useState(false);
-   const [isHeroVideoReady, setIsHeroVideoReady] = useState(false);
-   const heroVideoRef = useRef(null);
-   const progressRef = useRef(null);
-   const timeUpdateIntervalRef = useRef(null);
-   const [activeVideos, setActiveVideos] = useState({});
+  const [isHeroPlaying, setIsHeroPlaying] = useState(false);
+  const [heroDuration, setHeroDuration] = useState(0);
+  const [heroCurrentTime, setHeroCurrentTime] = useState(0);
+  const [heroVolume, setHeroVolume] = useState(100);
+  const [isHeroMuted, setIsHeroMuted] = useState(false);
+  const [isHeroVideoReady, setIsHeroVideoReady] = useState(false);
+  const heroVideoRef = useRef(null);
+  const progressRef = useRef(null);
+  const timeUpdateIntervalRef = useRef(null);
+  const [activeVideos, setActiveVideos] = useState({});
   const [mcAnswers, setMcAnswers] = useState({});
   const [essayAnswers, setEssayAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
@@ -58,255 +79,255 @@ import SalonSoal from "../assets/images/SalonSoal.png";
   const [popupMessage, setPopupMessage] = useState("");
   const [popupType, setPopupType] = useState("");
   const resultsRef = useRef(null);
-   const exerciseSectionRef = useRef(null);
+  const exerciseSectionRef = useRef(null);
 
- const stopTimeUpdate = useCallback(() => {
-   if (timeUpdateIntervalRef.current) {
-     clearInterval(timeUpdateIntervalRef.current);
-     timeUpdateIntervalRef.current = null;
-   }
- }, []);
+  const stopTimeUpdate = useCallback(() => {
+    if (timeUpdateIntervalRef.current) {
+      clearInterval(timeUpdateIntervalRef.current);
+      timeUpdateIntervalRef.current = null;
+    }
+  }, []);
 
- const startTimeUpdate = useCallback(() => {
-   stopTimeUpdate();
-   timeUpdateIntervalRef.current = setInterval(() => {
-     if (heroVideoRef.current) {
-       setHeroCurrentTime(heroVideoRef.current.getCurrentTime());
-     }
-   }, 1000);
- }, [stopTimeUpdate]);
+  const startTimeUpdate = useCallback(() => {
+    stopTimeUpdate();
+    timeUpdateIntervalRef.current = setInterval(() => {
+      if (heroVideoRef.current) {
+        setHeroCurrentTime(heroVideoRef.current.getCurrentTime());
+      }
+    }, 1000);
+  }, [stopTimeUpdate]);
 
- useEffect(() => {
-   const onPlayerReady = (event) => {
-     setHeroDuration(event.target.getDuration());
-     setIsHeroVideoReady(true);
-   };
+  useEffect(() => {
+    const onPlayerReady = (event) => {
+      setHeroDuration(event.target.getDuration());
+      setIsHeroVideoReady(true);
+    };
 
-   const onPlayerStateChange = (event) => {
-     if (event.data === window.YT.PlayerState.PLAYING) {
-       setIsHeroPlaying(true);
-       startTimeUpdate();
-     } else if (event.data === window.YT.PlayerState.PAUSED) {
-       setIsHeroPlaying(false);
-       stopTimeUpdate();
-     }
-   };
+    const onPlayerStateChange = (event) => {
+      if (event.data === window.YT.PlayerState.PLAYING) {
+        setIsHeroPlaying(true);
+        startTimeUpdate();
+      } else if (event.data === window.YT.PlayerState.PAUSED) {
+        setIsHeroPlaying(false);
+        stopTimeUpdate();
+      }
+    };
 
-   const initializeYouTubePlayer = () => {
-     heroVideoRef.current = new window.YT.Player("youtube-player", {
-       height: "100%",
-       width: "100%",
-       videoId: "mHQFy8IZPLY",
-       playerVars: {
-         autoplay: 0,
-         controls: 0,
-         modestbranding: 1,
-         rel: 0,
-         showinfo: 0,
-         fs: 0,
-       },
-       events: {
-         onReady: onPlayerReady,
-         onStateChange: onPlayerStateChange,
-       },
-     });
-   };
+    const initializeYouTubePlayer = () => {
+      heroVideoRef.current = new window.YT.Player("youtube-player", {
+        height: "100%",
+        width: "100%",
+        videoId: "mHQFy8IZPLY",
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          fs: 0,
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+        },
+      });
+    };
 
-   const tag = document.createElement("script");
-   tag.src = "https://www.youtube.com/iframe_api";
-   const firstScriptTag = document.getElementsByTagName("script")[0];
-   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-   window.onYouTubeIframeAPIReady = initializeYouTubePlayer;
+    window.onYouTubeIframeAPIReady = initializeYouTubePlayer;
 
-   return () => {
-     window.onYouTubeIframeAPIReady = null;
-     stopTimeUpdate();
-   };
- }, [startTimeUpdate, stopTimeUpdate]);
+    return () => {
+      window.onYouTubeIframeAPIReady = null;
+      stopTimeUpdate();
+    };
+  }, [startTimeUpdate, stopTimeUpdate]);
 
- const handleHeroPlayPause = useCallback(() => {
-   if (!heroVideoRef.current) return;
+  const handleHeroPlayPause = useCallback(() => {
+    if (!heroVideoRef.current) return;
 
-   if (isHeroPlaying) {
-     heroVideoRef.current.pauseVideo();
-   } else {
-     heroVideoRef.current.playVideo();
-     // Pause all other videos
-     setActiveVideos({});
-   }
-   setIsHeroPlaying(!isHeroPlaying);
- }, [isHeroPlaying]);
+    if (isHeroPlaying) {
+      heroVideoRef.current.pauseVideo();
+    } else {
+      heroVideoRef.current.playVideo();
+      // Pause all other videos
+      setActiveVideos({});
+    }
+    setIsHeroPlaying(!isHeroPlaying);
+  }, [isHeroPlaying]);
 
- const handleHeroProgressChange = useCallback((e) => {
-   if (!heroVideoRef.current) return;
+  const handleHeroProgressChange = useCallback((e) => {
+    if (!heroVideoRef.current) return;
 
-   const newTime = e.target.value;
-   heroVideoRef.current.seekTo(newTime);
-   setHeroCurrentTime(newTime);
- }, []);
+    const newTime = e.target.value;
+    heroVideoRef.current.seekTo(newTime);
+    setHeroCurrentTime(newTime);
+  }, []);
 
- const handleHeroVolumeChange = useCallback((e) => {
-   if (!heroVideoRef.current) return;
+  const handleHeroVolumeChange = useCallback((e) => {
+    if (!heroVideoRef.current) return;
 
-   const newVolume = e.target.value;
-   heroVideoRef.current.setVolume(newVolume);
-   setHeroVolume(newVolume);
-   setIsHeroMuted(newVolume === 0);
- }, []);
+    const newVolume = e.target.value;
+    heroVideoRef.current.setVolume(newVolume);
+    setHeroVolume(newVolume);
+    setIsHeroMuted(newVolume === 0);
+  }, []);
 
- const toggleHeroMute = useCallback(() => {
-   if (!heroVideoRef.current) return;
+  const toggleHeroMute = useCallback(() => {
+    if (!heroVideoRef.current) return;
 
-   if (isHeroMuted) {
-     heroVideoRef.current.unMute();
-     heroVideoRef.current.setVolume(heroVolume);
-   } else {
-     heroVideoRef.current.mute();
-   }
-   setIsHeroMuted(!isHeroMuted);
- }, [isHeroMuted, heroVolume]);
+    if (isHeroMuted) {
+      heroVideoRef.current.unMute();
+      heroVideoRef.current.setVolume(heroVolume);
+    } else {
+      heroVideoRef.current.mute();
+    }
+    setIsHeroMuted(!isHeroMuted);
+  }, [isHeroMuted, heroVolume]);
 
- const formatTime = useCallback((time) => {
-   const minutes = Math.floor(time / 60);
-   const seconds = Math.floor(time % 60);
-   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
- }, []);
+  const formatTime = useCallback((time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  }, []);
 
- const scrollToActiveVideo = useCallback(() => {
-   const activeVideoKey = Object.keys(activeVideos).find(
-     (key) => activeVideos[key]
-   );
-   if (activeVideoKey) {
-     const activeElement = document.querySelector(
-       `[data-video-key="${activeVideoKey}"]`
-     );
-     if (activeElement) {
-       activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
-     }
-   } else if (isHeroPlaying) {
-     const heroSection = document.querySelector(".hairstyle-hero");
-     if (heroSection) {
-       heroSection.scrollIntoView({ behavior: "smooth" });
-     }
-   }
- }, [activeVideos, isHeroPlaying]);
+  const scrollToActiveVideo = useCallback(() => {
+    const activeVideoKey = Object.keys(activeVideos).find(
+      (key) => activeVideos[key]
+    );
+    if (activeVideoKey) {
+      const activeElement = document.querySelector(
+        `[data-video-key="${activeVideoKey}"]`
+      );
+      if (activeElement) {
+        activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    } else if (isHeroPlaying) {
+      const heroSection = document.querySelector(".hairstyle-hero");
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [activeVideos, isHeroPlaying]);
 
- const toggleVideo = useCallback(
-   (section, index, videoIndex = null) => {
-     if (isHeroPlaying) {
-       handleHeroPlayPause();
-     }
+  const toggleVideo = useCallback(
+    (section, index, videoIndex = null) => {
+      if (isHeroPlaying) {
+        handleHeroPlayPause();
+      }
 
-     setActiveVideos((prev) => {
-       const videoKey =
-         videoIndex !== null
-           ? `${section}-${index}-${videoIndex}`
-           : `${section}-${index}`;
+      setActiveVideos((prev) => {
+        const videoKey =
+          videoIndex !== null
+            ? `${section}-${index}-${videoIndex}`
+            : `${section}-${index}`;
 
-       if (prev[videoKey]) {
-         return {};
-       }
+        if (prev[videoKey]) {
+          return {};
+        }
 
-       if (Object.values(prev).some(Boolean)) {
-         scrollToActiveVideo();
-         return prev;
-       }
+        if (Object.values(prev).some(Boolean)) {
+          scrollToActiveVideo();
+          return prev;
+        }
 
-       return { [videoKey]: true };
-     });
-   },
-   [isHeroPlaying, handleHeroPlayPause, scrollToActiveVideo]
- );
+        return { [videoKey]: true };
+      });
+    },
+    [isHeroPlaying, handleHeroPlayPause, scrollToActiveVideo]
+  );
 
- useEffect(() => {
-   return () => {
-     setActiveVideos({});
-   };
- }, []);
+  useEffect(() => {
+    return () => {
+      setActiveVideos({});
+    };
+  }, []);
 
- const VideoPlayer = ({ src, isActive, onPlay, onPause }) => {
-   const videoId = src.split("v=")[1]?.split("&")[0] || src.split("/").pop();
+  const VideoPlayer = ({ src, isActive, onPlay, onPause }) => {
+    const videoId = src.split("v=")[1]?.split("&")[0] || src.split("/").pop();
 
-   if (!isActive) return null;
+    if (!isActive) return null;
 
-   return (
-     <YouTube
-       videoId={videoId}
-       opts={{
-         width: "100%",
-         height: "315",
-         playerVars: {
-           autoplay: 1,
-         },
-       }}
-       onPlay={onPlay}
-       onPause={onPause}
-       onEnd={() => setActiveVideos({})}
-     />
-   );
- };
+    return (
+      <YouTube
+        videoId={videoId}
+        opts={{
+          width: "100%",
+          height: "315",
+          playerVars: {
+            autoplay: 1,
+          },
+        }}
+        onPlay={onPlay}
+        onPause={onPause}
+        onEnd={() => setActiveVideos({})}
+      />
+    );
+  };
 
- const scrollToSection = (sectionId) => {
-   document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
- };
+  const scrollToSection = (sectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  };
 
- const renderVideoSection = (videos, sectionKey) => {
-   return (
-     <div className="video-list">
-       {videos.map((video, index) => {
-         const videoKey = `${sectionKey}-${index}`;
-         const isVideoActive = activeVideos[videoKey];
-         const isAnyVideoPlaying =
-           isHeroPlaying || Object.values(activeVideos).some(Boolean);
-         const isOtherVideoPlaying = isAnyVideoPlaying && !isVideoActive;
+  const renderVideoSection = (videos, sectionKey) => {
+    return (
+      <div className="video-list">
+        {videos.map((video, index) => {
+          const videoKey = `${sectionKey}-${index}`;
+          const isVideoActive = activeVideos[videoKey];
+          const isAnyVideoPlaying =
+            isHeroPlaying || Object.values(activeVideos).some(Boolean);
+          const isOtherVideoPlaying = isAnyVideoPlaying && !isVideoActive;
 
-         return (
-           <div key={index} className="video-item" data-video-key={videoKey}>
-             <div
-               className={`video-title-wrapper ${
-                 isOtherVideoPlaying ? "disabled" : ""
-               }`}
-               onClick={() => {
-                 if (isOtherVideoPlaying) {
-                   scrollToActiveVideo();
-                 } else {
-                   toggleVideo(sectionKey, index);
-                 }
-               }}
-             >
-               {isVideoActive ? (
-                 <BsFillPauseFill className="play-icon" />
-               ) : (
-                 <BsFillPlayCircleFill className="play-icon" />
-               )}
-               <span className="video-title">
-                 {isOtherVideoPlaying
-                   ? "Matikan video lain terlebih dahulu"
-                   : video.title}
-               </span>
-             </div>
-             <VideoPlayer
-               src={video.src}
-               isActive={isVideoActive}
-               onPlay={() => {
-                 if (isHeroPlaying) {
-                   handleHeroPlayPause();
-                 }
-               }}
-               onPause={() => {
-                 setActiveVideos((prev) => ({
-                   ...prev,
-                   [videoKey]: false,
-                 }));
-               }}
-             />
-           </div>
-         );
-       })}
-     </div>
-   );
- };
+          return (
+            <div key={index} className="video-item" data-video-key={videoKey}>
+              <div
+                className={`video-title-wrapper ${
+                  isOtherVideoPlaying ? "disabled" : ""
+                }`}
+                onClick={() => {
+                  if (isOtherVideoPlaying) {
+                    scrollToActiveVideo();
+                  } else {
+                    toggleVideo(sectionKey, index);
+                  }
+                }}
+              >
+                {isVideoActive ? (
+                  <BsFillPauseFill className="play-icon" />
+                ) : (
+                  <BsFillPlayCircleFill className="play-icon" />
+                )}
+                <span className="video-title">
+                  {isOtherVideoPlaying
+                    ? "Matikan video lain terlebih dahulu"
+                    : video.title}
+                </span>
+              </div>
+              <VideoPlayer
+                src={video.src}
+                isActive={isVideoActive}
+                onPlay={() => {
+                  if (isHeroPlaying) {
+                    handleHeroPlayPause();
+                  }
+                }}
+                onPause={() => {
+                  setActiveVideos((prev) => ({
+                    ...prev,
+                    [videoKey]: false,
+                  }));
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   const handleMCAnswer = (questionIndex, answerIndex) => {
     setMcAnswers((prev) => {
@@ -405,15 +426,15 @@ import SalonSoal from "../assets/images/SalonSoal.png";
     setPopupType("reset");
   };
 
-   const handleConfirmReset = () => {
-     setMcAnswers({});
-     setEssayAnswers({});
-     setShowResults(false);
-     setScore(0);
-     setErrors({});
-     setShowPopup(false);
-     scrollToExerciseSection();
-   };
+  const handleConfirmReset = () => {
+    setMcAnswers({});
+    setEssayAnswers({});
+    setShowResults(false);
+    setScore(0);
+    setErrors({});
+    setShowPopup(false);
+    scrollToExerciseSection();
+  };
 
   const scrollToFirstUnanswered = () => {
     const firstUnansweredQuestion = document.querySelector(
@@ -424,14 +445,14 @@ import SalonSoal from "../assets/images/SalonSoal.png";
     }
   };
 
- const scrollToExerciseSection = () => {
-   if (exerciseSectionRef.current) {
-     exerciseSectionRef.current.scrollIntoView({
-       behavior: "smooth",
-       block: "start",
-     });
-   }
- };
+  const scrollToExerciseSection = () => {
+    if (exerciseSectionRef.current) {
+      exerciseSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
   const renderClassDescription = (classInfo) => (
     <div className="hairstyle-content">
@@ -639,19 +660,19 @@ import SalonSoal from "../assets/images/SalonSoal.png";
             items: [
               {
                 subtitle: "Bentuk 4 1/2",
-                image: foto1,
+                image: gunting1,
                 description:
                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
               },
               {
                 subtitle: "Bentuk 5",
-                image: foto1,
+                image: gunting2,
                 description:
                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
               },
               {
                 subtitle: "Bentuk 5 1/2",
-                image: foto1,
+                image: gunting3,
                 description:
                   "Memangkas rambut secara umum, layer dan untuk sudut pemangkasan",
               },
@@ -664,13 +685,13 @@ import SalonSoal from "../assets/images/SalonSoal.png";
             items: [
               {
                 subtitle: "Bentuk Satu Bilah",
-                image: foto1,
+                image: gunting4,
                 description:
                   "Memangkas garis pemangkasan lengkung karena memiliki gigi yang lebih panjang.",
               },
               {
                 subtitle: "Bentuk Dua Bilah",
-                image: foto1,
+                image: gunting5,
                 description: "Memangkas garis pemangkasan lurus",
               },
             ],
@@ -681,70 +702,70 @@ import SalonSoal from "../assets/images/SalonSoal.png";
             items: [
               {
                 subtitle: "Cape Penyampoan",
-                image: foto1,
+                image: nomor1,
                 description:
                   "Melindungi baju klien dari percikan air saat pencucian rambut",
               },
               {
                 subtitle: "Cape Pangkas",
-                image: foto1,
+                image: nomor2,
                 description:
                   "Menghalangi rambut yang telah dipangkas agar tidak menempel pada baju atau kulit klien",
               },
               {
                 subtitle: "Handuk Kecil",
-                image: foto1,
+                image: nomor3,
                 description:
                   "Mengeringkan rambut dan melindungi bagian tengkuk klien dari pecikan kosmetik",
               },
               {
                 subtitle: "Sisir Besar",
-                image: foto1,
+                image: nomor4,
                 description:
                   "Menyisir rambut secara umum setelah memncuci rambut",
               },
               {
                 subtitle: "Sisir Berekor",
-                image: foto1,
+                image: nomor5,
                 description: "Memudahkan pembagian (parting) rambut",
               },
               {
                 subtitle: "Sisir Pangkas",
-                image: foto1,
+                image: nomor6,
                 description: "Alat bantu pemangkasan",
               },
               {
                 subtitle: "Sisir Leher",
-                image: foto1,
+                image: nomor7,
                 description:
                   "Membersihkan leher dan bahu dari sisa potongan rambut",
               },
               {
                 subtitle: "Sisir Blow",
-                image: foto1,
+                image: nomor8,
                 description:
                   "Membentuk volume pada rambut selama proses penataan Teknik blowdryer",
               },
               {
                 subtitle: "Jepit Bergerigi",
-                image: foto1,
+                image: nomor9,
                 description: "Untuk menjepit rambut yang telah di parting",
               },
               {
                 subtitle: "Jepit Bebek",
-                image: foto1,
+                image: nomor10,
                 description:
                   "Untuk menejpit dan membagi section rambut yang akan dipangkas",
               },
               {
                 subtitle: "Water Sprayer",
-                image: foto1,
+                image: nomor11,
                 description:
                   "Membasahi rambut agar ujung rambut tetap dalam keadaan basah saat pemangkasan",
               },
               {
                 subtitle: "Hair Dryer",
-                image: foto1,
+                image: nomor12,
                 description:
                   "Mengeringkan rambut dengan suhuh yag dapat diatur sesuai kebutuhan",
               },
@@ -1635,7 +1656,7 @@ import SalonSoal from "../assets/images/SalonSoal.png";
           </div>
         </div>
       )}
-      <Footer />
+      <Footer currentPage="hairstyling" />
     </div>
   );
 };
